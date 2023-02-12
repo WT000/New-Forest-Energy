@@ -12,12 +12,12 @@ const homeSchema = new mongoose.Schema({
     name: {
         type: String,
         required: true,
-        minlength: [5, "Home names must be at least 5 characters in length."],
-        maxlength: [100, "Home names must not exceed 100 characters."],
+        minlength: [5, "Home name must be at least 5 characters in length."],
+        maxlength: [100, "Home name must not exceed 100 characters."],
     },
     description: {
         type: String,
-        maxlength: [300, "Home descriptions must not exceed 300 characters."],
+        maxlength: [300, "Home description must not exceed 300 characters."],
     },
     image: {
         type: String,
