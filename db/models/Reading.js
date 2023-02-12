@@ -5,6 +5,12 @@ const readingSchema = new mongoose.Schema({
         type: mongoose.Schema.Types.ObjectId, ref: "Home",
         required: true,
     },
+    booking: { // Blank if not made during a booking for that home
+        type: mongoose.Schema.Types.ObjectId, ref: "Booking",
+    },
+    user: { // Blank if visitor reading
+        type: mongoose.Schema.Types.ObjectId, ref: "User",
+    },
     value: {
         type: Number,
         required: true,
