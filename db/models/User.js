@@ -5,7 +5,7 @@ const userSchema = new mongoose.Schema({
         type: String, 
         required: true,
         minlength: [2, "Usernames must be at least 2 characters in length."], 
-        maxlength: [20, "Username too long, these should be short and memorable."],
+        maxlength: [30, "Username must not exceed 30 characters, these should be short and memorable."],
     },
     password: {
         type: String,
@@ -16,7 +16,7 @@ const userSchema = new mongoose.Schema({
         type: String,
         required: true,
         minlength: [2, "Names must be at least 2 characters in length."], 
-        maxlength: [80, "Name too long, this should be a friendly name (e.g. John Doe)."],
+        maxlength: [80, "Name must not exceed 80 characters, this should be a friendly name (e.g. John Doe)."],
     },
     role: {
         type: String,
