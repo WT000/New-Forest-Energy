@@ -36,7 +36,7 @@ const homeSchema = new mongoose.Schema({
     energyTariff: {
         type: Number,
         required: true,
-        min: [0.01, "Energy tariff must be at least £0.01/kWh"],
+        min: [0.01, "Energy tariff must be at least £0.01/kWh."],
         max: [Number.MAX_SAFE_INTEGER, "Energy tariff reached an unsafe number."]
     },
     energyBuffer: {
