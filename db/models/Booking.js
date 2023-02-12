@@ -18,7 +18,7 @@ const bookingSchema = new mongoose.Schema({
             validator: function(value) {
                 return typeof new Date(value) == "date" && new Date(value) >= new Date();
             },
-            message: "The start date & time of a booking must be in the future.",
+            message: "The start date & time of a booking must be now or in the future.",
         }
     },
     endDateTime: {
