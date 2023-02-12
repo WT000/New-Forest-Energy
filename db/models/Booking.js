@@ -26,7 +26,7 @@ const bookingSchema = new mongoose.Schema({
         required: true,
         validate: {
             validator: function(value) {
-                return typeof new Date(value) == "date" && new Date(value) >= new Date(this.startDateTime);
+                return typeof new Date(value) == "date" && new Date(value) > new Date(this.startDateTime);
             },
             message: "The end date & time of a booking must be ahead of the start date & time.",
         }
