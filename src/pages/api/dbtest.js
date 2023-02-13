@@ -34,7 +34,7 @@ export default async function handler(req, res) {
             res.status(500).json({error: "Couldn't connect"});
         }
     } catch (e) {
-        res.status(500).json({ error: e });
+        res.status(500).json({ error: e.message });
     }
   }
   
