@@ -10,7 +10,7 @@ const userSchema = new mongoose.Schema({
     password: {
         type: String,
         required: true,
-        minlength: [5, "Password must be at least 5 characters in length."],
+        bcrypt: true // No min or max length validaiton done here, this should be done in the route / form instead (e.g. you must have 5 characters of mixed numbers and letters)
     },
     name: {
         type: String,
@@ -25,4 +25,5 @@ const userSchema = new mongoose.Schema({
     },
 }, {timestamps: true});
 
+userSchema.plugin(require("mongoose-bcrypt"));
 export default mongoose.models.User || mongoose.model("User", userSchema);
