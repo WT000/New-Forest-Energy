@@ -1,4 +1,5 @@
 import mongoose from "mongoose";
+mongoose.set("strictQuery", true);
 
 // Based on the next.js mongoose example (https://github.com/vercel/next.js/blob/canary/examples/with-mongodb-mongoose/lib/dbConnect.js)
 
@@ -27,7 +28,6 @@ async function dbConnect() {
         }
 
         cached.promise = mongoose.connect(MONGODB_URI, opts).then(mongoose => {
-            mongoose.set("strictQuery", true);
             return mongoose;
         })
     }
