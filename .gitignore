@@ -130,6 +130,9 @@ yarn-error.log*
 
 # local env files
 .env*.local
+.env*.test
+.env*.development
+.env.*production
 
 # vercel
 .vercel
