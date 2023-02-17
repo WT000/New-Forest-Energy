@@ -1,4 +1,4 @@
-import dbConnect from "@/db/dbcon/dbcon";
+import dbConnect from "../../db/dbcon/dbcon";
 
 export default async function handler(req, res) {
     try {

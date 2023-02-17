@@ -1,8 +1,8 @@
 enum Role {
-    Guest,
-    Delegate,
-    Homeowner,
-    Agency,
+    Guest = "Guest",
+    Delegate = "Delegate",
+    Homeowner = "Homeowner",
+    Agency = "Agency",
 };
 
 export default Role;

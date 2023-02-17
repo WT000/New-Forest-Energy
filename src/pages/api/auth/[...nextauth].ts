@@ -1,15 +1,14 @@
 import NextAuth from "next-auth";
 import GithubProvider from "next-auth/providers/github";
 import {MongoDBAdapter} from "@next-auth/mongodb-adapter";
-import clientPromise from "@/lib/authcon/mongodb";
+import clientPromise from "../../../lib/authcon/mongodb";
 
 export const authOptions = {
-  pages: {
-    signIn: "/auth/signin",
-  },
   callbacks: {
     async session({session, user}) {
+      // Update the session.user with new fields here, which need to be their database id and isAgency status
       session.user.id = user.id;
+      session.user.isAgency = user.isAgency;
       return session;
     },
   },
