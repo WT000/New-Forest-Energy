@@ -1,3 +1,4 @@
+// @ts-nocheck
 import { getServerSession } from "next-auth/next";
 import Head from "next/head";
 import { authOptions } from "../api/auth/[...nextauth]";
@@ -5,12 +6,14 @@ import { useSession } from "next-auth/react";
 import { UserInterface } from "../../db/models/User";
 import { HomeInterface } from "../../db/models/Home";
 import getRole from "../../lib/utils/getRole";
+import mongoose from "mongoose";
 
 export default function Home() {
     const { data: session } = useSession();
 
-    const fakeHome = {
-        _id: "123",
+    // Automatically becomes the users home for testing
+    const fakeOwnHome = {
+        _id: "",
         owner: session ? session.user.id : "123",
         delegates: [],
         name: "home",
@@ -19,8 +22,42 @@ export default function Home() {
         numBeds: 5,
         energyInstructions: "instructions",
         energyTariff: 1.00,
-        energyBuffer: 1.00
+        energyBuffer: 1.00,
+        createdAt: new Date(),
+        updatedAt: new Date(),
     }
+
+    const fakeDelegate = {
+        _id: "",
+        owner: "123",
+        delegates: [session?.user.id],
+        name: "home",
+        description: "desc",
+        image: "imgpath",
+        numBeds: 5,
+        energyInstructions: "instructions",
+        energyTariff: 1.00,
+        energyBuffer: 1.00,
+        createdAt: new Date(),
+        updatedAt: new Date(),
+    }
+
+    const fakeOther = {
+        _id: "",
+        owner: "123",
+        delegates: [],
+        name: "home",
+        description: "desc",
+        image: "imgpath",
+        numBeds: 5,
+        energyInstructions: "instructions",
+        energyTariff: 1.00,
+        energyBuffer: 1.00,
+        createdAt: new Date(),
+        updatedAt: new Date(),
+    }
+
+    console.log(session);
 
     return (
         <>
@@ -34,6 +71,11 @@ export default function Home() {
             {session && 
                 <div>
                     <p>Logged in as {session.user.name}.</p>
+                    <p>Role status (own home if logged in): {getRole(fakeOwnHome, session)}</p>
+                    <p>Role status (delegate test): {getRole(fakeDelegate, session)}</p>
+                    <p>Role status (other home): {getRole(fakeOther, session)}</p>
+
+                    <br/>
                     <a href="./api/auth/signout">Click here to logout.</a>
                 </div>
             }
@@ -41,10 +83,18 @@ export default function Home() {
             {!session && 
                 <div>
                     <p>Logged out.</p>
+                    <p>Role status (own home if logged in): {getRole(fakeOwnHome, session)}</p>
+                    <p>Role status (delegate test): {getRole(fakeDelegate, session)}</p>
+                    <p>Role status (other home): {getRole(fakeOther, session)}</p>
+
+                    <br/>
                     <a href="./api/auth/signin">Click here to login.</a>
                 </div>
             }
 
+            <br/>
+            <a href="./api/toggleagency">Click here to toggle isAgency (would need something like axios if using fetch).</a>
+            
             {/* Imagine this is using a user and home from the database... */}
 
         </>
