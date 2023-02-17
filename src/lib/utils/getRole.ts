@@ -10,7 +10,7 @@ function getRole(home: HomeInterface, user: UserInterface) {
     // Check if Homeowner (owns the home)
     if (home.owner.toString() == user._id.toString()) return Role.Homeowner;
 
-    // Check if Delegate (worker of the home)
+    // Check if Delegate (worker of the home) - not using includes here to ensure that id's are converted to prevent type mismatching
     home.delegates.forEach(delegate => {
         if (delegate.toString() == user._id.toString()) return Role.Delegate;
     });
