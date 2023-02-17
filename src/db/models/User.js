@@ -1,5 +1,6 @@
 import mongoose from "mongoose";
 
+// This should now be done automatically by next-auth, kept here for archival purposes
 const userSchema = new mongoose.Schema({
     username: {
         type: String, 
@@ -18,10 +19,10 @@ const userSchema = new mongoose.Schema({
         minlength: [2, "Name must be at least 2 characters in length."], 
         maxlength: [80, "Name must not exceed 80 characters, this should be a friendly name (e.g. John Doe)."],
     },
-    role: {
-        type: String,
+    isAgency: {
+        type: Boolean,
         required: true,
-        enum: ["Agency", "Homeowner", "Delegate"], // Note that visitors do not have accounts, they are authenticated with their booking ID
+        default: false,
     },
 }, {timestamps: true});
 
