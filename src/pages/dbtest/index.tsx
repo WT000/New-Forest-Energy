@@ -9,7 +9,18 @@ import getRole from "../../lib/utils/getRole";
 export default function Home() {
     const { data: session } = useSession();
 
-    console.log(session)
+    const fakeHome = {
+        _id: "123",
+        owner: session ? session.user.id : "123",
+        delegates: [],
+        name: "home",
+        description: "desc",
+        image: "imgpath",
+        numBeds: 5,
+        energyInstructions: "instructions",
+        energyTariff: 1.00,
+        energyBuffer: 1.00
+    }
 
     return (
         <>
@@ -41,6 +52,7 @@ export default function Home() {
 }
 
 // Server-side session is ideal, otherwise we will have flashing components on the page
+// Using getServerSideProps as shown in official docs, but feel free to change it
 export async function getServerSideProps(context) {
     return {
         props: {
