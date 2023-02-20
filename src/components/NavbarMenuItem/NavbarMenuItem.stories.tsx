@@ -14,7 +14,8 @@ export const AllHomes = Template.bind({});
 AllHomes.args = {
     icon: <IoHome />,
     text: "All Homes",
-    onClick: () => console.log("AllHomes")
+    onClick: () => console.log("AllHomes"),
+    activePage: false,
 };
 
 export const Dashboard = Template.bind({});
@@ -22,7 +23,8 @@ export const Dashboard = Template.bind({});
 Dashboard.args = {
     icon: <IoPieChart />,
     text: "Dashboard",
-    onClick: () => console.log("Dashboard")
+    onClick: () => console.log("Dashboard"),
+    activePage: true,
 };
 
 export const NewReading = Template.bind({});
@@ -30,7 +32,8 @@ export const NewReading = Template.bind({});
 NewReading.args = {
     icon: <IoFlash />,
     text: "New Reading",
-    onClick: () => console.log("NewReading")
+    onClick: () => console.log("NewReading"),
+    activePage: false,
 };
 
 export const AddBooking = Template.bind({});
@@ -38,7 +41,8 @@ export const AddBooking = Template.bind({});
 AddBooking.args = {
     icon: <IoCalendar />,
     text: "Add Booking",
-    onClick: () => console.log("AddBooking")
+    onClick: () => console.log("AddBooking"),
+    activePage: false,
 };
 
 export const Instructions = Template.bind({});
@@ -46,7 +50,8 @@ export const Instructions = Template.bind({});
 Instructions.args = {
     icon: <IoList />,
     text: "Instructions",
-    onClick: () => console.log("Instructions")
+    onClick: () => console.log("Instructions"),
+    activePage: false,
 };
 
 export const SignOut = Template.bind({});
@@ -54,7 +59,8 @@ export const SignOut = Template.bind({});
 SignOut.args = {
     icon: <IoLogOut />,
     text: "Sign Out",
-    onClick: () => console.log("SignOut")
+    onClick: () => console.log("SignOut"),
+    activePage: false,
 };
 
 export const NewHome = Template.bind({});
@@ -62,5 +68,6 @@ export const NewHome = Template.bind({});
 NewHome.args = {
     icon: <IoAdd />,
     text: "New Home",
-    onClick: () => console.log("NewHome")
+    onClick: () => console.log("NewHome"),
+    activePage: false,
 };
