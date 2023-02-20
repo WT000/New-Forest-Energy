@@ -1,6 +1,6 @@
 import {ComponentMeta, ComponentStory} from "@storybook/react";
 import NavbarMenuItem from "./NavbarMenuItem";
-import {IoIosHome, IoIosPie} from "react-icons/io";
+import {IoIosHome, IoIosPie, IoIosFlash} from "react-icons/io";
 
 export default {
     title: "NavbarMenuItem",
@@ -23,4 +23,12 @@ Dashboard.args = {
     icon: <IoIosPie />,
     text: "Dashboard",
     onClick: console.log("dashboard")
+};
+
+export const NewReading = Template.bind({});
+  
+NewReading.args = {
+    icon: <IoIosFlash />,
+    text: "New Reading",
+    onClick: console.log("new reading")
 };
