@@ -1,6 +1,6 @@
 import {ComponentMeta, ComponentStory} from "@storybook/react";
 import NavbarMenu from "./NavbarMenu";
-import { AllHomes, Dashboard, NewReading } from "../NavbarMenuItem/NavbarMenuItem.stories";
+import { AllHomes, Dashboard, NewReading, AddBooking, Instructions, SignOut } from "../NavbarMenuItem/NavbarMenuItem.stories";
 
 export default {
     title: "NavbarMenu",
@@ -17,6 +17,9 @@ Menu.args = {
             <AllHomes {...AllHomes.args} />
             <Dashboard {...Dashboard.args} />
             <NewReading {...NewReading.args} />
+            <AddBooking {...AddBooking.args} />
+            <Instructions {...Instructions.args} />
+            <SignOut {...SignOut.args} />
         </div> 
     )
 };
