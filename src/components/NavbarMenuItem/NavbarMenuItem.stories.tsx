@@ -14,7 +14,7 @@ export const AllHomes = Template.bind({});
 AllHomes.args = {
     icon: <IoIosHome />,
     text: "All Homes",
-    onClick: console.log("AllHomes")
+    onClick: () => console.log("AllHomes")
 };
 
 export const Dashboard = Template.bind({});
@@ -22,7 +22,7 @@ export const Dashboard = Template.bind({});
 Dashboard.args = {
     icon: <IoIosPie />,
     text: "Dashboard",
-    onClick: console.log("Dashboard")
+    onClick: () => console.log("Dashboard")
 };
 
 export const NewReading = Template.bind({});
@@ -30,7 +30,7 @@ export const NewReading = Template.bind({});
 NewReading.args = {
     icon: <IoIosFlash />,
     text: "New Reading",
-    onClick: console.log("NewReading")
+    onClick: () => console.log("NewReading")
 };
 
 export const AddBooking = Template.bind({});
@@ -38,7 +38,7 @@ export const AddBooking = Template.bind({});
 AddBooking.args = {
     icon: <IoIosCalendar />,
     text: "Add Booking",
-    onClick: console.log("AddBooking")
+    onClick: () => console.log("AddBooking")
 };
 
 export const Instructions = Template.bind({});
@@ -46,7 +46,7 @@ export const Instructions = Template.bind({});
 Instructions.args = {
     icon: <IoIosList />,
     text: "Instructions",
-    onClick: console.log("Instructions")
+    onClick: () => console.log("Instructions")
 };
 
 export const SignOut = Template.bind({});
@@ -54,5 +54,5 @@ export const SignOut = Template.bind({});
 SignOut.args = {
     icon: <IoIosLogOut />,
     text: "Sign Out",
-    onClick: console.log("SignOut")
+    onClick: () => console.log("SignOut")
 };

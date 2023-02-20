@@ -1,8 +1,7 @@
 interface NavbarMenuItemProps {
     icon: React.ReactElement;
     text: string;
-    onClick: () => unknown;
-
+    onClick: () => void;
 }
 
 
