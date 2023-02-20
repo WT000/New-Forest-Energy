@@ -6,7 +6,7 @@ export default function NavbarMenu(props: NavbarMenuProps) {
     const {menuItems} = props;
 
     return (
-        <div className="flex w-80%">
+        <div className="flex">
             {menuItems}
         </div>
     )

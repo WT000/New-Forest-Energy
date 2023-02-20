@@ -10,11 +10,11 @@ export default function NavbarMenuItem(props: NavbarMenuItemProps) {
 
     return (
         <div 
-            className="grid grid-cols-3 text-[#77767A] justify-center hover:text-black cursor-pointer m-4" 
+            className="grid grid-cols-3 text-[#77767A] justify-center hover:text-black cursor-pointer mt-8 mb-8 w-full" 
             onClick={onClick} 
         >
-            <div className="grid-span-1">{icon}</div>
-            <div className="grid-span-2">{text}</div>
+            <div className="col-span-1 m-auto pr-4">{icon}</div>
+            <div className="col-span-2">{text}</div>
         </div>
     )
 
