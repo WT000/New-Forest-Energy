@@ -45,7 +45,7 @@ export default function DesktopNavbar(props: DesktopNavbarProps) {
                 
             
             <div className="m-auto ">
-                <div className="h-[0px] w-[173px] mx-auto border-2 border-[#1D1A221A]"></div>
+                <div className="h-[0px] w-[173px] mx-auto border-b-2 border-[#1D1A221A]"></div>
                 {menu}
             </div>
             
