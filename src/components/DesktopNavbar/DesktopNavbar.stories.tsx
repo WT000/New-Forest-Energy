@@ -1,6 +1,7 @@
 import {ComponentMeta, ComponentStory} from "@storybook/react";
 import DesktopNavbar from "./DesktopNavbar";
 import { Menu } from "../NavbarMenu/NavbarMenu.stories";
+import { Buffer, Tariff } from "../NavbarStats/NavbarStats.stories";
 
 export default {
     title: "DesktopNavbar",
@@ -15,5 +16,11 @@ Navbar.args = {
     welcomeMessage: "Welcome to",
     welcomeName: "Beau Soleil",
     image: "/home.jpg",
+    stats: (
+        <a>
+            <Buffer {...Buffer.args} />
+            <Tariff {...Tariff.args} />
+        </a>
+    ),
     menu: <Menu {...Menu.args} />
 };

@@ -13,12 +13,13 @@ export const Buffer = Template.bind({});
   
 Buffer.args = {
     stats: "£4.50",
-    text: "Cost Buffer (Daily)"
+    text1: "Cost Buffer (Daily)"
 };
 
 export const Tariff = Template.bind({});
   
 Tariff.args = {
     stats: "23p",
-    text: "Current Tariff (per kWh)"
+    text1: "Current Tariff",
+    text2: "(per kWh)",
 };
