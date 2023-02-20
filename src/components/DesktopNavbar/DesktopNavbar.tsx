@@ -13,9 +13,9 @@ interface DesktopNavbarProps {
 export default function DesktopNavbar(props: DesktopNavbarProps) {
     const {welcomeMessage, welcomeName, image, stats, menu} = props;
     return (
-        <div className="w-[260px] h-min-screen m-4 rounded-[20px] shadow-[0_4px_100px_rgba(0,0,0,0.1)] grid grid-cols-1 ">
+        <div className="w-[260px] h-min-screen m-4 rounded-[20px] shadow-[0_4px_100px_rgba(0,0,0,0.1)] grid grid-cols-1 py-9">
             <Image
-                className="m-auto pt-8 pb-8"
+                className="m-auto pb-12"
                 src="/tmp-title.PNG"
                 alt="Profile Image"
                 width={120}

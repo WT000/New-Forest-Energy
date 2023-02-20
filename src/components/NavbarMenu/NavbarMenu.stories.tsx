@@ -1,6 +1,6 @@
 import {ComponentMeta, ComponentStory} from "@storybook/react";
 import NavbarMenu from "./NavbarMenu";
-import { AllHomes, Dashboard, NewReading, AddBooking, Instructions, SignOut } from "../NavbarMenuItem/NavbarMenuItem.stories";
+import { AllHomes, Dashboard, NewReading, AddBooking, Instructions, SignOut, NewHome } from "../NavbarMenuItem/NavbarMenuItem.stories";
 
 export default {
     title: "NavbarMenu",
@@ -9,9 +9,9 @@ export default {
   
 const Template: ComponentStory<typeof NavbarMenu> = (args) => <NavbarMenu {...args} />;
   
-export const Menu = Template.bind({});
+export const HomeMenu = Template.bind({});
 
-Menu.args = {
+HomeMenu.args = {
     menuItems: (
         <div>
             <AllHomes {...AllHomes.args} />
@@ -19,6 +19,17 @@ Menu.args = {
             <NewReading {...NewReading.args} />
             <AddBooking {...AddBooking.args} />
             <Instructions {...Instructions.args} />
+            <SignOut {...SignOut.args} />
+        </div> 
+    )
+};
+
+export const HomesMenu = Template.bind({});
+
+HomesMenu.args = {
+    menuItems: (
+        <div>
+            <NewHome {...NewHome.args} />
             <SignOut {...SignOut.args} />
         </div> 
     )
