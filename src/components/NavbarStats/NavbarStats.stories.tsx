@@ -23,3 +23,26 @@ Tariff.args = {
     text1: "Current Tariff",
     text2: "(per kWh)",
 };
+
+export const Homes = Template.bind({});
+  
+Homes.args = {
+    stats: "47",
+    text1: "Homes",
+};
+
+export const Bookings3mo = Template.bind({});
+  
+Bookings3mo.args = {
+    stats: "21",
+    text1: "Bookings",
+    text2: "(Last 3 months)",
+};
+
+export const Bookings12mo = Template.bind({});
+  
+Bookings12mo.args = {
+    stats: "124",
+    text1: "Bookings",
+    text2: "(Last 12 months)",
+};

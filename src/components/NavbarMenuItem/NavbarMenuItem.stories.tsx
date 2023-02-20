@@ -1,6 +1,6 @@
 import {ComponentMeta, ComponentStory} from "@storybook/react";
 import NavbarMenuItem from "./NavbarMenuItem";
-import {IoHome, IoPieChart, IoFlash, IoCalendar, IoList, IoLogOut} from "react-icons/io5";
+import {IoHome, IoPieChart, IoFlash, IoCalendar, IoList, IoLogOut, IoAdd} from "react-icons/io5";
 
 export default {
     title: "NavbarMenuItem",
@@ -55,4 +55,12 @@ SignOut.args = {
     icon: <IoLogOut />,
     text: "Sign Out",
     onClick: () => console.log("SignOut")
+};
+
+export const NewHome = Template.bind({});
+  
+NewHome.args = {
+    icon: <IoAdd />,
+    text: "New Home",
+    onClick: () => console.log("NewHome")
 };
