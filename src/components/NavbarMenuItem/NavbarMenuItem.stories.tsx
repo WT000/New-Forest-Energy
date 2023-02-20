@@ -1,6 +1,6 @@
 import {ComponentMeta, ComponentStory} from "@storybook/react";
 import NavbarMenuItem from "./NavbarMenuItem";
-import {IoIosHome, IoIosPie, IoIosFlash, IoIosCalendar, IoIosList, IoIosLogOut} from "react-icons/io";
+import {IoHome, IoPieChart, IoFlash, IoCalendar, IoList, IoLogOut} from "react-icons/io5";
 
 export default {
     title: "NavbarMenuItem",
@@ -12,7 +12,7 @@ const Template: ComponentStory<typeof NavbarMenuItem> = (args) => <NavbarMenuIte
 export const AllHomes = Template.bind({});
   
 AllHomes.args = {
-    icon: <IoIosHome />,
+    icon: <IoHome />,
     text: "All Homes",
     onClick: () => console.log("AllHomes")
 };
@@ -20,7 +20,7 @@ AllHomes.args = {
 export const Dashboard = Template.bind({});
   
 Dashboard.args = {
-    icon: <IoIosPie />,
+    icon: <IoPieChart />,
     text: "Dashboard",
     onClick: () => console.log("Dashboard")
 };
@@ -28,7 +28,7 @@ Dashboard.args = {
 export const NewReading = Template.bind({});
   
 NewReading.args = {
-    icon: <IoIosFlash />,
+    icon: <IoFlash />,
     text: "New Reading",
     onClick: () => console.log("NewReading")
 };
@@ -36,7 +36,7 @@ NewReading.args = {
 export const AddBooking = Template.bind({});
   
 AddBooking.args = {
-    icon: <IoIosCalendar />,
+    icon: <IoCalendar />,
     text: "Add Booking",
     onClick: () => console.log("AddBooking")
 };
@@ -44,7 +44,7 @@ AddBooking.args = {
 export const Instructions = Template.bind({});
   
 Instructions.args = {
-    icon: <IoIosList />,
+    icon: <IoList />,
     text: "Instructions",
     onClick: () => console.log("Instructions")
 };
@@ -52,7 +52,7 @@ Instructions.args = {
 export const SignOut = Template.bind({});
   
 SignOut.args = {
-    icon: <IoIosLogOut />,
+    icon: <IoLogOut />,
     text: "Sign Out",
     onClick: () => console.log("SignOut")
 };
