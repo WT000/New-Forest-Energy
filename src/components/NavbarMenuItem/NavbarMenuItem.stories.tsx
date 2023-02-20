@@ -1,17 +1,26 @@
 import {ComponentMeta, ComponentStory} from "@storybook/react";
 import NavbarMenuItem from "./NavbarMenuItem";
-import {FaHome} from "react-icons/fa";
+import {IoIosHome, IoIosPie} from "react-icons/io";
 
 export default {
     title: "NavbarMenuItem",
     component: NavbarMenuItem,
-  } as ComponentMeta<typeof NavbarMenuItem>;
+} as ComponentMeta<typeof NavbarMenuItem>;
   
-  const Template: ComponentStory<typeof NavbarMenuItem> = (args) => <NavbarMenuItem {...args} />;
+const Template: ComponentStory<typeof NavbarMenuItem> = (args) => <NavbarMenuItem {...args} />;
   
-  export const MenuItem = Template.bind({});
+export const AllHomes = Template.bind({});
   
-  MenuItem.args = {
-    icon: FaHome,
-    text: "All Homes"
-  };
+AllHomes.args = {
+    icon: <IoIosHome />,
+    text: "All Homes",
+    onClick: console.log("all homes")
+};
+
+export const Dashboard = Template.bind({});
+  
+Dashboard.args = {
+    icon: <IoIosPie />,
+    text: "Dashboard",
+    onClick: console.log("dashboard")
+};
