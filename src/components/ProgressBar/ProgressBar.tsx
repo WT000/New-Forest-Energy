@@ -8,9 +8,14 @@ interface ProgressBarProps {
 import './ProgressBar.css';
 
 
+
 export default function NavbarStats(props: ProgressBarProps) {
      const {text1, text2, smallnum, largenum} = props
     let textFormat = "text-[#77767A] hover:text-[#242425]"
+
+    
+    let onepercent = largenum / 100
+    let prcnt = smallnum / onepercent
 
 
 
