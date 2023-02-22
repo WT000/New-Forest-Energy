@@ -19,3 +19,12 @@ Bar1.args = {
 
 };
 
+export const Bar2 = Template.bind({});
+
+Bar2.args = {
+    smallnum: 3.43,
+    largenum: 13.36,
+    text1: "Buffer",
+    text2: "Average per Day"
+
+};
