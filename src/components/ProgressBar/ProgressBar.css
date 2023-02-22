@@ -1,0 +1,11 @@
+#bar {
+   width: 100%;
+    background-color: #ddd; 
+   border-radius: 25px;
+   } 
+
+   #progressBar {
+   height: 15px;
+   background-color: #000000;
+   border-radius: 25px;
+   }
