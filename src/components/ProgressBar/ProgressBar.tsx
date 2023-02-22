@@ -33,6 +33,9 @@ export default function NavbarStats(props: ProgressBarProps) {
 
                     <div className="grid grid-cols-3 justify-center cursor-pointer mt-8 mb-8 w-full">
 
+                        <div className="text-2xl col-span-2 pr-4">{text1} / {text2}</div> 
+                        <div className="text-2xl col-span-1">£{smallnum} / £{largenum}</div>
+
                 
                     </div>
 
