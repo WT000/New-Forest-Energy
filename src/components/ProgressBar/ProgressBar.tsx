@@ -6,6 +6,7 @@ interface ProgressBarProps {
 }
 
 import './ProgressBar.css';
+import CSS from 'csstype';
 
 
 
@@ -16,6 +17,10 @@ export default function NavbarStats(props: ProgressBarProps) {
 
     let onepercent = largenum / 100
     let prcnt = smallnum / onepercent
+
+    const progressStyle: CSS.Properties = {
+        width: `${prcnt}%`
+      };
 
 
 
@@ -35,7 +40,7 @@ export default function NavbarStats(props: ProgressBarProps) {
 
                 <div id="bar">
                 
-                <div id="progressBar"></div>
+                <div id="progressBar" style={progressStyle}></div>
 
             </div>
             </div>
