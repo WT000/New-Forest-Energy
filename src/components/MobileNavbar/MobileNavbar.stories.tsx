@@ -16,8 +16,20 @@ HomeOwnerAgency.args = {
 
 };
 
+HomeOwnerAgency.parameters = {
+    viewport: {
+        defaultViewport: "iphone6"
+    }
+}
+
 export const HomesAgency = Template.bind({});
 
 HomesAgency.args = {
     menu: <HomesMenu {...HomesMenu.args} />
 };
+
+HomesAgency.parameters = {
+    viewport: {
+        defaultViewport: "iphone6"
+    }
+}
