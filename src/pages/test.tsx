@@ -8,6 +8,20 @@ import {IoHome, IoPieChart, IoFlash, IoCalendar, IoList, IoLogOut, IoAdd} from "
 
 
 export default function test() {
+    const navItems = [
+        <NavbarMenuItem
+                        icon={<IoHome />}
+                        text="All Homes"
+                        onClick={() => console.log("AllHomes")}
+                        activePage={false} 
+                    />,
+        <NavbarMenuItem
+                    icon={<IoPieChart />}
+                    text="Dashboard"
+                    onClick={() => console.log("Dashboard")}
+                    activePage={true} 
+        />
+    ]
     return (
         <div>
             <DesktopNavbar 
@@ -15,18 +29,7 @@ export default function test() {
             image="/stories/rachel.jpeg"
             menu={
                 <NavbarMenu>
-                    <NavbarMenuItem
-                        icon={<IoHome />}
-                        text="All Homes"
-                        onClick={() => console.log("AllHomes")}
-                        activePage={false} 
-                    />
-                    <NavbarMenuItem
-                        icon={<IoPieChart />}
-                        text="Dashboard"
-                        onClick={() => console.log("Dashboard")}
-                        activePage={true} 
-                    />
+                    {navItems}
                 </NavbarMenu>  
                 }
             >
@@ -44,19 +47,8 @@ export default function test() {
             <MobileNavbar 
                 menu={
                     <NavbarMenu>
-                        <NavbarMenuItem
-                            icon={<IoHome />}
-                            text="All Homes"
-                            onClick={() => console.log("AllHomes")}
-                            activePage={false} 
-                        />
-                        <NavbarMenuItem
-                            icon={<IoPieChart />}
-                            text="Dashboard"
-                            onClick={() => console.log("Dashboard")}
-                            activePage={true} 
-                        />
-                        </NavbarMenu>
+                        {navItems}
+                    </NavbarMenu>
                 } 
             />
         

@@ -16,7 +16,7 @@ export default function NavbarStats(props: NavbarStatsProps) {
     }
 
     return (
-        <div className="mx-auto text-center mt-10 mb-12">
+        <div className="mx-auto text-center">
             <p className="font-bold text-3xl">{stat}</p>
             <p className="text-sm text-[#77767A]">{line1}<br/>{line2}</p>
         </div>
