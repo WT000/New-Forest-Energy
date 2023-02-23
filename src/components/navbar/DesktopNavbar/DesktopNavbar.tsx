@@ -24,7 +24,7 @@ export default function DesktopNavbar(props: DesktopNavbarProps) {
             <div>
                 <Image
                     className="m-auto pb-12"
-                    src="/tmp-title.PNG"
+                    src="/logo.png"
                     alt="Logo"
                     width={120}
                     height={31}
@@ -39,19 +39,18 @@ export default function DesktopNavbar(props: DesktopNavbarProps) {
                             width={193}
                             height={108}
                             unoptimized={true}
-                            
                         />
                     </div>
                 </div>
                 <div className="text-center">
                     <span className="text-sm text-[#77767A]">{welcome},</span><br/>
-                    <span className="font-bold text-lg">{name}</span>
+                    <span className="font-bold text-lg text-[#051821]">{name}</span>
                 </div>
             </div>
             <div>
                 {children}
             </div>
-            <div className="m-auto ">
+            <div className="m-auto">
                 <div className="h-[0px] w-[173px] mx-auto border-b-2 border-[#1D1A221A]"></div>
                 {menu}
             </div>
