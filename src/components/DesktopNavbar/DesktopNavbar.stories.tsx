@@ -1,6 +1,6 @@
 import {ComponentMeta, ComponentStory} from "@storybook/react";
 import DesktopNavbar from "./DesktopNavbar";
-import { HomeMenu, HomesMenu } from "../NavbarMenu/NavbarMenu.stories";
+import { DashboardMenu, HomesMenu } from "../NavbarMenu/NavbarMenu.stories";
 import { Buffer, Tariff, Homes, Bookings3mo, Bookings12mo } from "../NavbarStats/NavbarStats.stories";
 
 export default {
@@ -21,7 +21,7 @@ HomeOwnerAgency.args = {
             <Tariff {...Tariff.args} />
         </a>
     ),
-    menu: <HomeMenu {...HomeMenu.args} />
+    menu: <DashboardMenu {...DashboardMenu.args} />
 };
 
 export const HomesAgency = Template.bind({});

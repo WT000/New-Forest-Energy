@@ -9,9 +9,9 @@ export default {
   
 const Template: ComponentStory<typeof NavbarMenu> = (args) => <NavbarMenu {...args} />;
   
-export const HomeMenu = Template.bind({});
+export const DashboardMenu = Template.bind({});
 
-HomeMenu.args = {
+DashboardMenu.args = {
     children: (
         <div>
             <AllHomes {...AllHomes.args} />
