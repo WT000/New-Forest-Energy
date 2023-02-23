@@ -30,8 +30,8 @@ export default function DesktopNavbar(props: DesktopNavbarProps) {
                     height={31}
                     unoptimized={true}
                 />
-                <div className="m-auto pb-4">
-                    <div className="flex items-center justify-center pb-2">
+                <div className="m-auto">
+                    <div className="flex items-center justify-center pb-1">
                         <Image
                             className="rounded-full h-24 w-24"
                             src={image}
