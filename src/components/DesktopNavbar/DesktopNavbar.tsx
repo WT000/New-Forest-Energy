@@ -48,7 +48,7 @@ export default function DesktopNavbar(props: DesktopNavbarProps) {
                     <span className="font-bold text-lg">{name}</span>
                 </div>
             </div>
-            <div className="flex flex-col gap-20">
+            <div>
                 {children}
             </div>
             <div className="m-auto ">
