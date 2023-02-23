@@ -1,57 +1,49 @@
 interface ProgressBarProps {
-    text1: string;
-    text2: string;
-    smallnum: number;
-    largenum: number;
+  text1: string;
+  text2: string;
+  num1: number;
+  num2: number;
 }
 
-import './ProgressBar.css';
-import CSS from 'csstype';
+import "./ProgressBar.css";
+import CSS from "csstype";
 
+export default function ProgressBar(props: ProgressBarProps) {
+  const { text1, text2, num1, num2 } = props;
 
+  var largenum = 0.0;
+  var smallnum = 0.0;
 
-export default function NavbarStats(props: ProgressBarProps) {
-     const {text1, text2, smallnum, largenum} = props
-    let textFormat = "text-[#77767A] hover:text-[#242425]"
+  if (num1 > num2) {
+    let onepercent = num1 / 100;
+    var prnct = num2 / onepercent;
+    smallnum = num2;
+    largenum = num1;
+  } else if (num1 < num2) {
+    let onepercent = num2 / 100;
+    var prnct = num1 / onepercent;
+    smallnum = num1;
+    largenum = num2;
+  }
 
+  const progressStyle: CSS.Properties = {
+    width: `${prnct}%`,
+  };
 
-    let onepercent = largenum / 100
-    let prcnt = smallnum / onepercent
-
-    const progressStyle: CSS.Properties = {
-        width: `${prcnt}%`
-      };
-
-
-
-
-    return (
-
-        <div className={`${textFormat} grid grid-cols-3 justify-center cursor-pointer mt-8 mb-8 w-full`}>
-
-                <div>
-
-                    <div className="grid grid-cols-3 justify-center cursor-pointer mt-8 mb-8 w-full">
-
-                        <div className="text-2xl col-span-2 pr-4">{text1} / {text2}</div> 
-                        <div className="text-2xl col-span-1">£{smallnum} / £{largenum}</div>
-
-                
-                    </div>
-
-
-
-                <div id="bar">
-                
-                <div id="progressBar" style={progressStyle}></div>
-
-            </div>
-            </div>
-
+  return (
+    <div className=" ">
+      <div className="flex justify-content-between mb-6 ">
+        <div className="text-2xl pr-20 mr-20 font-weight-400">
+          {text1} / {text2}
         </div>
+        <div className="text-2xl pl-20 ml-20 font-weight-400 ">
+          £{smallnum} / £{largenum}
+        </div>
+      </div>
 
-
-            )
-
+      <div id="bar">
+        <div id="progressBar" style={progressStyle}></div>
+      </div>
+    </div>
+  );
 }
-
