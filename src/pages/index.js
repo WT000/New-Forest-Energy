@@ -1,7 +1,7 @@
 import Head from 'next/head'
 import Image from 'next/image'
 import { Inter } from '@next/font/google'
-import styles from '@/styles/Home.module.css'
+import styles from "../styles/Home.module.css"
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -16,6 +16,7 @@ export default function Home() {
       </Head>
       <main className={styles.main}>
         <div className={styles.description}>
+          <a href="./dbtest"><strong>Click here for db testing.</strong></a>
           <p>
             Get started by editing&nbsp;
             <code className={styles.code}>src/pages/index.js</code>
