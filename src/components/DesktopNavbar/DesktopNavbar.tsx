@@ -27,7 +27,7 @@ export default function DesktopNavbar(props: DesktopNavbarProps) {
             <Image
                 className="m-auto pb-12"
                 src="/tmp-title.PNG"
-                alt="Profile Image"
+                alt="Logo"
                 width={120}
                 height={31}
                 unoptimized={true}
@@ -37,7 +37,7 @@ export default function DesktopNavbar(props: DesktopNavbarProps) {
                     <Image
                         className="rounded-full h-24 w-24"
                         src={image}
-                        alt="Profile Image"
+                        alt="Profile Picture"
                         width={193}
                         height={108}
                         unoptimized={true}
