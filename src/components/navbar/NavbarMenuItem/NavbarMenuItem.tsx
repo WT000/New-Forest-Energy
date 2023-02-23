@@ -16,7 +16,7 @@ export default function NavbarMenuItem(props: NavbarMenuItemProps) {
 
     return (
         <div 
-            className={`${textFormat} ${desktop} hover:text-[#051821] cursor-pointer `}
+            className={`${textFormat} ${desktop} hover:text-[#051821] cursor-pointer transition ease-in-out hover:scale-105`}
             onClick={onClick} 
         >
             <div className="md:col-span-1 md:m-auto md:pr-4">{icon}</div>
