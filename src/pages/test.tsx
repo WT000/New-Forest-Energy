@@ -7,29 +7,34 @@ import {IoHome, IoPieChart, IoFlash, IoCalendar, IoList, IoLogOut, IoAdd} from "
 
 export default function test() {
     return (
-        <DesktopNavbar 
-            text="Welcome back, Rachel"
-            image="/stories/rachel.jpeg"
-            menu={
-                <NavbarMenu>
-                    <NavbarMenuItem
-                        icon={<IoHome />}
-                        text="All Homes"
-                        onClick={() => console.log("AllHomes")}
-                        activePage={false} 
-                    />
-                    <NavbarMenuItem
-                        icon={<IoPieChart />}
-                        text="Dashboard"
-                        onClick={() => console.log("Dashboard")}
-                        activePage={true} 
-                    />
-                </NavbarMenu>  
-            }
-        >
-            <NavbarStats stat="30" text="some stats (testing)" />
-            <NavbarStats stat="£4.50" text="cost"/>
-            <NavbarStats stat="60" text="some more stats (that are cool)"/>
-        </DesktopNavbar>
+        <div>
+            <div className= "invisible md:visible">
+                <DesktopNavbar 
+                text="Welcome back, Rachel"
+                image="/stories/rachel.jpeg"
+                menu={
+                    <NavbarMenu>
+                        <NavbarMenuItem
+                            icon={<IoHome />}
+                            text="All Homes"
+                            onClick={() => console.log("AllHomes")}
+                            activePage={false} 
+                        />
+                        <NavbarMenuItem
+                            icon={<IoPieChart />}
+                            text="Dashboard"
+                            onClick={() => console.log("Dashboard")}
+                            activePage={true} 
+                        />
+                    </NavbarMenu>  
+                    }
+                >
+                    <NavbarStats stat="30" text="some stats (testing)" />
+                    <NavbarStats stat="£4.50" text="cost"/>
+                    <NavbarStats stat="60" text="some more stats (that are cool)"/>
+                </DesktopNavbar>
+            </div>
+        
+    </div>
     )
 }
