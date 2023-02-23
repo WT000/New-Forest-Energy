@@ -17,6 +17,12 @@ HomeOwnerAgency.args = {
     currentPage: "Dashboard",
 };
 
+HomeOwnerAgency.parameters = { 
+    viewport: {
+        defaultViewport: "iphone6"
+    }
+};
+
 export const HomesAgency = Template.bind({});
 
 HomesAgency.args = {
@@ -24,4 +30,9 @@ HomesAgency.args = {
     image: "/stories/rachel.jpeg",
     currentPage: "Homes",
 };
-  
+
+HomesAgency.parameters = { 
+    viewport: {
+        defaultViewport: "iphone6"
+    }
+};
