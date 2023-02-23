@@ -16,7 +16,7 @@ HomeOwnerAgency.args = {
     welcomeMessage: "Welcome to",
     welcomeName: "Beau Soleil",
     image: "/stories/home.jpg",
-    stats: (
+    children: (
         <a>
             <Buffer {...Buffer.args} />
             <Tariff {...Tariff.args} />
@@ -31,7 +31,7 @@ HomesAgency.args = {
     welcomeMessage: "Welcome back",
     welcomeName: "Rachel",
     image: "/stories/rachel.jpeg",
-    stats: (
+    children: (
         <a>
             <Homes {...Homes.args} />
             <Bookings3mo {...Bookings3mo.args} />

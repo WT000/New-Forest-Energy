@@ -12,37 +12,35 @@ const Template: ComponentStory<typeof NavbarStats> = (args) => <NavbarStats {...
 export const Buffer = Template.bind({});
   
 Buffer.args = {
-    stats: "£4.50",
-    text1: "Cost Buffer (Daily)"
+    stat: "£4.50",
+    text: "Cost Buffer (Daily)"
 };
 
 export const Tariff = Template.bind({});
   
 Tariff.args = {
-    stats: "23p",
-    text1: "Current Tariff",
-    text2: "(per kWh)",
+    stat: "23p",
+    text: "Current Tariff (per kWh)",
 };
 
 export const Homes = Template.bind({});
   
 Homes.args = {
-    stats: "47",
-    text1: "Homes",
+    stat: "47",
+    text: "Homes",
 };
 
 export const Bookings3mo = Template.bind({});
   
 Bookings3mo.args = {
-    stats: "21",
-    text1: "Bookings",
-    text2: "(Last 3 months)",
+    stat: "21",
+    text: "Bookings (Last 3 months)",
 };
 
 export const Bookings12mo = Template.bind({});
   
 Bookings12mo.args = {
-    stats: "124",
-    text1: "Bookings",
-    text2: "(Last 12 months)",
+    stat: "124",
+    text: "Bookings (Last 12 months)",
+
 };

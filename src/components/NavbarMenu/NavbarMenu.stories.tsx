@@ -12,7 +12,7 @@ const Template: ComponentStory<typeof NavbarMenu> = (args) => <NavbarMenu {...ar
 export const HomeMenu = Template.bind({});
 
 HomeMenu.args = {
-    menuItems: (
+    children: (
         <div>
             <AllHomes {...AllHomes.args} />
             <Dashboard {...Dashboard.args} />
@@ -27,7 +27,7 @@ HomeMenu.args = {
 export const HomesMenu = Template.bind({});
 
 HomesMenu.args = {
-    menuItems: (
+    children: (
         <div>
             <NewHome {...NewHome.args} />
             <SignOut {...SignOut.args} />

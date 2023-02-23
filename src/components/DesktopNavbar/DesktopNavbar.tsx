@@ -6,14 +6,15 @@ interface DesktopNavbarProps {
     welcomeMessage: string;
     welcomeName: string;
     image: string;
-    stats: React.ReactNode;
     menu: React.ReactNode;
+    children: React.ReactNode;
 }
 
 export default function DesktopNavbar(props: DesktopNavbarProps) {
-    const {welcomeMessage, welcomeName, image, stats, menu} = props;
+    const {welcomeMessage, welcomeName, image, menu, children} = props;
     return (
-        <div className="w-[260px] h-min-screen m-4 rounded-[20px] shadow-[0_4px_100px_rgba(0,0,0,0.1)] grid grid-cols-1 py-9">
+        <div className="w-[260px] min-h-full m-4 rounded-[20px] shadow-[0_4px_100px_rgba(0,0,0,0.1)] grid grid-cols-1 py-9">
+            <div>
             <Image
                 className="m-auto pb-12"
                 src="/tmp-title.PNG"
@@ -34,13 +35,15 @@ export default function DesktopNavbar(props: DesktopNavbarProps) {
                         
                     />
                 </div>
+            </div>
+            
                 <div className="text-center">
                     <span className="text-sm text-[#77767A]">{welcomeMessage},</span><br/>
                     <span className="font-bold text-lg">{welcomeName}</span>
                 </div>
             </div>
             <div>
-                {stats}
+                {children}
             </div>
                 
             

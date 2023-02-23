@@ -1,13 +1,13 @@
 interface NavbarMenuProps {
-    menuItems: React.ReactNode;
+    children: React.ReactNode;
 }
 
 export default function NavbarMenu(props: NavbarMenuProps) {
-    const {menuItems} = props;
+    const {children} = props;
 
     return (
-        <div className="flex">
-            {menuItems}
+        <div className="">
+            {children}
         </div>
     )
 
