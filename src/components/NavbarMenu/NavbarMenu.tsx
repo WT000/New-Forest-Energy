@@ -5,8 +5,8 @@ interface NavbarMenuProps {
 export default function NavbarMenu(props: NavbarMenuProps) {
     const {children} = props;
 
-    const mobile = "flex justify-between w-full m-auto mx-6"
-    const desktop = "md:inline-block md:mx-0"
+    const mobile = "flex place-content-evenly w-full m-auto"
+    const desktop = "md:inline-block"
 
     return (
         <div className={`${mobile} ${desktop}`}>

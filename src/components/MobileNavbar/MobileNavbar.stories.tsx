@@ -1,8 +1,6 @@
 import {ComponentMeta, ComponentStory} from "@storybook/react";
 import MobileNavbar from "./MobileNavbar";
-import { DashboardMenu } from "../NavbarMenu/NavbarMenu.stories";
-import { AllHomes, Dashboard, NewReading, AddBooking, Instructions, SignOut, NewHome } from "../NavbarMenuItem/NavbarMenuItem.stories";
-
+import { DashboardMenu, HomesMenu } from "../NavbarMenu/NavbarMenu.stories";
 
 export default {
     title: "MobileNavbar",
@@ -16,4 +14,10 @@ export const HomeOwnerAgency = Template.bind({});
 HomeOwnerAgency.args = {
     menu: <DashboardMenu {...DashboardMenu.args} />
 
+};
+
+export const HomesAgency = Template.bind({});
+
+HomesAgency.args = {
+    menu: <HomesMenu {...HomesMenu.args} />
 };
