@@ -1,9 +1,9 @@
-import NavbarMenu from "../components/NavbarMenu/NavbarMenu";
-import NavbarMenuItem from "../components/NavbarMenuItem/NavbarMenuItem";
-import NavbarStats from "../components/NavbarStats/NavbarStats";
-import DesktopNavbar from "../components/DesktopNavbar/DesktopNavbar";
-import MobileNavbar from "../components/MobileNavbar/MobileNavbar";
-import MobileHeader from "../components/MobileHeader/MobileHeader";
+import NavbarMenu from "../components/navbar/NavbarMenu/NavbarMenu";
+import NavbarMenuItem from "../components/navbar/NavbarMenuItem/NavbarMenuItem";
+import NavbarStats from "../components/navbar/NavbarStats/NavbarStats";
+import DesktopNavbar from "../components/navbar/DesktopNavbar/DesktopNavbar";
+import MobileNavbar from "../components/navbar/MobileNavbar/MobileNavbar";
+import MobileHeader from "../components/navbar/MobileHeader/MobileHeader";
 import {IoHome, IoPieChart, IoFlash, IoCalendar, IoList, IoLogOut, IoAdd} from "react-icons/io5";
 
 
