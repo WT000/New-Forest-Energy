@@ -18,7 +18,7 @@ export default function NavbarMenuItem(props: NavbarMenuItemProps) {
             onClick={onClick} 
         >
             <div className="col-span-1 m-auto pr-4">{icon}</div>
-            <div className="col-span-2">{text}</div>
+            <div className="hidden md:block col-span-2">{text}</div>
         </div>
     )
 

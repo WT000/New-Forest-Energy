@@ -6,6 +6,7 @@ import { AllHomes, Dashboard, NewReading, AddBooking, Instructions, SignOut, New
 export default {
     title: "MobileNavbar",
     component: MobileNavbar,
+    
 } as ComponentMeta<typeof MobileNavbar>;
   
 const Template: ComponentStory<typeof MobileNavbar> = (args) => <MobileNavbar {...args} />;
