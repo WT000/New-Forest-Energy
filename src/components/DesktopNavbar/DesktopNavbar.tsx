@@ -3,15 +3,24 @@ import NavbarMenu from "../NavbarMenu/NavbarMenu";
 
 
 interface DesktopNavbarProps {
-    welcomeMessage: string;
-    welcomeName: string;
+    text: string;
     image: string;
     menu: React.ReactNode;
     children: React.ReactNode;
 }
 
 export default function DesktopNavbar(props: DesktopNavbarProps) {
-    const {welcomeMessage, welcomeName, image, menu, children} = props;
+    const {text, image, menu, children} = props;
+
+    let welcome = text
+    let name = ""
+
+    if(text.includes(",")){
+        const split = text.split(",");
+        welcome = split[0];
+        name = split[1]
+    }
+
     return (
         <div className="w-[260px] min-h-full m-4 rounded-[20px] shadow-[0_4px_100px_rgba(0,0,0,0.1)] grid grid-cols-1 py-9">
             <div>
@@ -38,8 +47,8 @@ export default function DesktopNavbar(props: DesktopNavbarProps) {
             </div>
             
                 <div className="text-center">
-                    <span className="text-sm text-[#77767A]">{welcomeMessage},</span><br/>
-                    <span className="font-bold text-lg">{welcomeName}</span>
+                    <span className="text-sm text-[#77767A]">{welcome},</span><br/>
+                    <span className="font-bold text-lg">{name}</span>
                 </div>
             </div>
             <div>

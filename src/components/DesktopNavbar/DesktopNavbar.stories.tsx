@@ -13,8 +13,7 @@ const Template: ComponentStory<typeof DesktopNavbar> = (args) => <DesktopNavbar 
 export const HomeOwnerAgency = Template.bind({});
 
 HomeOwnerAgency.args = {
-    welcomeMessage: "Welcome to",
-    welcomeName: "Beau Soleil",
+    text: "Welcome to, Beau Soleil",
     image: "/stories/home.jpg",
     children: (
         <a>
@@ -28,8 +27,7 @@ HomeOwnerAgency.args = {
 export const HomesAgency = Template.bind({});
 
 HomesAgency.args = {
-    welcomeMessage: "Welcome back",
-    welcomeName: "Rachel",
+    text: "Welcome back, Rachel",
     image: "/stories/rachel.jpeg",
     children: (
         <a>

@@ -8,8 +8,7 @@ import {IoHome, IoPieChart, IoFlash, IoCalendar, IoList, IoLogOut, IoAdd} from "
 export default function test() {
     return (
         <DesktopNavbar 
-            welcomeMessage="Welcome back"
-            welcomeName="Rachel"
+            text="Welcome back, Rachel"
             image="/stories/rachel.jpeg"
             menu={
                 <NavbarMenu>
