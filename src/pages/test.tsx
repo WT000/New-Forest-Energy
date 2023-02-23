@@ -3,6 +3,7 @@ import NavbarMenuItem from "../components/NavbarMenuItem/NavbarMenuItem";
 import NavbarStats from "../components/NavbarStats/NavbarStats";
 import DesktopNavbar from "../components/DesktopNavbar/DesktopNavbar";
 import MobileNavbar from "../components/MobileNavbar/MobileNavbar";
+import MobileHeader from "../components/MobileHeader/MobileHeader";
 import {IoHome, IoPieChart, IoFlash, IoCalendar, IoList, IoLogOut, IoAdd} from "react-icons/io5";
 
 
@@ -33,6 +34,12 @@ export default function test() {
                 <NavbarStats stat="£4.50" text="cost"/>
                 <NavbarStats stat="60" text="some more stats (that are cool)"/>
             </DesktopNavbar>
+            
+            <MobileHeader 
+                text="Welcome back, Rachel"
+                image="/stories/rachel.jpeg"
+                currentPage="Homes"
+            />
         
             <MobileNavbar 
                 menu={
