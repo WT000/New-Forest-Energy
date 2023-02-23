@@ -2,9 +2,15 @@ import {ComponentMeta, ComponentStory} from "@storybook/react";
 import MobileHeader from "./MobileHeader";
 
 
+
 export default {
     title: "MobileHeader",
     component: MobileHeader,
+    parameters: {
+        viewport: {
+          defaultViewport: 'iphone5',
+        },
+      },
 } as ComponentMeta<typeof MobileHeader>;
   
 const Template: ComponentStory<typeof MobileHeader> = (args) => <MobileHeader {...args} />;

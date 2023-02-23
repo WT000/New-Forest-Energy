@@ -5,6 +5,11 @@ import { DashboardMenu, HomesMenu } from "../NavbarMenu/NavbarMenu.stories";
 export default {
     title: "MobileNavbar",
     component: MobileNavbar,
+    parameters: {
+        viewport: {
+          defaultViewport: 'iphone5',
+        },
+      },
 } as ComponentMeta<typeof MobileNavbar>;
   
 const Template: ComponentStory<typeof MobileNavbar> = (args) => <MobileNavbar {...args} />;
@@ -16,20 +21,9 @@ HomeOwnerAgency.args = {
 
 };
 
-HomeOwnerAgency.parameters = {
-    viewport: {
-        defaultViewport: "iphone6"
-    }
-}
-
 export const HomesAgency = Template.bind({});
 
 HomesAgency.args = {
     menu: <HomesMenu {...HomesMenu.args} />
 };
 
-HomesAgency.parameters = {
-    viewport: {
-        defaultViewport: "iphone6"
-    }
-}
