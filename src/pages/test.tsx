@@ -36,20 +36,24 @@ export default function test() {
                 </DesktopNavbar>
             </div>
             <div className="md:hidden">
-                <MobileNavbar>
-                <NavbarMenuItem
-                            icon={<IoHome />}
-                            text="All Homes"
-                            onClick={() => console.log("AllHomes")}
-                            activePage={false} 
-                        />
-                        <NavbarMenuItem
-                            icon={<IoPieChart />}
-                            text="Dashboard"
-                            onClick={() => console.log("Dashboard")}
-                            activePage={true} 
-                        />
-                </MobileNavbar>
+                <MobileNavbar 
+                    menu={
+                        <NavbarMenu>
+                            <NavbarMenuItem
+                                icon={<IoHome />}
+                                text="All Homes"
+                                onClick={() => console.log("AllHomes")}
+                                activePage={false} 
+                            />
+                            <NavbarMenuItem
+                                icon={<IoPieChart />}
+                                text="Dashboard"
+                                onClick={() => console.log("Dashboard")}
+                                activePage={true} 
+                            />
+                            </NavbarMenu>
+                    } 
+                />
             </div>
         
     </div>

@@ -20,7 +20,7 @@ export default function DesktopNavbar(props: DesktopNavbarProps) {
     }
 
     return (
-        <div className="w-[260px] min-h-full m-4 rounded-[20px] shadow-[0_4px_100px_rgba(0,0,0,0.1)] grid grid-cols-1 py-9">
+        <div className="hidden md:grid w-[260px] min-h-full m-4 rounded-[20px] shadow-[0_4px_100px_rgba(0,0,0,0.1)] grid-cols-1 py-9">
             <div>
                 <Image
                     className="m-auto pb-12"
