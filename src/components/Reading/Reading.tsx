@@ -6,7 +6,7 @@ export interface ReadingComponentInterface {
     kwhValue: number,
     image: string,
     createdAt: Date,
-    onClick: () => void;
+    onClick: () => void,
 }
 
 export default function Reading(props: ReadingComponentInterface) {
