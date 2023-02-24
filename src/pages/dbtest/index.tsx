@@ -57,8 +57,6 @@ export default function Home() {
         updatedAt: new Date(),
     }
 
-    console.log(session);
-
     return (
         <>
             <Head>
