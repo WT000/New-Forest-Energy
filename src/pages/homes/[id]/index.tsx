@@ -4,6 +4,7 @@ import Home from "../../../db/models/Home";
 import Reading from "../../../db/models/Reading";
 import User from "../../../db/models/User";
 import mongoose from "mongoose";
+import ReadingContainer from "../../../components/ReadingContainer/ReadingContainer";
 
 export default function Homes(props) {
     // Feel free to do something like const {home} = props here
@@ -20,6 +21,8 @@ export default function Homes(props) {
             <div>
                 <p>Home name: {props.home.name}</p>
                 <p>Total readings: {readings.length}</p>
+                <p>Readings:</p>
+                <ReadingContainer readings={readings}/>
             </div>
         </>
     );
