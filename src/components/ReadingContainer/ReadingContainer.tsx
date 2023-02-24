@@ -54,7 +54,7 @@ export default function ReadingContainer(props: ReadingContainertInterface) {
         rowCount: readings.length,
         hasMore,
     });
-
+    
     return (
         <div>
             <div
@@ -71,9 +71,13 @@ export default function ReadingContainer(props: ReadingContainertInterface) {
                 {data.map((reading, index) => (
                     <Reading
                         key={index}
+                        //@ts-ignore
                         creator={reading.user?.name ? reading.user.name : "Guest"}
+                        //@ts-ignore
                         kwhValue={reading.value}
+                        //@ts-ignore
                         image={reading.image}
+                        //@ts-ignore
                         createdAt={new Date(reading.createdAt)}
                         onClick={() => {
                             console.log("click");
