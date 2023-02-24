@@ -59,14 +59,7 @@ export default function ReadingContainer(props: ReadingContainertInterface) {
         <div>
             <div
                 ref={ref}
-                className="List bg-white-100"
-                style={{
-                    height: "35vh",
-                    width: "60vw",
-                    overflowY: "auto",
-                    display: "flex",
-                    flexDirection: "column",
-                }}
+                className="List bg-white-100 h-[35vh] w-[60vw] overflow-y-auto flex flex-col"
             >
                 {data.map((reading, index) => (
                     <Reading
