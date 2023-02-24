@@ -59,9 +59,9 @@ export default function ReadingContainer(props: ReadingContainertInterface) {
         <div>
             <div
                 ref={ref}
-                className="List"
+                className="List bg-white-100"
                 style={{
-                    height: "44vh",
+                    height: "35vh",
                     width: "60vw",
                     overflowY: "auto",
                     display: "flex",

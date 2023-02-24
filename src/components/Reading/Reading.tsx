@@ -15,14 +15,15 @@ export default function Reading(props: ReadingComponentInterface) {
     return (
         <div className="flex gap-x-4 w-full my-2 py-2 cursor-pointer" onClick={onClick}>
             <div className="flex justify-center items-center">
+                {/* CHANGE TO CARD COMPONENT ONCE CREATED */}
                 <div className="flex justify-center items-center w-12 h-12 rounded-lg  bg-white shadow-[0_4px_10px_rgba(0,0,0,0.1)]">
                     <IoFlash className="w-7 h-7"/>
                 </div>
             </div>
 
             <div className="flex flex-col justify-center">
-                <p className="align-top font-semibold">{creator}</p>
-                <p className="text-sm text-[#77767A]">{createdAt.toLocaleDateString()} at {createdAt.toLocaleTimeString("en-US", {hour12: true})}</p>
+                <p className="align-top font-semibold text-black">{creator}</p>
+                <p className="text-sm text-black-500">{createdAt.toLocaleDateString()} at {createdAt.toLocaleTimeString("en-US", {hour12: true})}</p>
             </div>
 
             <div className="flex flex-col justify-center ml-auto">
