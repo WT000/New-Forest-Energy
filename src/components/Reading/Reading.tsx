@@ -25,7 +25,7 @@ export default function Reading(props: ReadingComponentInterface) {
                 <span className="inline-block w-44">
                     <p className="align-top font-semibold text-black truncate ...">{creator}</p>
                 </span>
-                <p className="text-sm text-black-500">{createdAt.toLocaleDateString()} at {createdAt.toLocaleTimeString("en-US", {hour12: true})}</p>
+                <p className="text-sm text-black-500">{createdAt.toLocaleDateString("en-GB")} at {createdAt.toLocaleTimeString("en-GB", {hour12: true})}</p>
             </div>
 
             <div className="flex flex-col justify-center ml-auto">
