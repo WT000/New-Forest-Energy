@@ -1,3 +1,5 @@
+const defaultTheme = require('tailwindcss/defaultTheme')
+
 /** @type {import('tailwindcss').Config} */
 module.exports = {
   content: [
@@ -13,6 +15,27 @@ module.exports = {
       "xs": "500px"
     },
     extend: {},
+  colors: {
+      'orange': '#F58800',
+      'yellow': '#F8BC24',
+      'green': {
+        400: '#266867',
+        500: '#1A4645',
+      },
+      'black': {
+        DEFAULT: '#051821',
+        500: '#77767A'
+      },
+      'white': {
+        DEFAULT: '#FFFFFF',
+        100: '#FAFAFA'
+      },
+    },
+    extend: {
+      fontFamily: {
+        sans: ['Roboto', ...defaultTheme.fontFamily.sans],
+      },
+    },
   },
   plugins: [],
 }
