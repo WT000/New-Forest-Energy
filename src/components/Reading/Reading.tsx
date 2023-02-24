@@ -28,7 +28,7 @@ export default function Reading(props: ReadingComponentInterface) {
 
             <div className="flex flex-col justify-center ml-auto">
                 <div className="flex gap-x-6 justify-center ml">
-                    <p className="hidden font-semibold text-xl leading-relaxed xs:inline-block">{kwhValue} kWh</p>
+                    <p className="hidden font-semibold text-xl leading-relaxed sm:inline-block">{kwhValue} kWh</p>
                     <div className="flex justify-center items-center">
                         <MdArrowForwardIos className="w-4.5 h-4.5"/>
                     </div>
