@@ -22,7 +22,9 @@ export default function Reading(props: ReadingComponentInterface) {
             </div>
 
             <div className="flex flex-col justify-center">
-                <p className="align-top font-semibold text-black">{creator}</p>
+                <span className="inline-block w-44">
+                    <p className="align-top font-semibold text-black truncate ...">{creator}</p>
+                </span>
                 <p className="text-sm text-black-500">{createdAt.toLocaleDateString()} at {createdAt.toLocaleTimeString("en-US", {hour12: true})}</p>
             </div>
 
