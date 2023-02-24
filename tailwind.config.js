@@ -11,9 +11,9 @@ module.exports = {
 		"./src/**/*.{js,ts,jsx,tsx}",
 	],
 	theme: {
-		screens: {
-			xs: "500px",
-		},
+		// screens: {
+		// 	xs: "500px",
+		// },
 		extend: {},
 		colors: {
 			orange: "#F58800",
