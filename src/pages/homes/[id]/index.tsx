@@ -88,8 +88,6 @@ export async function getServerSideProps({ req, res, params }) {
             home: params.id,
         }).populate("user").sort("-createdAt");
 
-        console.log(seededHome);
-
         return {
             props: {
                 home: {

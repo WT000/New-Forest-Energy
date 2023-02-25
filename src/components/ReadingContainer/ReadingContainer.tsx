@@ -3,11 +3,10 @@ import Reading from "../Reading/Reading";
 import useInfiniteScroll, { ScrollDirectionBooleanState, ScrollDirection } from "react-easy-infinite-scroll-hook";
 
 function loadMore(setCurrentOffset: (number) => void, currentOffset: number, offset: number, data: []) {
-    const startingIndex = currentOffset;
     const newOffset = currentOffset + offset;
 
     setCurrentOffset(newOffset);
-    return data.slice(startingIndex, newOffset);
+    return data.slice(0, newOffset);
 }
 
 const createNext =
@@ -41,7 +40,7 @@ export default function ReadingContainer(props: ReadingContainertInterface) {
     // Setdata SHOULD BE SETTING READING VALUES
     const { readings } = props;
 
-    const [offset, setCurrentOffset] = useState(6);
+    const [offset, setCurrentOffset] = useState(0);
 
     const [data, setData] = useState(readings ? readings.slice(0, 6) : []);
     const [hasMore, setHasMore] = useState<ScrollDirectionBooleanState>({
