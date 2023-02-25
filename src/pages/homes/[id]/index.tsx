@@ -6,6 +6,11 @@ import User from "../../../db/models/User";
 import mongoose from "mongoose";
 import ReadingContainer from "../../../components/ReadingContainer/ReadingContainer";
 
+function randomDate(start, end) {
+    return new Date(start.getTime() + Math.random() * (end.getTime() - start.getTime()))
+  }
+  
+
 export default function Homes(props) {
     // Feel free to do something like const {home} = props here
     const readings = props.readings ? JSON.parse(props.readings) : null
@@ -74,6 +79,7 @@ export async function getServerSideProps({ req, res, params }) {
                     home: params.id,
                     value: Math.floor(Math.random() * (max - min + 1) + min),
                     image: "Image",
+                    createdAt: randomDate(new Date(2010, 0, 1), new Date())
                 })
             };
 
@@ -87,8 +93,6 @@ export async function getServerSideProps({ req, res, params }) {
         const seededReadings = await Reading.find({
             home: params.id,
         }).populate("user").sort("-createdAt");
-
-        console.log(seededHome);
 
         return {
             props: {

@@ -15,7 +15,7 @@ function loadMore(
 	data: []
 ) {
 	const startingIndex = currentOffset;
-	const newOffset = currentOffset + offset;
+	const newOffset = currentOffset + offset - 1;
 
 	setCurrentOffset(newOffset);
 	return data.slice(startingIndex, newOffset);
@@ -44,7 +44,7 @@ const createNext =
 				data
 			);
 
-			setData((prev) => [...rows, ...prev]);
+			setData((prev) => [...prev, ...rows]);
 		} finally {
 		}
 	};
