@@ -84,3 +84,29 @@ ColourThumbnailComplete.args = {
     bookingType: BookingType.complete,
 };
 
+export const ComparisonOtherGuests = Template.bind({});
+ComparisonOtherGuests.args = {
+    cardType: CardType.comparison,
+
+};
+
+export const ComparisonOtherHomes = Template.bind({});
+ComparisonOtherHomes.args = {
+    cardType: CardType.comparison,
+
+};
+
+export const MobileComparisonOtherGuests = Template.bind({});
+MobileComparisonOtherGuests.parameters = { viewport: { defaultViewport: "iphone5" } };
+MobileComparisonOtherGuests.args = {
+    cardType: CardType.comparison,
+
+};
+
+export const MobileComparisonOtherHomes = Template.bind({});
+MobileComparisonOtherHomes.parameters = { viewport: { defaultViewport: "iphone5" } };
+MobileComparisonOtherHomes.args = {
+    cardType: CardType.comparison,
+
+};
+
