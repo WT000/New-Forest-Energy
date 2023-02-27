@@ -24,8 +24,8 @@ export default function Stats(props: StatsProps) {
     }
 
     return (
-        <div className="mx-auto text-center md:mt-10 md:mb-12">
-            <p className="text-xl font-bold md:text-3xl text-[#051821]">{statLargeText}
+        <div className="mx-auto text-center mt-1 md:mt-10 md:mb-12">
+            <p className="text-xl font-bold md:text-3xl text-[#051821] leading-6">{statLargeText}
                 <span className="text-[10px] md:text-lg"> {statSmallText} </span>
             </p>
             <p className="text-[#77767A] leading-3 text-[10px] md:text-sm">{line1}<br/>
