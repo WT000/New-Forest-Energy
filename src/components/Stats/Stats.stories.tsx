@@ -27,6 +27,18 @@ Homes.args = {
     text: "Homes",
 };
 
+export const TotalUsage = Template.bind({});
+TotalUsage.args = {
+    stat: "27.2 kWh",
+    text: "Total Usage",
+};
+
+export const TotalCost = Template.bind({});
+TotalCost.args = {
+    stat: "£1.77",
+    text: "Total Cost (minus Buffer)",
+};
+
 export const Bookings3mo = Template.bind({});
 Bookings3mo.args = {
     stat: "21",

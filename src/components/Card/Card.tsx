@@ -22,7 +22,8 @@ export default function Card(props: CardProps) {
 
     return (
         <div className={`${styling} flex justify-center items-center rounded-lg bg-white`}>
-            {stats}
+            <div className="m-auto">{stats}</div>
+            
         </div>
     )
     
