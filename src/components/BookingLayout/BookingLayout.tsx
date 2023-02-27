@@ -8,7 +8,7 @@ export default function BookingLayout(props: BookingLayoutProps) {
     const { cost, duration, dateRange } = props;
 
     return(
-        <div className="grid grid-rows-3 p-2 text-white-100">
+        <div className="grid grid-rows-3 text-white-100 w-full">
             <div className="text-[22px]">£{cost}</div>
             <div></div>
             <div>

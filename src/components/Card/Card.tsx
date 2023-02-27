@@ -35,7 +35,7 @@ export default function Card(props: CardProps) {
     if(bookingType == BookingType.complete) {bgColour="bg-orange"}
 
     return (
-        <div className={`${styling} ${bgColour} flex justify-center content-center`}>
+        <div className={`${styling} ${bgColour} flex`}>
             <div className="m-auto">{children}</div>
         </div>
     )

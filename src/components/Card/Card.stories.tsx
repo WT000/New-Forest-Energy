@@ -1,9 +1,10 @@
-import {ComponentMeta, ComponentStory} from "@storybook/react";
+import { ComponentMeta, ComponentStory } from "@storybook/react";
 import Card from "./Card";
 import { CardType, BookingType } from "./Card";
 import { MobileTariff, MobileUsage, MobileCost } from "../Stats/Stats.stories";
 import { TrendingDown, TrendingUp } from "../CompactLayout/CompactLayout.stories";
-import {IoFlash} from "react-icons/io5";
+import { IoFlash } from "react-icons/io5";
+import { Booking1, Booking2, Booking3 } from "../BookingLayout/BookingLayout.stories";
 
 export default {
     title: "Card",
@@ -50,21 +51,21 @@ export const BookingCardPlanned = Template.bind({});
 BookingCardPlanned.args = {
     cardType: CardType.booking,
     bookingType: BookingType.planned,
-    children: <div className="text-white">Planned</div>
+    children: <Booking1 {...Booking1.args} />
 };
 
 export const BookingCardInProgress = Template.bind({});
 BookingCardInProgress.args = {
     cardType: CardType.booking,
     bookingType: BookingType.inProgress,
-    children: <div className="text-white">In Progress</div>
+    children: <Booking2 {...Booking2.args} />
 };
 
 export const BookingCardComplete = Template.bind({});
 BookingCardComplete.args = {
     cardType: CardType.booking,
     bookingType: BookingType.complete,
-    children: <div className="text-white">Complete</div>
+    children: <Booking3 {...Booking3.args} />
 };
 
 export const ColourThumbnailPlanned = Template.bind({});

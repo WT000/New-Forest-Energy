@@ -14,3 +14,17 @@ Booking1.args = {
     duration: 4,
     dateRange: "15th - 19th Feb"
 };
+
+export const Booking2 = Template.bind({});
+Booking2.args = {
+    cost: 3.65,
+    duration: 2,
+    dateRange: "7th - 9th Feb"
+};
+
+export const Booking3 = Template.bind({});
+Booking3.args = {
+    cost: 8.45,
+    duration: 7,
+    dateRange: "10th - 17th Feb"
+};
