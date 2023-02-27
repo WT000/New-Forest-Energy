@@ -2,6 +2,7 @@ import {ComponentMeta, ComponentStory} from "@storybook/react";
 import Card from "./Card";
 import { CardType, BookingType } from "./Card";
 import { MobileTariff, MobileUsage, MobileCost } from "../Stats/Stats.stories";
+import { TrendingDown, TrendingUp } from "../CompactLayout/CompactLayout.stories";
 import {IoFlash} from "react-icons/io5";
 
 export default {
@@ -87,26 +88,15 @@ ColourThumbnailComplete.args = {
 export const ComparisonOtherGuests = Template.bind({});
 ComparisonOtherGuests.args = {
     cardType: CardType.comparison,
+    children: <TrendingUp {...TrendingUp.args} />
 
 };
 
 export const ComparisonOtherHomes = Template.bind({});
 ComparisonOtherHomes.args = {
     cardType: CardType.comparison,
-
+    children: <TrendingDown {...TrendingDown.args} />
 };
 
-export const MobileComparisonOtherGuests = Template.bind({});
-MobileComparisonOtherGuests.parameters = { viewport: { defaultViewport: "iphone5" } };
-MobileComparisonOtherGuests.args = {
-    cardType: CardType.comparison,
 
-};
-
-export const MobileComparisonOtherHomes = Template.bind({});
-MobileComparisonOtherHomes.parameters = { viewport: { defaultViewport: "iphone5" } };
-MobileComparisonOtherHomes.args = {
-    cardType: CardType.comparison,
-
-};
 
