@@ -1,9 +1,9 @@
-interface NavbarStatsProps {
+interface StatsProps {
     stat: string;
     text: string;
 }
 
-export default function NavbarStats(props: NavbarStatsProps) {
+export default function Stats(props: StatsProps) {
     const {stat, text} = props
     
     let line1 = text

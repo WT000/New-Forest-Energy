@@ -1,7 +1,7 @@
 import {ComponentMeta, ComponentStory} from "@storybook/react";
 import DesktopNavbar from "./DesktopNavbar";
 import { DashboardMenu, HomesMenu } from "../NavbarMenu/NavbarMenu.stories";
-import { Buffer, Tariff, Homes, Bookings3mo, Bookings12mo } from "../NavbarStats/NavbarStats.stories";
+import { Buffer, Tariff, Homes, Bookings3mo, Bookings12mo } from "../../Stats/Stats.stories";
 
 export default {
     title: "DesktopNavbar",

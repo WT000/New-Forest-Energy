@@ -1,13 +1,13 @@
 import {ComponentMeta, ComponentStory} from "@storybook/react";
-import NavbarStats from "./NavbarStats";
+import Stats from "./Stats";
 
 
 export default {
-    title: "NavbarStats",
-    component: NavbarStats,
-} as ComponentMeta<typeof NavbarStats>;
+    title: "Stats",
+    component: Stats,
+} as ComponentMeta<typeof Stats>;
   
-const Template: ComponentStory<typeof NavbarStats> = (args) => <NavbarStats {...args} />;
+const Template: ComponentStory<typeof Stats> = (args) => <Stats {...args} />;
   
 export const Buffer = Template.bind({});
   
