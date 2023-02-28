@@ -13,11 +13,22 @@ const Template: ComponentStory<typeof Tile> = (args) => <Tile {...args} />;
 export const ShareLink = Template.bind({});
 ShareLink.args = {
     tileType: TileType.link,
-    children: <Share {...Share.args} />
+    children: <Share {...Share.args} />,
+    link: true,
+    onClick: () => console.log("clicked"),
 };
 
 export const PrintQR = Template.bind({});
 PrintQR.args = {
     tileType: TileType.link,
-    children: <QRCode {...QRCode.args} />
+    children: <QRCode {...QRCode.args} />,
+    link: true,
+    onClick: () => console.log("clicked"),
+};
+
+export const tempInput = Template.bind({});
+tempInput.args = {
+    tileType: TileType.input,
+    children: <div>Temp</div>,
+    link: false
 };
