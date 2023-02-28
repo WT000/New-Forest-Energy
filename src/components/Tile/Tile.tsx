@@ -20,8 +20,8 @@ export default function Tile(props: TileProps) {
     if(tileType == TileType.home) {styling = "h-[170px] w-[170px] shadow-[0_4px_10px_rgba(0,0,0,0.1)] rounded-[10px] w-full"}
 
     return (
-        <div className={`${styling} bg-white-100 flex border-solid border-[#DCDCDD]`}>
-            <div className="m-auto">{children}</div>
+        <div className={`${styling} bg-white-100 flex border-solid border-[1px] border-[#DCDCDD]`}>
+            <div className="m-auto w-full">{children}</div>
         </div>
     )
     

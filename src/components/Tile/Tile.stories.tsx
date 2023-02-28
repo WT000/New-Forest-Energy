@@ -1,6 +1,7 @@
 import { ComponentMeta, ComponentStory } from "@storybook/react";
 import Tile from "./Tile";
 import { TileType } from "./Tile";
+import { Share, QRCode } from "../CompactLayout/CompactLayout.stories";
 
 export default {
     title: "Tile",
@@ -10,8 +11,13 @@ export default {
 const Template: ComponentStory<typeof Tile> = (args) => <Tile {...args} />;
 
 export const ShareLink = Template.bind({});
-ShareLink.parameters = { viewport: { defaultViewport: "iphone5" } };
 ShareLink.args = {
-    TileType: TileType.link,
-    // children: <MobileCost {...MobileCost.args} />
+    tileType: TileType.link,
+    children: <Share {...Share.args} />
+};
+
+export const PrintQR = Template.bind({});
+PrintQR.args = {
+    tileType: TileType.link,
+    children: <QRCode {...QRCode.args} />
 };

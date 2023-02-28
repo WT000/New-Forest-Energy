@@ -1,6 +1,6 @@
 import {ComponentMeta, ComponentStory} from "@storybook/react";
 import CompactLayout from "./CompactLayout";
-import { IoTrendingDown, IoTrendingUp } from "react-icons/io5";
+import { IoTrendingDown, IoTrendingUp, IoShareSocial, IoQrCode } from "react-icons/io5";
 
 export default {
     title: "CompactLayout",
@@ -21,4 +21,18 @@ TrendingDown.args = {
     icon: <IoTrendingDown size="34px" className="text-orange"/>,
     textLine1: "vs Other Homes",
     textLine2: "10% less"
+};
+
+export const Share = Template.bind({});
+Share.args = {
+    icon: <IoShareSocial size="34px"/>,
+    textLine1: "Share Link",
+    textLine2: "This Home"
+};
+
+export const QRCode = Template.bind({});
+QRCode.args = {
+    icon: <IoQrCode size="34px"/>,
+    textLine1: "Print",
+    textLine2: "QR Code"
 };
