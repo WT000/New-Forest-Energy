@@ -32,3 +32,11 @@ tempInput.args = {
     children: <div>Temp</div>,
     clickable: false
 };
+
+export const tempHome = Template.bind({});
+tempHome.args = {
+    tileType: TileType.home,
+    children: <div>Temp</div>,
+    clickable: true,
+    onClick: () => console.log("clicked"),
+};

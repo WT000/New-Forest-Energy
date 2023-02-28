@@ -17,9 +17,9 @@ export default function Tile(props: TileProps) {
 
     let styling = ""
     if(tileType == TileType.input) {styling = "w-[80%] h-[66px] md:w-[368px] rounded-[10px]"}
-    if(tileType == TileType.box) {styling = "h-8 w-8 md:w-10 md:h-10 shadow-[0_4px_10px_rgba(0,0,0,0.1)] rounded-lg"}
+    if(tileType == TileType.box) {styling = ""}
     if(tileType == TileType.link) {styling = "h-[46px] w-[150px] md:h-[77px] md:w-[176px] rounded-[5px] md:rounded-[10px]"}
-    if(tileType == TileType.home) {styling = "h-[170px] w-[170px] shadow-[0_4px_10px_rgba(0,0,0,0.1)] rounded-[10px] w-full"}
+    if(tileType == TileType.home) {styling = "w-[80%] h-[290px] rounded-[5px] md:w-52 md:h-48 hover:bg-white hover:shadow-[0_4px_20px_rgba(0,0,0,0.1)] hover:border-none"}
 
     let cursorStyle = ""
     if(clickable) {cursorStyle = "cursor-pointer"}
