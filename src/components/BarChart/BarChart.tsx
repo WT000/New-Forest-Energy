@@ -5,62 +5,33 @@
 // import ToolTip from 'chart.js'
 // import Legend from 'chart.js'
 
+import { Chart as ChartJS, BarElement, CategoryScale, LinearScale, Tooltip, Legend } from "chart.js";
 
+import { Bar } from "react-chartjs-2";
 
-import {
-
-    Chart as ChartJS,
-    BarElement,
-    CategoryScale,
-    LinearScale,
-    Tooltip,
-    Legend
-
-
-} from 'chart.js'
-
-
-import { Bar } from 'react-chartjs-2';
-
-import type { ChartData, ChartOptions } from 'chart.js';
+import type { ChartData, ChartOptions } from "chart.js";
 
 interface LineProps {
-    options: ChartOptions<'line'>;
-    data: ChartData<'line'>;
-  }
+    options: ChartOptions<"line">;
+    data: ChartData<"line">;
+}
 
-ChartJS.register(
-    BarElement,
-    CategoryScale,
-    LinearScale,
-    Tooltip,
-    Legend
-
-)
-
-
-
+ChartJS.register(BarElement, CategoryScale, LinearScale, Tooltip, Legend);
 
 export default function BarChart() {
-    
-
     const data = {
-        labels: ['Mon', 'Tue', 'Wed', 'Thurs', 'Friday', 'Saturday'],
+        labels: ["Mon", "Tue", "Wed", "Thurs", "Friday", "Saturday"],
         datasets: [
             {
-                label: '369',
+                label: "369",
                 data: [3, 6, 8.7, 7, 8, 5],
-                backgroundColor: '#266867',
+                backgroundColor: "#266867",
                 borderRadius: 10,
                 borderSkipped: false,
                 barPercentage: 0.5,
-
             },
-
-        ]
-    }
-
-    
+        ],
+    };
 
     const options = {
         maintainAspectRatio: true,
@@ -70,10 +41,9 @@ export default function BarChart() {
                 display: false,
                 labels: {
                     fontColor: "blue",
-                    fontSize: 70
-                }
-            }
-
+                    fontSize: 70,
+                },
+            },
         },
 
         scales: {
@@ -83,48 +53,24 @@ export default function BarChart() {
                     drawBorder: false,
                 },
 
-                ticks: { color: '#77767A' }
+                ticks: { color: "#77767A" },
             },
             y: {
                 grid: {
-                     lineWidth: '4.5',
-                     color: '#EDEEF0',
-                     drawBorder: false,
-                     
-
+                    lineWidth: "4.5",
+                    color: "#EDEEF0",
+                    drawBorder: false,
                 },
-                ticks: { color: '#77767A',}
-            }
-            
-
-
-
-
-        }
-
-    }
-
-
-    
-
-    
-
-
+                ticks: { color: "#77767A" },
+            },
+        },
+    };
 
     return (
-
-            <div>
-
-                <div style={{padding: '20px', width: '50%'}}>
-                    <Bar data={data} options={options}></Bar>
-                </div>
-
-
+        <div>
+            <div style={{ padding: "20px", width: "50%" }}>
+                <Bar data={data} options={options}></Bar>
             </div>
-
-
-
-    )
-
+        </div>
+    );
 }
-
