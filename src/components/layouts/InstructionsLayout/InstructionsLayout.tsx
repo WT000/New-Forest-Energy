@@ -14,7 +14,7 @@ export default function InstructionsLayout(props: InstructionsLayoutProps) {
                     <div className="py-1 md:py-2 pr-6"><IoFootsteps size="32" /></div>
                     <div className="py-2 md:py-3 text-lg font-bold">Instructions</div>
                 </div>
-                <div className="pt-2 text-xs md:text-base">{text}</div>
+                <div className="text-xs md:text-base">{text}</div>
             </div>
         </div>
     )
