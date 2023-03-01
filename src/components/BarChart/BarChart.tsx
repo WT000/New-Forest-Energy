@@ -52,15 +52,22 @@ export default function BarChart() {
                     display: false,
                     drawBorder: false,
                 },
+                border: {
+                    color: "rgb(0, 0, 0, 0)",
+                },
 
                 ticks: { color: "#77767A" },
             },
             y: {
                 grid: {
+                    drawBorder: false,
                     lineWidth: "4.5",
                     color: "#EDEEF0",
-                    drawBorder: false,
                 },
+                border: {
+                    color: "rgb(0, 0, 0, 0)",
+                },
+
                 ticks: { color: "#77767A" },
             },
         },
