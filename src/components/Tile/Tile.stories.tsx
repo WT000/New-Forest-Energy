@@ -1,7 +1,7 @@
 import { ComponentMeta, ComponentStory } from "@storybook/react";
 import Tile from "./Tile";
 import { TileType } from "./Tile";
-import { Share, QRCode } from "../CompactLayout/CompactLayout.stories";
+import { Share, QRCode } from "../layouts/CompactLayout/CompactLayout.stories";
 
 export default {
     title: "Tile",

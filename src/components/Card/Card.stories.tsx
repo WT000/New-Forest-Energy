@@ -2,9 +2,9 @@ import { ComponentMeta, ComponentStory } from "@storybook/react";
 import Card from "./Card";
 import { CardType, BookingType } from "./Card";
 import { MobileTariff, MobileUsage, MobileCost } from "../Stats/Stats.stories";
-import { TrendingDown, TrendingUp } from "../CompactLayout/CompactLayout.stories";
+import { TrendingDown, TrendingUp } from "../layouts/CompactLayout/CompactLayout.stories";
 import { IoFlash } from "react-icons/io5";
-import { Booking1, Booking2, Booking3 } from "../BookingLayout/BookingLayout.stories";
+import { Booking1, Booking2, Booking3 } from "../layouts/BookingLayout/BookingLayout.stories";
 
 export default {
     title: "Card",
