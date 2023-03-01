@@ -50,22 +50,20 @@ export default function BarChart() {
             x: {
                 grid: {
                     display: false,
-                    drawBorder: false,
                 },
                 border: {
-                    color: "rgb(0, 0, 0, 0)",
+                    display: false,
                 },
 
                 ticks: { color: "#77767A" },
             },
             y: {
                 grid: {
-                    drawBorder: false,
                     lineWidth: "4.5",
                     color: "#EDEEF0",
                 },
                 border: {
-                    color: "rgb(0, 0, 0, 0)",
+                    display: false,
                 },
 
                 ticks: { color: "#77767A" },
