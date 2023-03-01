@@ -3,6 +3,7 @@ import Tile from "./Tile";
 import { TileType } from "./Tile";
 import { Share, QRCode } from "../layouts/CompactLayout/CompactLayout.stories";
 import { RowesCottage } from "../layouts/HomeLayout/HomeLayout.stories";
+import { RowesCottageImage } from "../layouts/ImageLayout/ImageLayout.stories";
 
 export default {
     title: "Tile",
@@ -40,4 +41,11 @@ Home.args = {
     children: <RowesCottage {...RowesCottage.args} />,
     clickable: true,
     onClick: () => console.log("clicked"),
+};
+
+export const Image = Template.bind({});
+Image.args = {
+    tileType: TileType.box,
+    children: <RowesCottageImage {...RowesCottageImage.args} />,
+    clickable: false,
 };

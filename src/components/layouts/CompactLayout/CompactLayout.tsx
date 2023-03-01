@@ -8,7 +8,7 @@ export default function CompactLayout(props: CompactLayoutProps) {
     const { icon, textLine1, textLine2 } = props;
 
     return(
-        <div className="grid grid-cols-3">
+        <div className="grid grid-cols-3 m-auto w-full">
             
             <div className="col-span-1 m-auto">
                 {icon}

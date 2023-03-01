@@ -28,7 +28,7 @@ export default function Tile(props: TileProps) {
         <div className={`${styling} ${cursorStyle} bg-white-100 flex border-solid border-[1px] border-[#DCDCDD]`}
             onClick={onClick}
         >
-            <div className="m-auto w-full">{children}</div>
+            {children}
         </div>
     )
     

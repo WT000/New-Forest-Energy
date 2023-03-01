@@ -9,7 +9,7 @@ interface HomeLayoutProps {
 export default function HomeLayout(props: HomeLayoutProps) {
     const { image, name, sleeps } = props;
     return (
-        <div className="">
+        <div className="m-auto w-full">
             <div className="flex items-center justify-center">
                 <div className="relative w-[90%] h-48 md:h-32 mb-2 md:mb-1">
                     <Image
