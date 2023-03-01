@@ -5,6 +5,7 @@ import { Share, QRCode } from "../layouts/CompactLayout/CompactLayout.stories";
 import { RowesCottage } from "../layouts/HomeLayout/HomeLayout.stories";
 import { RowesCottageImage } from "../layouts/ImageLayout/ImageLayout.stories";
 import { InstructionsText } from "../layouts/InstructionsLayout/InstructionsLayout.stories";
+import { HomeName, HomeImage } from "../layouts/InputLayout/InputLayout.stories";
 
 export default {
     title: "Tile",
@@ -29,10 +30,17 @@ PrintQR.args = {
     onClick: () => console.log("clicked"),
 };
 
-export const tempInput = Template.bind({});
-tempInput.args = {
+export const TextInput = Template.bind({});
+TextInput.args = {
     tileType: TileType.input,
-    children: <div>Temp</div>,
+    children: <HomeName {...HomeName.args} />,
+    clickable: false
+};
+
+export const FileInput = Template.bind({});
+FileInput.args = {
+    tileType: TileType.input,
+    children: <HomeImage {...HomeImage.args} />,
     clickable: false
 };
 
