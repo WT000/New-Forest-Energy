@@ -2,6 +2,7 @@ import { ComponentMeta, ComponentStory } from "@storybook/react";
 import Tile from "./Tile";
 import { TileType } from "./Tile";
 import { Share, QRCode } from "../layouts/CompactLayout/CompactLayout.stories";
+import { RowesCottage } from "../layouts/HomeLayout/HomeLayout.stories";
 
 export default {
     title: "Tile",
@@ -33,10 +34,10 @@ tempInput.args = {
     clickable: false
 };
 
-export const tempHome = Template.bind({});
-tempHome.args = {
+export const Home = Template.bind({});
+Home.args = {
     tileType: TileType.home,
-    children: <div>Temp</div>,
+    children: <RowesCottage {...RowesCottage.args} />,
     clickable: true,
     onClick: () => console.log("clicked"),
 };
