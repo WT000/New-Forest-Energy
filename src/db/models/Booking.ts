@@ -7,6 +7,7 @@ export interface BookingInterface {
   home: mongoose.Schema.Types.ObjectId;
   startDateTime: Date;
   endDateTime: Date;
+  isDeleted: Boolean;
   createdAt: Date;
   updatedAt: Date;
 }
@@ -48,6 +49,11 @@ const bookingSchema = new Schema<BookingInterface, Model<BookingInterface>>(
         message: "The end date & time of a booking must be ahead of the start date & time.",
       },
     },
+    isDeleted: {
+      type: Boolean,
+      required: true,
+      default: false,
+    }
   },
   { timestamps: true }
 );
