@@ -18,10 +18,3 @@ SubtitlesWithBar.args = {
     showbar: true
 };
 
-export const SubtitlesWithoutBar = Template.bind({});
-
-SubtitlesWithoutBar.args = {
-    text1: "Average Usage Per Day",
-    text2: "Secondary Text",
-    showbar: false
-};
