@@ -13,15 +13,15 @@ const Template: ComponentStory<typeof Subtitles> = (args) => (
 export const SubtitlesWithBar = Template.bind({});
 
 SubtitlesWithBar.args = {
-    text1: "Average Usage Per Day",
-    text2: "Secondary Text",
-    showbar: true
+  text1: "Delagates",
+  text2: "Secondary Text",
+  showbar: true
 };
 
 export const SubtitlesWithoutBar = Template.bind({});
 
 SubtitlesWithoutBar.args = {
-    text1: "Average Usage Per Day",
-    text2: "Secondary Text",
-    showbar: false
+  text1: "Average Usage Per Day",
+  text2: "Secondary Text",
+  showbar: false
 };
