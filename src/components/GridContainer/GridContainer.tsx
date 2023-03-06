@@ -61,7 +61,7 @@ export default function GridContainer(props: GridContainertInterface) {
 
 	const [offset, setCurrentOffset] = useState(6);
 
-	const [data, setData] = useState(readings ? readings.slice(0, 8) : []);
+	const [data, setData] = useState(readings ? readings.slice(0, 6) : []);
 
 	const [hasMore, setHasMore] = useState<ScrollDirectionBooleanState>({
 		up: false,
@@ -72,7 +72,7 @@ export default function GridContainer(props: GridContainertInterface) {
 		next: createNext({
 			setData,
 			setCurrentOffset,
-			offset: 4,
+			offset: 6,
 			currentOffset: offset,
 			data: readings,
 		}),
@@ -94,6 +94,7 @@ export default function GridContainer(props: GridContainertInterface) {
 							children={reading.image}
 							clickable={true}
 						></Tile>
+						<p>{index}</p>
 					</div>
 				))}
 			</div>

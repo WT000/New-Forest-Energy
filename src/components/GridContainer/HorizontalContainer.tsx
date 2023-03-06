@@ -45,7 +45,6 @@ const createNext =
 				offset,
 				data
 			);
-
 			setData((prev) => [...prev, ...rows]);
 		} finally {
 		}
@@ -55,13 +54,15 @@ export interface HorizontalContainertInterface {
 	readings: [];
 }
 
-export default function GridContainer(props: HorizontalContainertInterface) {
+export default function HorizontalContainer(
+	props: HorizontalContainertInterface
+) {
 	// Setdata SHOULD BE SETTING READING VALUES
 	const { readings } = props;
 
 	const [offset, setCurrentOffset] = useState(6);
 
-	const [data, setData] = useState(readings ? readings.slice(0, 12) : []);
+	const [data, setData] = useState(readings ? readings.slice(0, 11) : []);
 
 	const [hasMore, setHasMore] = useState<ScrollDirectionBooleanState>({
 		right: true,
@@ -72,11 +73,11 @@ export default function GridContainer(props: HorizontalContainertInterface) {
 		next: createNext({
 			setData,
 			setCurrentOffset,
-			offset: 4,
+			offset: 6,
 			currentOffset: offset,
 			data: readings,
 		}),
-		rowCount: readings.length,
+		columnCount: readings.length,
 		hasMore,
 	});
 
@@ -93,7 +94,7 @@ export default function GridContainer(props: HorizontalContainertInterface) {
 					Horizontal
 				</h1>
 				<div
-					className="flex overflow-x-scroll pb-10" // scrollbar-hide"
+					className="flex overflow-x-scroll pb-10 scrollbar-hide"
 					ref={multiRef}
 					{...events}
 				>
