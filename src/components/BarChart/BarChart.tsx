@@ -22,24 +22,24 @@ ChartJS.register(BarElement, CategoryScale, LinearScale, Tooltip, Legend);
 export default function BarChart(props: ChartProps) {
     const {datalist} = props;
 
-    const datalistn = []
-    for (var val in datalist){
-        let value = datalist[val]['date']
-        datalistn.push(value)
-    }
-
     const datalistd = []
     for (var val in datalist){
-        let value = datalist[val]['num']
+        let value = datalist[val]['date']
         datalistd.push(value)
     }
 
+    const datalistn = []
+    for (var val in datalist){
+        let value = datalist[val]['num']
+        datalistn.push(value)
+    }
+
     const data = {
-        labels: datalistn,
+        labels: datalistd,
         datasets: [
             {
 
-                data: datalistd,
+                data: datalistn,
                 backgroundColor: "#266867",
                 borderRadius: 10,
                 borderSkipped: false,

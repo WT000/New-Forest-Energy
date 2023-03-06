@@ -20,19 +20,19 @@ Bar1.args = {
     datalist: [
         {
             num: 27,
-            date: '23'
+            date: '23 November'
         },
         {
             num: 28,
-            date: '24'
+            date: '24 November'
         },
         {
-            num: 31,
-            date: '25'
+            num: 31.5,
+            date: '25 November'
         },
         {
             num: 19,
-            date: '26'
+            date: '26 November'
         }
     ],
 
