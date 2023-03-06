@@ -14,6 +14,7 @@ import type { ChartData, ChartOptions } from "chart.js";
 interface ChartProps {
     options: ChartOptions<"line">;
     data: ChartData<"line">;
+    datalist: { num: number, date: string}
 }
 
 ChartJS.register(BarElement, CategoryScale, LinearScale, Tooltip, Legend);
