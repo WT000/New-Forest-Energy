@@ -11,7 +11,7 @@ import { Bar } from "react-chartjs-2";
 
 import type { ChartData, ChartOptions } from "chart.js";
 
-interface LineProps {
+interface ChartProps {
     options: ChartOptions<"line">;
     data: ChartData<"line">;
 }
@@ -19,11 +19,14 @@ interface LineProps {
 ChartJS.register(BarElement, CategoryScale, LinearScale, Tooltip, Legend);
 
 export default function BarChart() {
+
+
+
     const data = {
         labels: ["Mon", "Tue", "Wed", "Thurs", "Friday", "Saturday"],
         datasets: [
             {
-                label: "369",
+
                 data: [3, 6, 8.7, 7, 8, 5],
                 backgroundColor: "#266867",
                 borderRadius: 10,

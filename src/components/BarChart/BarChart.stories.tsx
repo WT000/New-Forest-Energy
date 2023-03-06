@@ -7,9 +7,13 @@ export default {
     component: BarChart,
 } as ComponentMeta<typeof BarChart>;
   
-const Template: ComponentStory<typeof BarChart> = (args) => <BarChart />;
+const Template: ComponentStory<typeof BarChart> = (args) => <BarChart {...args}/>;
+
   
 export const Bar1 = Template.bind({});
+
+
+
 
 
 
