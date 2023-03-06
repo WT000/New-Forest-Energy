@@ -6,6 +6,7 @@ import User from "../../../db/models/User";
 import mongoose from "mongoose";
 import ReadingContainer from "../../../components/ReadingContainer/ReadingContainer";
 import GridContainer from "../../../components/GridContainer/GridContainer";
+import HorizontalContainer from "../../../components/GridContainer/HorizontalContainer";
 
 function randomDate(start, end) {
 	return new Date(
@@ -35,8 +36,13 @@ export default function Homes(props) {
 				<p>Home name: {props.home.name}</p>
 				<p>Total readings: {readings.length}</p>
 				<p>Readings:</p>
+				<br></br>
 				<ReadingContainer readings={readings} />
+				<br></br>
 				<GridContainer readings={readings} />
+				<br></br>
+				<HorizontalContainer readings={readings} />
+				<br></br>
 			</div>
 		</>
 	);
