@@ -35,11 +35,11 @@ export default function BarChart(props: ChartProps) {
     }
 
     const data = {
-        labels: ["Mon", "Tue", "Wed", "Thurs", "Friday", "Saturday"],
+        labels: datalistn,
         datasets: [
             {
 
-                data: [3, 6, 8.7, 7, 8, 5],
+                data: datalistd,
                 backgroundColor: "#266867",
                 borderRadius: 10,
                 borderSkipped: false,
