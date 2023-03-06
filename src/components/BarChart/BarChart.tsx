@@ -28,7 +28,11 @@ export default function BarChart(props: ChartProps) {
         datalistn.push(value)
     }
 
-
+    const datalistd = []
+    for (var val in datalist){
+        let value = datalist[val]['num']
+        datalistd.push(value)
+    }
 
     const data = {
         labels: ["Mon", "Tue", "Wed", "Thurs", "Friday", "Saturday"],
