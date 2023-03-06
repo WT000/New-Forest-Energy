@@ -19,7 +19,7 @@ interface ChartProps {
 
 ChartJS.register(BarElement, CategoryScale, LinearScale, Tooltip, Legend);
 
-export default function BarChart() {
+export default function BarChart(props: ChartProps) {
 
 
 
