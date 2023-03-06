@@ -1,6 +1,6 @@
 import NavbarMenu from "../components/navbar/NavbarMenu/NavbarMenu";
 import NavbarMenuItem from "../components/navbar/NavbarMenuItem/NavbarMenuItem";
-import NavbarStats from "../components/navbar/NavbarStats/NavbarStats";
+import NavbarStats from "../components/Stats/Stats";
 import DesktopNavbar from "../components/navbar/DesktopNavbar/DesktopNavbar";
 import MobileNavbar from "../components/navbar/MobileNavbar/MobileNavbar";
 import MobileHeader from "../components/navbar/MobileHeader/MobileHeader";
