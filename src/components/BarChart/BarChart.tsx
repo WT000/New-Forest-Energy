@@ -21,7 +21,7 @@ import type { ChartData, ChartOptions } from "chart.js";
 interface ChartProps {
   options: ChartOptions<"line">;
   data: ChartData<"line">;
-  datalist: { num: number; date: string };
+  datalist: { num: number; date: Date };
 }
 
 ChartJS.register(BarElement, CategoryScale, LinearScale, Tooltip, Legend);
@@ -31,7 +31,9 @@ export default function BarChart(props: ChartProps) {
 
   const datalistd = [];
   for (var val in datalist) {
-    let value = datalist[val]["date"];
+    let d = datalist[val]["date"].getDate();
+    let m =datalist[val]["date"].toDateString().split(' ');
+    let value = m[1] + " " + d;
     datalistd.push(value);
   }
 
