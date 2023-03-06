@@ -99,7 +99,7 @@ export default function GridContainer(props: HorizontalContainertInterface) {
 				>
 					<div className="flex flex-nowrap lg:ml-40 md:ml-20 ml-10">
 						{data.map((reading, index) => (
-							<div class="inline-block px-3">
+							<div className="inline-block px-3">
 								<Tile
 									key={index}
 									tileType={TileType.home}
