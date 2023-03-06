@@ -1,16 +1,17 @@
 import { IoFlash } from "react-icons/io5";
 import { MdArrowForwardIos } from "react-icons/md";
 
-export interface ReadingComponentInterface {
+export interface GridComponentInterface {
 	creator: string;
 	kwhValue: number;
 	image: string;
+	_id: string;
 	createdAt: Date;
 	onClick: () => void;
 }
 
-export default function Reading(props: ReadingComponentInterface) {
-	const { creator, kwhValue, image, createdAt, onClick } = props;
+export default function Grid(props: GridComponentInterface) {
+	const { creator, kwhValue, image, _id, createdAt, onClick } = props;
 
 	return (
 		<div

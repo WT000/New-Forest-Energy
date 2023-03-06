@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import Reading from "../Reading/Reading";
+import Grid from "../Grid/Grid";
 import useInfiniteScroll, {
 	ScrollDirectionBooleanState,
 	ScrollDirection,
@@ -78,7 +78,7 @@ export default function GridContainer(props: GridContainertInterface) {
 		return matrix;
 	}
 
-	const [data, setData] = useState(readings ? readings.slice(0, 17) : []);
+	const [data, setData] = useState(readings ? readings.slice(0, 50) : []);
 
 	const [hasMore, setHasMore] = useState<ScrollDirectionBooleanState>({
 		up: false,
@@ -100,14 +100,14 @@ export default function GridContainer(props: GridContainertInterface) {
 	return (
 		<div>
 			<div
-				className="grid grid-cols-4 gap-4 overflow-y-scroll h-32 scrollbar-hide"
+				className="grid grid-cols-4 gap-7 overflow-y-scroll h-48"
 				ref={ref}
 			>
 				{data.map((reading, index) => (
-					<div class="text-2xl">
-						{" "}
-						<Reading
-							key={index}
+					<div className="text-2xl border-solid">
+						<p>{index}</p>
+						<Grid
+							key={reading._id}
 							//@ts-ignore
 							creator={
 								reading.user?.name ? reading.user.name : "Guest"
@@ -119,8 +119,9 @@ export default function GridContainer(props: GridContainertInterface) {
 							//@ts-ignore
 							createdAt={new Date(reading.createdAt)}
 							onClick={() => {
-								console.log("click");
+								console.log("click: " + reading._id);
 							}}
+							_id={""}
 						/>
 					</div>
 				))}

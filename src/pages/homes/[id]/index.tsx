@@ -5,7 +5,7 @@ import Reading from "../../../db/models/Reading";
 import User from "../../../db/models/User";
 import mongoose from "mongoose";
 import ReadingContainer from "../../../components/ReadingContainer/ReadingContainer";
-import GridContainer from "../../../components/ReadingContainer/Grid";
+import GridContainer from "../../../components/GridContainer/GridContainer";
 
 function randomDate(start, end) {
 	return new Date(

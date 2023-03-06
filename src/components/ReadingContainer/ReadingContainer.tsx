@@ -88,7 +88,7 @@ export default function ReadingContainer(props: ReadingContainertInterface) {
 			<div
 				ref={multiRef}
 				{...events}
-				className="List bg-white-100 h-[35vh] w-[60vw] overflow-y-auto flex flex-col scrollbar-hide select-none"
+				className="List bg-white-100 h-[35vh] w-[60vw] overflow-y-auto flex flex-col" // scrollbar-hide select-none"
 			>
 				{data.map((reading, index) => (
 					<Reading
