@@ -62,7 +62,7 @@ export default function HorizontalContainer(
 
 	const [offset, setCurrentOffset] = useState(6);
 
-	const [data, setData] = useState(readings ? readings.slice(0, 11) : []);
+	const [data, setData] = useState(readings ? readings.slice(0, 12) : []);
 
 	const [hasMore, setHasMore] = useState<ScrollDirectionBooleanState>({
 		right: true,
@@ -94,7 +94,7 @@ export default function HorizontalContainer(
 					Horizontal
 				</h1>
 				<div
-					className="flex overflow-x-scroll pb-10 scrollbar-hide"
+					className="flex overflow-x-scroll pb-10"
 					ref={multiRef}
 					{...events}
 				>
