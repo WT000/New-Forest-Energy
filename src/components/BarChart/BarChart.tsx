@@ -96,7 +96,7 @@ export default function BarChart(props: ChartProps) {
 
   return (
     <div>
-      <div style={{ padding: "20px", width: "50%" }}>
+      <div className="p-5 w-1/2">
         <Bar data={data} options={options}></Bar>
       </div>
     </div>
