@@ -18,7 +18,6 @@ import { Bar } from "react-chartjs-2";
 
 import type { ChartData, ChartOptions } from "chart.js";
 
-
 interface ChartProps {
   options: ChartOptions<"bar">;
   data: ChartData<"bar">;
@@ -33,7 +32,7 @@ export default function BarChart(props: ChartProps) {
   const datalistd = [];
   for (var val in datalist) {
     let d = datalist[val]["date"].getDate();
-    let m =datalist[val]["date"].toDateString().split(' ');
+    let m = datalist[val]["date"].toDateString().split(" ");
     let value = m[1] + " " + d;
     datalistd.push(value);
   }
@@ -58,14 +57,12 @@ export default function BarChart(props: ChartProps) {
   };
 
   const options = {
-    type: 'bar',
+    type: "bar",
     maintainAspectRatio: true,
 
     plugins: {
       legend: {
         display: false,
-
-        
       },
     },
 
@@ -74,7 +71,6 @@ export default function BarChart(props: ChartProps) {
         grid: {
           color: "rgba(0, 0, 0, 0)",
         },
-        //options error
         border: {
           display: false,
         },
@@ -86,8 +82,7 @@ export default function BarChart(props: ChartProps) {
           lineWidth: 4,
           color: "#EDEEF0",
         },
-        
-          //options error
+
         border: {
           display: false,
         },
