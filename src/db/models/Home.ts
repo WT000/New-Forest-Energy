@@ -11,6 +11,7 @@ export interface HomeInterface {
   energyInstructions: string;
   energyTariff: Number;
   energyBuffer: Number;
+  isDeleted: Boolean;
   createdAt: Date;
   updatedAt: Date;
 }
@@ -68,6 +69,11 @@ const homeSchema = new Schema<HomeInterface, Model<HomeInterface>>(
       min: [0, "Energy buffer must be at least £0."],
       max: [Number.MAX_SAFE_INTEGER, "Energy buffer reached an unsafe number."],
     },
+    isDeleted: {
+      type: Boolean,
+      required: true,
+      default: false,
+    }
   },
   { timestamps: true }
 );
