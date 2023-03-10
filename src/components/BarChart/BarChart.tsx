@@ -25,7 +25,7 @@ export default function BarChart(props: ChartProps) {
       {
         data: values,
         backgroundColor: "#266867",
-        borderRadius: 10,
+        borderRadius: 5,
         borderSkipped: false,
         barPercentage: 0.5,
       },
@@ -69,8 +69,8 @@ export default function BarChart(props: ChartProps) {
   };
 
   return (
-    <div>
-      <div className="p-5 w-1/2">
+    <div className="w-full h-[149px] md:w-96 md:h-44">
+      <div className="">
         <Bar data={data} options={options}></Bar>
       </div>
     </div>
