@@ -8,7 +8,7 @@ export default function Button(props: ButtonProp) {
 	const { icon, text, onClick } = props;
 
 	let backgroundColour =
-		"bg-gradient-to-r bg-green-400 hover:to-green-400 hover:from-green-500";
+		"bg-gradient-to-br bg-green-400 hover:to-green-400 hover:from-green-500";
 	let iconPadding = "p-2 pl-3";
 	let shadowType = "shadow-neutral-350";
 	let iconClassName = "";
