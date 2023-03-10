@@ -1,30 +1,11 @@
-// import Chart from 'chart.js'
-// import BarElement from 'chart.js'
-// import CategoryScale  from 'chart.js'
-// import LinearScale from 'chart.js'
-// import ToolTip from 'chart.js'
-// import Legend from 'chart.js'
-
-import {
-  Chart as ChartJS,
-  BarElement,
-  CategoryScale,
-  LinearScale,
-  Tooltip,
-  Legend,
-} from "chart.js";
-
+import { Chart as ChartJS, BarElement, CategoryScale, LinearScale, Tooltip, Legend } from "chart.js";
 import { Bar } from "react-chartjs-2";
 
-import type { ChartData, ChartOptions } from "chart.js";
+ChartJS.register(BarElement, CategoryScale, LinearScale, Tooltip, Legend);
 
 interface ChartProps {
-  options: ChartOptions<"bar">;
-  data: ChartData<"bar">;
   datalist: { num: number; date: Date };
 }
-
-ChartJS.register(BarElement, CategoryScale, LinearScale, Tooltip, Legend);
 
 export default function BarChart(props: ChartProps) {
   const { datalist } = props;
