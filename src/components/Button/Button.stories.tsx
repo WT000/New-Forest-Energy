@@ -13,5 +13,5 @@ export const ButtonSubmit = Template.bind({});
 
 ButtonSubmit.args = {
 	text: "Submit",
-	icon: <IoSave className="text-[#FAFAFA]" />,
+	icon: <IoSave className="text-white" />,
 };
