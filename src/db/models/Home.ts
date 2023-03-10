@@ -32,7 +32,7 @@ const homeSchema = new Schema<HomeInterface, Model<HomeInterface>>(
     name: {
       type: String,
       required: true,
-      minlength: [5, "Home name must be at least 5 characters in length."],
+      minlength: [4, "Home name must be at least 5 characters in length."],
       maxlength: [100, "Home name must not exceed 100 characters."],
     },
     description: {
