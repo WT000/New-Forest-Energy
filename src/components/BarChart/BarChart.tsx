@@ -1,34 +1,29 @@
 import { Chart as ChartJS, BarElement, CategoryScale, LinearScale, Tooltip, Legend } from "chart.js";
 import { Bar } from "react-chartjs-2";
+import { ReadingComponentInterface } from "../Reading/Reading";
 
 ChartJS.register(BarElement, CategoryScale, LinearScale, Tooltip, Legend);
 
 interface ChartProps {
-  datalist: { num: number; date: Date };
+  rawData: ReadingComponentInterface[];
 }
 
 export default function BarChart(props: ChartProps) {
-  const { datalist } = props;
+  const { rawData } = props;
 
-  const datalistd = [];
-  for (var val in datalist) {
-    let d = datalist[val]["date"].getDate();
-    let m = datalist[val]["date"].toDateString().split(" ");
-    let value = m[1] + " " + d;
-    datalistd.push(value);
-  }
+  let dates = rawData.map(reading => {
+    let date = reading.createdAt;
+    console.log(date.getDate())
+    return `${date.getDate()} ${date.toLocaleString('default', { month: 'long' })}`
+  })
 
-  const datalistn = [];
-  for (var val in datalist) {
-    let value = datalist[val]["num"];
-    datalistn.push(value);
-  }
+  let values = rawData.map(reading => reading.value)
 
   const data = {
-    labels: datalistd,
+    labels: dates,
     datasets: [
       {
-        data: datalistn,
+        data: values,
         backgroundColor: "#266867",
         borderRadius: 10,
         borderSkipped: false,

@@ -13,37 +13,31 @@ const Template: ComponentStory<typeof BarChart> = (args) => (
 export const Bar1 = Template.bind({});
 
 Bar1.args = {
-  datalist: [
+  rawData: [
     {
-      num: 27,
-      date: new Date(2022, 5, 7),
+      "value": 100,
+      "createdAt": new Date("2015-05-01T10:02:03.839Z"),
     },
     {
-      num: 28,
-      date: new Date(2022, 6, 7),
+      "value": 102,
+      "createdAt": new Date("2015-05-02T10:02:03.839Z"),
     },
     {
-      num: 31.5,
-      date: new Date(2022, 7, 7),
+      "value": 110,
+      "createdAt": new Date("2015-05-03T10:02:03.839Z"),
     },
     {
-      num: 19,
-      date: new Date(2022, 8, 7),
+      "value": 125,
+      "createdAt": new Date("2015-05-04T10:02:03.839Z"),
     },
+    {
+      "value": 70,
+      "createdAt": new Date("2015-05-05T10:02:03.839Z"),
+    },
+    {
+      "value": 130,
+      "createdAt": new Date("2015-05-06T10:02:03.839Z"),
+    }
 
-    {
-      num: 32,
-      date: new Date(2022, 9, 7),
-    },
-
-    {
-      num: 17,
-      date: new Date(2022, 10, 7),
-    },
-
-    {
-      num: 10,
-      date: new Date(2022, 11, 7),
-    },
   ],
 };
