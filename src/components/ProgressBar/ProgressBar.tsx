@@ -13,6 +13,8 @@ export default function ProgressBar(props: ProgressBarProps) {
 
   var largenum = 0.0;
   var smallnum = 0.0;
+  var stringlargenum = ""
+  var stringsmallnum = ""
 
   if (num1 > num2) {
     let onepercent = num1 / 100;
@@ -29,6 +31,8 @@ export default function ProgressBar(props: ProgressBarProps) {
     var prnct = 100;
     smallnum = num1;
     largenum = num2;
+    stringlargenum = text1
+    stringsmallnum = text2
   }
 
   const progressStyle: CSS.Properties = {
@@ -39,7 +43,7 @@ export default function ProgressBar(props: ProgressBarProps) {
     <div className=" ">
       <div className="flex justify-content-between mb-6 ">
         <div className="text-2xl pr-20 mr-20 font-weight-400">
-          {text1} / {text2}
+          {stringlargenum} / {stringsmallnum}
         </div>
         <div className="text-2xl pl-20 ml-20 font-weight-400 ">
           £{smallnum} / £{largenum}
