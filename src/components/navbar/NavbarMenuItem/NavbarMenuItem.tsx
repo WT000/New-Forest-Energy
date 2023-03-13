@@ -12,7 +12,7 @@ export default function NavbarMenuItem(props: NavbarMenuItemProps) {
     let textFormat = "text-black-500"
     if(activePage) { textFormat = "text-black" }
 
-    const desktop = "md:grid md:grid-cols-3 md:mt-8 md:mb-8 md:w-full md:justify-center"
+    const desktop = "md:grid md:grid-cols-3 md:mt-8 md:w-full md:justify-center md:pl-4"
 
     return (
         <div 
