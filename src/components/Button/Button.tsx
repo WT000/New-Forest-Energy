@@ -8,31 +8,16 @@ export default function Button(props: ButtonProp) {
 	const { icon, text, onClick } = props;
 
 	let backgroundColour =
-		"bg-gradient-to-br bg-green-400 hover:to-green-400 hover:from-green-500";
-	let iconPadding = "p-2 pl-3";
+		"bg-gradient-to-br bg-green-400 hover:to-green-400 hover:from-green-500 hover:scale-105 transition ease-in-out";
 	let shadowType = "shadow-neutral-350";
-	let iconClassName = "";
-	let textClassName = "";
-	const inputClassName = "";
-
-	if (icon) {
-		iconClassName = `${iconPadding}`;
-	}
-
-	if (text) {
-		if (icon) {
-			textClassName = "text-white pl-2 pr-3 md:text-base";
-		} else {
-			textClassName = "text-white pr-3 pl-3";
-		}
-	}
+	let textClassName = text && icon ? "text-white md:text-base" : "text-white";
 
 	return (
 		<button
 			onClick={onClick}
-			className={`${backgroundColour} rounded-lg ${shadowType} shadow-md flex justify-center items-center`}
+			className={`${backgroundColour} rounded-lg ${shadowType} shadow-md flex gap-4 justify-center items-center py-2 px-4`}
 		>
-			<div className={`${iconClassName}`}>{icon}</div>
+			<div>{icon}</div>
 			<div className={`${textClassName}`}>{text}</div>
 		</button>
 	);
