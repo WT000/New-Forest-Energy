@@ -21,11 +21,15 @@ export default function ProgressBar(props: ProgressBarProps) {
     var prnct = num2 / onepercent;
     smallnum = num2;
     largenum = num1;
+    stringlargenum = text1
+    stringsmallnum = text2
   } else if (num1 < num2) {
     let onepercent = num2 / 100;
     var prnct = num1 / onepercent;
     smallnum = num1;
     largenum = num2;
+    stringlargenum = text2
+    stringsmallnum = text1
   }
   else{
     var prnct = 100;
@@ -34,6 +38,7 @@ export default function ProgressBar(props: ProgressBarProps) {
     stringlargenum = text2
     stringsmallnum = text1
   }
+  
 
   const progressStyle: CSS.Properties = {
     width: `${prnct}%`,
@@ -42,15 +47,15 @@ export default function ProgressBar(props: ProgressBarProps) {
   return (
     <div className=" ">
       <div className="flex justify-content-between mb-6 ">
-        <div className="text-2xl pr-20 mr-20 font-weight-400">
-        {stringlargenum} <span className="text-[#77767A]">/ {stringsmallnum}</span>
+        <div className="text-2xl pr-20 mr-20 font-weight-400 text-[16px]">
+         {stringlargenum} <span className="text-[#77767A]">/ {stringsmallnum}</span>
         </div>
-        <div className="text-2xl pl-20 ml-20 font-weight-400 ">
-        £{smallnum} <span className="text-[#77767A]">/ £{largenum}</span>
+        <div className="text-2xl pl-20 ml-20 font-weight-400 text-[14px]">
+          £{smallnum} <span className="text-[#77767A]">/ £{largenum}</span>
         </div>
       </div>
 
-      <div id="bar">
+      <div className="bg-[#EDEEF0] rounded-full w-1/2 h-2.5">
         <div id="progressBar" style={progressStyle}></div>
       </div>
     </div>
