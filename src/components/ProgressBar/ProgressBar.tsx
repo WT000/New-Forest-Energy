@@ -56,7 +56,7 @@ export default function ProgressBar(props: ProgressBarProps) {
       </div>
 
       <div className="bg-[#EDEEF0] rounded-full w-1/2 h-2.5">
-        <div id="progressBar" style={progressStyle}></div>
+        <div className={`bg-[#000000] rounded-full w-[26%] h-2.5`} style={progressStyle}></div>
       </div>
     </div>
   );
