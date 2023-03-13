@@ -5,7 +5,6 @@ interface ProgressBarProps {
   num2: number;
 }
 
-import "./ProgressBar.css";
 import CSS from "csstype";
 
 export default function ProgressBar(props: ProgressBarProps) {
