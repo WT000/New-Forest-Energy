@@ -43,10 +43,10 @@ export default function ProgressBar(props: ProgressBarProps) {
     <div className=" ">
       <div className="flex justify-content-between mb-6 ">
         <div className="text-2xl pr-20 mr-20 font-weight-400">
-        {stringlargenum} <span className="text-gray-500">/ {stringsmallnum}</span>
+        {stringlargenum} <span className="text-[#77767A]">/ {stringsmallnum}</span>
         </div>
         <div className="text-2xl pl-20 ml-20 font-weight-400 ">
-        £{smallnum} <span className="text-gray-500">/ £{largenum}</span>
+        £{smallnum} <span className="text-[#77767A]">/ £{largenum}</span>
         </div>
       </div>
 
