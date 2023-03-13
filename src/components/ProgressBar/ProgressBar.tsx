@@ -25,6 +25,11 @@ export default function ProgressBar(props: ProgressBarProps) {
     smallnum = num1;
     largenum = num2;
   }
+  else{
+    var prnct = 100;
+    smallnum = num1;
+    largenum = num2;
+  }
 
   const progressStyle: CSS.Properties = {
     width: `${prnct}%`,
