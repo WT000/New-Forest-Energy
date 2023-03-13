@@ -1,4 +1,4 @@
-import { Chart as ChartJS, BarElement, CategoryScale, LinearScale, Tooltip, Legend } from "chart.js";
+import { Chart as ChartJS, BarElement, CategoryScale, LinearScale, Tooltip, Legend, scales } from "chart.js";
 import { Bar, Chart } from "react-chartjs-2";
 import { ReadingComponentInterface } from "../Reading/Reading";
 
@@ -99,7 +99,8 @@ export default function BarChart(props: ChartProps) {
 
   if(props.beginAtZero == false){
     //Ignore error
-    options.scales.y = {...options.scales.y, beginAtZero: false, grace: "2%"}
+    var newY = ({...options.scales.y, beginAtZero: false, grace: "2%"})
+    options.scales.y = newY
   }
 
   return (
