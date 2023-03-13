@@ -3,14 +3,14 @@ import {MdArrowForwardIos} from "react-icons/md";
 
 export interface ReadingComponentInterface {
     creator: string,
-    kwhValue: number,
+    value: number,
     image: string,
     createdAt: Date,
     onClick: () => void,
 }
 
 export default function Reading(props: ReadingComponentInterface) {
-    const {creator, kwhValue, image, createdAt, onClick} = props;
+    const {creator, value, image, createdAt, onClick} = props;
     
     return (
         <div className="flex gap-x-4 w-full my-2 py-2 cursor-pointer" onClick={onClick}>
@@ -30,7 +30,7 @@ export default function Reading(props: ReadingComponentInterface) {
 
             <div className="flex flex-col justify-center ml-auto">
                 <div className="flex gap-x-6 justify-center ml">
-                    <p className="hidden font-semibold text-xl leading-relaxed sm:inline-block">{kwhValue} kWh</p>
+                    <p className="hidden font-semibold text-xl leading-relaxed sm:inline-block">{value} kWh</p>
                     <div className="flex justify-center items-center">
                         <MdArrowForwardIos className="w-4.5 h-4.5"/>
                     </div>
