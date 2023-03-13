@@ -31,8 +31,8 @@ export default function MobileHeader(props: MobileHeaderProps) {
                     />
                 </div>
                 <div className="col-span-3 flex content-center items-center">
-                    <div className="text-sm text-[#051821]">
-                        <span className=" text-[#77767A]">{welcome},</span> 
+                    <div className="text-sm text-black">
+                        <span className=" text-black-500">{welcome},</span> 
                         <span className="font-bold">{name}</span><br/>
                         <span className="text-xs">{currentPage}</span>
                     </div>

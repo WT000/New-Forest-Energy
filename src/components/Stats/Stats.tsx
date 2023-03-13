@@ -25,10 +25,10 @@ export default function Stats(props: StatsProps) {
 
     return (
         <div className="mx-auto text-center mt-1 md:mt-10 md:mb-12">
-            <p className="text-xl font-bold md:text-3xl text-[#051821] leading-6">{statLargeText}
+            <p className="text-xl font-bold md:text-3xl text-black leading-6">{statLargeText}
                 <span className="text-[10px] md:text-lg"> {statSmallText} </span>
             </p>
-            <p className="text-[#77767A] leading-3 text-[10px] md:text-sm">{line1}<br/>
+            <p className="text-black-500 leading-3 text-[10px] md:text-sm">{line1}<br/>
                 <span className="text-[8px] leading-3 md:text-xs">{line2}</span>
             </p>
         </div>

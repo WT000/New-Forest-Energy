@@ -43,8 +43,8 @@ export default function DesktopNavbar(props: DesktopNavbarProps) {
                     </div>
                 </div>
                 <div className="text-center">
-                    <span className="text-sm text-[#77767A]">{welcome},</span><br/>
-                    <span className="font-bold text-lg text-[#051821]">{name}</span>
+                    <span className="text-sm text-black-500">{welcome},</span><br/>
+                    <span className="font-bold text-lg text-black">{name}</span>
                 </div>
             </div>
             <div>

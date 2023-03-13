@@ -29,6 +29,7 @@ module.exports = {
             white: {
                 DEFAULT: "#FFFFFF",
                 100: "#FAFAFA",
+                300: "#EDEEF0"
             },
         },
         extend: {
