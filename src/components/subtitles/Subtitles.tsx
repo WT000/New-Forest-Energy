@@ -13,7 +13,7 @@ export default function ProgressBar(props: ProgressBarProps) {
 				<div className="flex flex-row pb-3">
 					<h3>
 						{text1}
-						<small className="text-muted ml-16 display-6 text-[#77767A]">
+						<small className="text-muted ml-16 display-6 text-black-500">
 							{text2}
 						</small>
 					</h3>
@@ -26,7 +26,7 @@ export default function ProgressBar(props: ProgressBarProps) {
 			<div className="flex flex-row pb-3">
 				<h3>
 					{text1}
-					<small className="text-muted ml-16 display-6 text-[#77767A]">
+					<small className="text-muted ml-16 display-6 text-black-500">
 						{text2}
 					</small>
 				</h3>

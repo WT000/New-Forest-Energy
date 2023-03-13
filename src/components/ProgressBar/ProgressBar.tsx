@@ -45,17 +45,17 @@ export default function ProgressBar(props: ProgressBarProps) {
 
   return (
     <div className=" ">
-      <div className="flex justify-content-between mb-6 ">
-        <div className="text-2xl pr-20 mr-20 font-normal text-[18px] ">
-         {stringlargenum} <span className="text-[#77767A]">/ {stringsmallnum}</span>
+      <div className="flex justify-between mb-2 ">
+        <div className="text-2xl font-normal text-[18px] ">
+         {stringlargenum} <span className="text-black-500">/ {stringsmallnum}</span>
         </div>
-        <div className="text-2xl pl-20 ml-20 font-normal text-[18px]">
-          £{smallnum} <span className="text-[#77767A]">/ £{largenum}</span>
+        <div className="text-2xl font-normal text-[18px]">
+          £{smallnum} <span className="text-black-500">/ £{largenum}</span>
         </div>
       </div>
 
-      <div className="bg-[#EDEEF0] rounded-full w-1/2 h-2.5">
-        <div className={`bg-[#000000] rounded-full w-[26%] h-2.5`} style={progressStyle}></div>
+      <div className="bg-white-300 rounded-full w-full h-2.5">
+        <div className={`bg-black rounded-full w-[26%] h-2.5`} style={progressStyle}></div>
       </div>
     </div>
   );
