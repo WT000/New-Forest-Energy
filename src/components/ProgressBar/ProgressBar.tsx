@@ -31,8 +31,8 @@ export default function ProgressBar(props: ProgressBarProps) {
     var prnct = 100;
     smallnum = num1;
     largenum = num2;
-    stringlargenum = text1
-    stringsmallnum = text2
+    stringlargenum = text2
+    stringsmallnum = text1
   }
 
   const progressStyle: CSS.Properties = {
