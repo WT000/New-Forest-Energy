@@ -1,11 +1,19 @@
 import { Chart as ChartJS, BarElement, CategoryScale, LinearScale, Tooltip, Legend } from "chart.js";
-import { Bar } from "react-chartjs-2";
+import { Bar, Chart } from "react-chartjs-2";
 import { ReadingComponentInterface } from "../Reading/Reading";
 
 ChartJS.register(BarElement, CategoryScale, LinearScale, Tooltip, Legend);
 
+export enum ChartDateType {
+  DayMonth = "DayMonth",
+  MonthYear = "MonthYear"
+};
+
 interface ChartProps {
   rawData: ReadingComponentInterface[];
+  beginAtZero: boolean;
+  dateType: ChartDateType;
+  unitOfMeasure: string;
 }
 
 export default function BarChart(props: ChartProps) {
@@ -14,7 +22,14 @@ export default function BarChart(props: ChartProps) {
   let dates = rawData.map(reading => {
     let date = reading.createdAt;
     console.log(date.getDate())
-    return `${date.getDate()} ${date.toLocaleString('default', { month: 'long' })}`
+    
+
+    if(props.dateType == ChartDateType.DayMonth){
+      return `${date.getDate()} ${date.toLocaleString('default', { month: 'long' })}`
+    }
+    else {
+      return `${date.toLocaleString('default', { month: 'long'})} ${date.toLocaleString('default', {year: "numeric" }).slice(-2)}`
+    }
   })
 
   let values = rawData.map(reading => reading.value)
@@ -40,12 +55,26 @@ export default function BarChart(props: ChartProps) {
       legend: {
         display: false,
       },
+      tooltip: {
+        callbacks: {
+            label: function(context) {
+                if(props.unitOfMeasure){
+                  let label = context.dataset.label || '';
+
+                  if (context.parsed.y !== null) {
+                      label += `${context.parsed.y} ${props.unitOfMeasure}`
+                  }
+                  return label;
+                }
+            }
+        }
+    }
     },
 
     scales: {
       x: {
         grid: {
-          color: "rgba(0, 0, 0, 0)",
+          display: false,
         },
         border: {
           display: false,
@@ -55,7 +84,7 @@ export default function BarChart(props: ChartProps) {
       },
       y: {
         grid: {
-          lineWidth: 4,
+          lineWidth: 2,
           color: "#EDEEF0",
         },
 
@@ -67,6 +96,11 @@ export default function BarChart(props: ChartProps) {
       },
     },
   };
+
+  if(props.beginAtZero == false){
+    //Ignore error
+    options.scales.y = {...options.scales.y, beginAtZero: false, grace: "2%"}
+  }
 
   return (
     <div className="w-full h-[149px] md:w-96 md:h-44">
