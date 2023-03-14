@@ -100,7 +100,7 @@ export default function HorizontalContainer(
 				>
 					<div className="flex flex-nowrap lg:ml-40 md:ml-20 ml-10">
 						{data.map((reading, index) => (
-							<div className="inline-block px-3">
+							<div className="inline-block px-3" key={index}>
 								<Tile
 									key={index}
 									tileType={TileType.home}

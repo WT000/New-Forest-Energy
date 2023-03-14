@@ -87,7 +87,7 @@ export default function GridContainer(props: GridContainertInterface) {
 				ref={ref}
 			>
 				{data.map((reading, index) => (
-					<div className="text-2xl border-solid">
+					<div className="text-2xl border-solid" key={index}>
 						<Tile
 							key={index}
 							tileType={TileType.home}

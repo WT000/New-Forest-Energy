@@ -91,9 +91,8 @@ export default function ReadingContainer(props: ReadingContainertInterface) {
 				className="List bg-white-100 h-[35vh] w-[60vw] overflow-y-auto flex flex-col" // scrollbar-hide select-none"
 			>
 				{data.map((reading, index) => (
-					<div>
+					<div key={index}>
 						<Reading
-							key={index}
 							//@ts-ignore
 							creator={
 								reading.user?.name ? reading.user.name : "Guest"
