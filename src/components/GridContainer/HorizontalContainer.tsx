@@ -102,7 +102,6 @@ export default function HorizontalContainer(
 						{data.map((reading, index) => (
 							<div className="inline-block px-3" key={index}>
 								<Tile
-									key={index}
 									tileType={TileType.home}
 									children={reading.image}
 									clickable={true}
