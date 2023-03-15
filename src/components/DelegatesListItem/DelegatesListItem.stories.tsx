@@ -13,7 +13,7 @@ const Template: ComponentStory<typeof DelegatesListItem> = (args) => <DelegatesL
 export const Primary = Template.bind({});
 
 Primary.args = {
-    image: "/stories/rachel.jpeg",
-    username: "Rachel",
+    image: "/stories/nfe.png",
+    username: "New Forest Escapes",
     onClick: () => console.log("clicked"),
 };
