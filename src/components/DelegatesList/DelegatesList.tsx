@@ -13,7 +13,7 @@ export default function DelegatesList(props: DelegatesListProps) {
         <div className="w-fit flex">
             <div>
                 <div 
-                    className="h-11 w-11 md:h-12 md:w-12 rounded-full bg-black cursor-pointer flex justify-center items-center"
+                    className="h-11 w-11 md:h-12 md:w-12 rounded-full bg-black cursor-pointer flex justify-center items-center transition ease-in-out hover:scale-110"
                     onClick={onClick}
                     >
                     <IoAdd className="text-white-100" size="20px"/>
