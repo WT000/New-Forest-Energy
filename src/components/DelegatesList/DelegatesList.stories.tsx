@@ -20,6 +20,9 @@ Primary.args = {
             <Delegate {...Delegate.args} />
             <Delegate {...Delegate.args} />
             <Delegate {...Delegate.args} />
+            <Delegate {...Delegate.args} />
+            <Delegate {...Delegate.args} />
+            <Delegate {...Delegate.args} />
         </>
     )
 };
