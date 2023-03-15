@@ -10,10 +10,16 @@ export default {
   
 const Template: ComponentStory<typeof DelegatesListItem> = (args) => <DelegatesListItem {...args} />;
 
-export const Primary = Template.bind({});
-
-Primary.args = {
+export const Delegate1 = Template.bind({});
+Delegate1.args = {
     image: "/stories/nfe.png",
     username: "New Forest Escapes",
+    onClick: () => console.log("clicked"),
+};
+
+export const Delegate2 = Template.bind({});
+Delegate2.args = {
+    image: "/stories/rachel.jpeg",
+    username: "Rachel",
     onClick: () => console.log("clicked"),
 };

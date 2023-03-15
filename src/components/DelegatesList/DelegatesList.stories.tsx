@@ -1,6 +1,6 @@
 import {ComponentMeta, ComponentStory} from "@storybook/react";
 import DelegatesList from "./DelegatesList";
-import { Primary as Delegate } from "../DelegatesListItem/DelegatesListItem.stories";
+import { Delegate1, Delegate2 } from "../DelegatesListItem/DelegatesListItem.stories";
 
 
 
@@ -17,12 +17,8 @@ Primary.args = {
     onClick: () => console.log("clicked"),
     children: (
         <>
-            <Delegate {...Delegate.args} />
-            <Delegate {...Delegate.args} />
-            <Delegate {...Delegate.args} />
-            <Delegate {...Delegate.args} />
-            <Delegate {...Delegate.args} />
-            <Delegate {...Delegate.args} />
+            <Delegate1 {...Delegate1.args} />
+            <Delegate2 {...Delegate2.args} />
         </>
     )
 };
