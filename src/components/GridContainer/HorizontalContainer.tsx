@@ -9,12 +9,13 @@ import { useRef } from "react";
 import useMergedRef from "@react-hook/merged-ref";
 import Tile from "../Tile/Tile";
 import { TileType } from "../Tile/Tile";
+import { ReadingComponentInterface } from "../Reading/Reading";
 
 function loadMore(
 	setCurrentOffset: (number) => void,
 	currentOffset: number,
 	offset: number,
-	data: []
+	data: any[]
 ) {
 	const startingIndex = currentOffset;
 	const newOffset = currentOffset + offset - 1;
@@ -35,7 +36,7 @@ const createNext =
 		setCurrentOffset: (v: React.SetStateAction<number>) => void;
 		offset: number;
 		currentOffset: number;
-		data: [];
+		data: any[];
 	}) =>
 	async () => {
 		try {
@@ -45,13 +46,14 @@ const createNext =
 				offset,
 				data
 			);
+
 			setData((prev) => [...prev, ...rows]);
 		} finally {
 		}
 	};
 
 export interface HorizontalContainertInterface {
-	readings: [];
+	readings: any[];
 }
 
 export default function HorizontalContainer(

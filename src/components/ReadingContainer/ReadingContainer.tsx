@@ -12,7 +12,7 @@ function loadMore(
 	setCurrentOffset: (number) => void,
 	currentOffset: number,
 	offset: number,
-	data: []
+	data: any[]
 ) {
 	const startingIndex = currentOffset;
 	const newOffset = currentOffset + offset - 1;
@@ -33,7 +33,7 @@ const createNext =
 		setCurrentOffset: (v: React.SetStateAction<number>) => void;
 		offset: number;
 		currentOffset: number;
-		data: [];
+		data: any[];
 	}) =>
 	async () => {
 		try {
@@ -50,7 +50,7 @@ const createNext =
 	};
 
 export interface ReadingContainertInterface {
-	readings: [];
+	readings: any[];
 }
 
 export default function ReadingContainer(props: ReadingContainertInterface) {
