@@ -13,8 +13,8 @@ export default function DelegatesListItem(props: DelegatesListItemProps) {
     return (
         <div 
             className="relative h-11 w-11 md:h-12 md:w-12 rounded-full cursor-pointer flex justify-center items-center
-                bg-[#1D1A22] text-[rgb(255,255,255,0.0)] hover:bg-orange hover:text-[rgb(255,255,255,1)] 
-                transition ease-in-out hover:scale-110"
+                bg-[#1D1A22] text-[rgb(255,255,255,0.0)]  hover:text-[rgb(255,255,255,1)] 
+                transition duration-500 ease-in-out hover:bg-orange hover:scale-110"
             onClick={onClick}
         >
             <IoRemove className="" size="20px" />
