@@ -30,7 +30,11 @@ export default function test() {
     ]
     return (
         <Body menuItems={navItems} statItems={statItems}>
+            <>
             <p>The Body</p>
+            <p>asdfasdf</p>
+            </>
+
         </Body>
 
 
