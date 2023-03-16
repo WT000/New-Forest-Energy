@@ -10,7 +10,6 @@ export default {
 const Template: ComponentStory<typeof NavbarMenu> = (args) => <NavbarMenu {...args} />;
   
 export const DashboardMenu = Template.bind({});
-
 DashboardMenu.args = {
     children: 
         <>
@@ -24,7 +23,6 @@ DashboardMenu.args = {
 };
 
 export const HomesMenu = Template.bind({});
-
 HomesMenu.args = {
     children: (
         <>
@@ -32,4 +30,15 @@ HomesMenu.args = {
             <SignOut {...SignOut.args} />
         </> 
     )
+};
+
+export const GuestMenu = Template.bind({});
+GuestMenu.args = {
+    children: 
+        <>
+            <Dashboard {...Dashboard.args} />
+            <NewReading {...NewReading.args} />
+            <Instructions {...Instructions.args} />
+            <SignOut {...SignOut.args} />
+        </>
 };

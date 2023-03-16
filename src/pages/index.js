@@ -16,7 +16,7 @@ export default function Home() {
       </Head>
       <main className={styles.main}>
         <div className={styles.description}>
-          <a href="./dbtest"><strong>Click here for db testing.</strong></a>
+          <a href="./dbtest"><strong>Click here for db and UI testing.</strong></a>
           <p>
             Get started by editing&nbsp;
             <code className={styles.code}>src/pages/index.js</code>

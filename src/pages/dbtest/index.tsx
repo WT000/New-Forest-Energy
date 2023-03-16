@@ -57,8 +57,6 @@ export default function Home() {
         updatedAt: new Date(),
     }
 
-    console.log(session);
-
     return (
         <>
             <Head>
@@ -95,8 +93,8 @@ export default function Home() {
             <br/>
             <a href="./api/toggleagency">Click here to toggle isAgency (would need something like axios if using fetch).</a>
             
-            {/* Imagine this is using a user and home from the database... */}
-
+            <br/><br/>
+            <a href="./homes/63f7ded31180b041ab90d191">Click here for test readings.</a>
         </>
     );
 }

@@ -20,7 +20,7 @@ export default function DesktopNavbar(props: DesktopNavbarProps) {
     }
 
     return (
-        <div className="absolute hidden md:grid w-[260px] min-h-[calc(100%-2rem)] m-4 rounded-[20px] shadow-[0_4px_100px_rgba(0,0,0,0.1)] grid-cols-1 py-9">
+        <div className="absolute bg-white-100 hidden md:flex md:flex-col w-[260px] min-h-[calc(100%-2rem)] m-4 rounded-[20px] shadow-[0_4px_100px_rgba(0,0,0,0.1)] p-9 z-10">
             <div>
                 <Image
                     className="m-auto pb-12"
@@ -43,14 +43,14 @@ export default function DesktopNavbar(props: DesktopNavbarProps) {
                     </div>
                 </div>
                 <div className="text-center">
-                    <span className="text-sm text-[#77767A]">{welcome},</span><br/>
-                    <span className="font-bold text-lg text-[#051821]">{name}</span>
+                    <span className="text-sm text-black-500">{welcome},</span><br/>
+                    <span className="font-bold text-lg text-black">{name}</span>
                 </div>
             </div>
-            <div>
+            <div className="grow self-center flex flex-col place-content-evenly">
                 {children}
             </div>
-            <div className="m-auto">
+            <div className="justify-self-center align-self-end flex flex-col justify-center">
                 <div className="h-[0px] w-[173px] mx-auto border-b-2 border-[#1D1A221A]"></div>
                 {menu}
             </div>
