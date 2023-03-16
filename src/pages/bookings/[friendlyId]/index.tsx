@@ -1,23 +1,45 @@
 import NavbarMenuItem from "../../../components/navbar/NavbarMenuItem/NavbarMenuItem";
 import NavbarStats from "../../../components/Stats/Stats";
-import {IoHome, IoPieChart, IoFlash, IoCalendar, IoList, IoLogOut, IoAdd} from "react-icons/io5";
+import {IoHome, IoPieChart, IoFlash, IoList, IoLogOut} from "react-icons/io5";
 import Body from "../../../components/Body/Body";
 import Head from "next/head";
+import { useRouter } from "next/router";
 
+// TO DO - UPDATE LINKS
 
 export default function test() {
+    const router = useRouter();
+
     const navItems = [
         <NavbarMenuItem
                         icon={<IoHome />}
                         text="All Homes"
-                        onClick={() => console.log("AllHomes")}
+                        onClick={() => router.push(`/`)}
                         activePage={false} 
                     />,
         <NavbarMenuItem
                     icon={<IoPieChart />}
                     text="Dashboard"
-                    onClick={() => console.log("Dashboard")}
+                    onClick={() => router.push(`/`)}
                     activePage={true} 
+        />,
+        <NavbarMenuItem
+                    icon={<IoFlash />}
+                    text="New Reading"
+                    onClick={() => router.push(`/`)}
+                    activePage={false} 
+        />,
+        <NavbarMenuItem
+                    icon={<IoList />}
+                    text="Instructions"
+                    onClick={() => router.push(`/`)}
+                    activePage={false} 
+        />,
+        <NavbarMenuItem
+                    icon={<IoLogOut />}
+                    text="Sign Out"
+                    onClick={() => router.push(`/`)}
+                    activePage={false} 
         />]
 
     const statItems = [
@@ -25,6 +47,8 @@ export default function test() {
         <NavbarStats stat="£4.50" text="cost"/>,
         <NavbarStats stat="60" text="some more stats (that are cool)"/>
     ]
+
+
     return (
         <>
             <Head>
