@@ -15,3 +15,11 @@ DefaultToast.args = {
 	text: "Link has been copied",
 	icon: <IoClose />,
 };
+
+export const InteractiveToast = Template.bind({});
+
+InteractiveToast.args = {
+	text: "Link has been copied",
+	icon: <IoClose />,
+	interactive: { href: "#", text: "Undo" },
+};
