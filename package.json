@@ -24,6 +24,7 @@
     "react-chartjs-2": "^5.2.0",
     "react-dom": "18.2.0",
     "react-easy-infinite-scroll-hook": "^2.1.2",
+    "react-hot-toast": "^2.4.0",
     "react-icons": "^4.7.1",
     "storybook": "^6.5.16",
     "webpack": "^5.75.0"
