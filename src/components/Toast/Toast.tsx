@@ -7,13 +7,13 @@ interface ToastProp {
 
 export default function Toast(props: ToastProp) {
 	const { icon, text, onClick, interactive } = props;
-	let b = null;
+	let buttons = null;
 
 	let closeButton = (
 		<button
 			type="button"
 			className={
-				"text-white text-2xl ml-auto hover:scale-150 transition ease-in-out"
+				"text-white text-2xl ml-auto hover:scale-125 transition ease-in-out"
 			}
 			data-dismiss-target="#toast-default"
 			aria-label="Close"
@@ -23,12 +23,12 @@ export default function Toast(props: ToastProp) {
 	);
 
 	if (interactive) {
-		b = (
+		buttons = (
 			<div className="grid grid-cols-2 gap-2 ml-auto">
 				<div>
 					<a
 						href={interactive.href}
-						className="inline-flex justify-center w-full text-base font-bold text-center text-white hover:scale-125 transition ease-in-out"
+						className="inline-flex justify-center w-full text-base font-bold text-center text-white hover:scale-110 transition ease-in-out"
 					>
 						{interactive.text}
 					</a>
@@ -37,7 +37,7 @@ export default function Toast(props: ToastProp) {
 			</div>
 		);
 	} else {
-		b = closeButton;
+		buttons = closeButton;
 	}
 
 	return (
@@ -50,7 +50,7 @@ export default function Toast(props: ToastProp) {
 				<div className="ml-3 text-base font-normal text-white">
 					{text}
 				</div>
-				{b}
+				{buttons}
 			</div>
 		</div>
 	);
