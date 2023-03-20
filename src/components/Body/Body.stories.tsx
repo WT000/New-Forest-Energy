@@ -7,18 +7,17 @@ import {IoHome, IoPieChart} from "react-icons/io5";
 
 
 const navItems = [
-    <NavbarMenuItem
-                    icon={<IoHome />}
-                    text="All Homes"
-                    onClick={() => console.log("AllHomes")}
-                    activePage={false} 
-                />,
-    <NavbarMenuItem
-                icon={<IoPieChart />}
-                text="Dashboard"
-                onClick={() => console.log("Dashboard")}
-                activePage={true} 
-    />]
+    {
+        icon:<IoHome />,
+        text:"All Homes",
+        path:"/homes",
+        activePage:false 
+    },
+    {
+        icon:<IoPieChart />,
+        text:"Dashboard",
+        activePage:true 
+    }]
 
 const statItems = [
     <NavbarStats stat="30" text="some stats (testing)" />,
