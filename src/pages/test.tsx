@@ -28,7 +28,7 @@ export default function test() {
         {stat:"60", text:"some more stats (that are cool)"}
     ]
     return (
-        <Body currentPage="dashboard" menuItems={navItems} statItems={statItems} welcomeText="Welcome, Ryan" welcomeImage="/img/stories/rachel.jpeg">
+        <Body currentPage="dashboard" menuItems={navItems} statItems={statItems} welcomeText="Welcome, Rachel" welcomeImage="/stories/rachel.jpeg">
             <p>The Body</p>
         </Body>
 
