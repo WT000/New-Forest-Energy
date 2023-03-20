@@ -7,7 +7,7 @@ import NavbarMenuItem from "../navbar/NavbarMenuItem/NavbarMenuItem";
 import Image from 'next/image';
 import NavbarStats from '../Stats/Stats'
 
-interface BodyNavItem{
+export interface BodyNavItem{
     icon: React.ReactElement,
     text: string,
     path: string,
