@@ -8,6 +8,12 @@ import Booking from "../../../db/models/Booking";
 import Card from "../../../components/Card/Card";
 import { CardType } from "../../../components/Card/Card";
 import CompactLayout from "../../../components/layouts/CompactLayout/CompactLayout";
+import {GetServerSideProps} from "next";
+import dbConnect from "../../../db/dbcon/dbcon";
+import Home from "../../../db/models/Home";
+import Reading from "../../../db/models/Reading";
+import User from "../../../db/models/User";
+import mongoose from "mongoose";
 
 // TO DO - UPDATE LINKS
 
@@ -62,13 +68,14 @@ export default function Index({booking, sessionUser}) {
             </Head>
             <Body menuItems={navItems} statItems={statItems}>
                 <div className="md:hidden">
-                    <Card cardType={CardType.stats}>
-
-
-                    </Card>
+                    {statItems.map((stat) => (
+                        <Card cardType={CardType.stats}>
+                            {stat}
+                        </Card>
+                    ))}
+                    
                 </div>
                 
-                <p>The Body</p>
             </Body>
         </>
         
@@ -77,4 +84,18 @@ export default function Index({booking, sessionUser}) {
 
        
     )
+}
+
+export async function getServerSideProps({ req, res, params }) {
+    await dbConnect();
+
+    try {
+
+    } catch (e) {
+        console.log(e.message);
+
+        return {
+            notFound: true,
+        };
+    }
 }
