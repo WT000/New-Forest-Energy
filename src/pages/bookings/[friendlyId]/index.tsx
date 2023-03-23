@@ -31,18 +31,18 @@ export default function Index(props) {
         {
             icon: <IoPieChart />,
             text: "Dashboard",
-            path: "/",
+            path: "/1",
             activePage: true
         },
         {
             icon: <IoFlash />,
             text: "New Reading",
-            path: "/"
+            path: "/2"
         },
         {
             icon: <IoList />,
             text: "Instructions",
-            path: "/"
+            path: "/3"
         },
         {
             icon: <IoLogOut />,
@@ -82,7 +82,7 @@ export default function Index(props) {
                 welcomeImage={"test"}
                 currentPage={`Booking (${startDate} - ${endDate})`}
             >
-                <div className="space-x-6 w-full flex md:hidden">
+                <div className="w-full flex justify-evenly md:hidden">
                     {stats.map((stat) => (
                         <Card cardType={CardType.stats}>
                             <Stats stat={stat.stat} text={stat.text}/>
@@ -113,8 +113,6 @@ export async function getServerSideProps({ req, res, params }) {
 
         // get readings between start and end date, +1 day each side as one mongoose query
         // get range, then get one before (if exists), then get one after (if exists)
-
-        console.log("100", b)
 
         return {
             props: {

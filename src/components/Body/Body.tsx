@@ -38,7 +38,13 @@ export default function Body(props: BodyProps){
         return (<NavbarStats stat={x.stat} text={x.text} key={x.text}/>)
     })
 
-    console.log(menuItems)
+    let title = props.currentPage;
+    let dates = "";
+    if(props.currentPage.includes("(")) {
+        const split = props.currentPage.split("(");
+        title = split[0]
+        dates = `(${split[1]}`
+    }
 
     return(
         <div>
@@ -73,7 +79,7 @@ export default function Body(props: BodyProps){
 
             <main className="mt-[70px] md:mt-0 md:ml-[calc(260px+1rem)]">
                 <div className="p-5 md:px-10 lg:px-12 xl:px-20 md:mt-2">
-                    <h1 className="hidden md:block text-3xl">{props.currentPage}</h1>
+                    <h1 className="hidden md:block text-3xl">{title} <span className="text-xl">{dates}</span></h1>
                     {props.children}
                 </div>
             </main>

@@ -12,9 +12,6 @@ export function ToSeriableHome(home){
 }
 
 export function ToSeriableBooking(booking){
-
-    console.log("abc", booking)
-
     return (
         {
             ...booking._doc,
