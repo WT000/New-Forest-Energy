@@ -4,6 +4,9 @@ import {MongoDBAdapter} from "@next-auth/mongodb-adapter";
 import clientPromise from "../../../lib/authcon/mongodb";
 
 export const authOptions = {
+  pages: {
+    signIn: '/auth/signin'
+  },
   callbacks: {
     async session({session, user}) {
       // Update the session.user with new fields here, which need to be their database id and isAgency status
