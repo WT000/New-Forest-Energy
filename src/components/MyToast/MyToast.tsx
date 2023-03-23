@@ -1,17 +1,14 @@
 import toast, { Toast, Toaster } from "react-hot-toast";
 
-// TODO: Duration, transition?
 interface ToastProp {
-	icon?: React.ReactElement;
+	icon: React.ReactElement;
 	text: string;
-	onClick?: (event: React.MouseEvent<HTMLButtonElement>) => void;
 	interactive?: { href: string; icon: string };
 	duration?: number;
-	transition?: "250ms";
 }
 
 export default function MyToast(props: ToastProp) {
-	const { icon, text, onClick, interactive, duration } = props;
+	const { icon, text, interactive, duration } = props;
 
 	/**
 	 * An button for dismissing the toast.
@@ -71,7 +68,7 @@ export default function MyToast(props: ToastProp) {
 				</div>
 			),
 			{
-				duration: duration ? duration : 500,
+				duration: duration ? duration : 5000,
 			}
 		);
 	};

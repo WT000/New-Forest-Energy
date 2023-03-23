@@ -1,4 +1,3 @@
-import { ComponentMeta, ComponentStory } from "@storybook/react";
 import MyToast from "./MyToast";
 import { IoClose } from "react-icons/io5";
 import { Toaster } from "react-hot-toast";
@@ -29,4 +28,5 @@ InteractiveMyToast.args = {
 	text: "Delegate removed",
 	icon: <IoClose />,
 	interactive: { href: "#", icon: "Undo" },
+	duration: 10000,
 };
