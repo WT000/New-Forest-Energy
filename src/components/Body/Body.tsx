@@ -9,6 +9,7 @@ import Image from 'next/image';
 interface BodyProps{
     menuItems?: ReactNode
     statItems?: ReactNode
+    session?: any
     children: ReactNode
 }
 
@@ -16,8 +17,8 @@ export default function Body(props: BodyProps){
     return(
         <div>
             <DesktopNavbar 
-            text="Welcome back, Rachel"
-            image="/stories/rachel.jpeg"
+            text={props.session?.user?.name? `Welcome back, ${props.session.user.name}!` : "Welcome back, Rachel!"}
+            image={props.session?.user?.image? props.session.user.image : "/stories/rachel.jpeg"}
             menu={
                 <NavbarMenu>
                     {props.menuItems}

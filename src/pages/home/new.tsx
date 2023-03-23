@@ -7,19 +7,28 @@ import NavbarMenuItem from "../../components/navbar/NavbarMenuItem/NavbarMenuIte
 import NavbarStats from "../../components/Stats/Stats";
 import getRole from "../../lib/utils/getRole";
 import Role from "../../lib/utils/roles";
+import { useSession } from "next-auth/react";
 
 const navItems = [
     <NavbarMenuItem key={"allhomes-link"} icon={<IoHome />} text="All Homes" onClick={() => console.log("AllHomes")} activePage={false} />,
-    <NavbarMenuItem key={"dashboard-link"}  icon={<IoPieChart />} text="Dashboard" onClick={() => console.log("Dashboard")} activePage={true} />,
+    <NavbarMenuItem
+        key={"dashboard-link"}
+        icon={<IoPieChart />}
+        text="Dashboard"
+        onClick={() => console.log("Dashboard")}
+        activePage={true}
+    />,
 ];
 
 const statItems = [
     <NavbarStats key={"somestats-stats"} stat="30" text="some stats (testing)" />,
     <NavbarStats key={"cost-stats"} stat="£4.50" text="cost" />,
-    <NavbarStats key={"cool-stats"}  stat="60" text="some more stats (that are cool)" />,
+    <NavbarStats key={"cool-stats"} stat="60" text="some more stats (that are cool)" />,
 ];
 
 export default function NewHome(props) {
+    const {userSession} = props;
+
     return (
         <>
             <Head>
@@ -28,7 +37,7 @@ export default function NewHome(props) {
                 <meta name="viewport" content="width=device-width, initial-scale=1" />
                 <link rel="icon" href="/favicon.ico" />
             </Head>
-            <Body menuItems={navItems} statItems={statItems}>
+            <Body menuItems={navItems} statItems={statItems} session={userSession}>
                 <div className="mx-12 my-2">
                     {/* To become the form component */}
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-x-40 gap-y-5">
@@ -76,19 +85,21 @@ export default function NewHome(props) {
 }
 
 export async function getServerSideProps(context) {
-    const session = await getServerSession(context.req, context.res, authOptions)
+    const session = await getServerSession(context.req, context.res, authOptions);
     const role = getRole(session);
 
     if (role !== Role.Agency) {
         return {
             redirect: {
                 destination: "/",
-                permanent: false
-            }
-        }
+                permanent: false,
+            },
+        };
     }
 
     return {
-        props: { session }
-    }
+        props: {
+            userSession: session,
+        },
+    };
 }
