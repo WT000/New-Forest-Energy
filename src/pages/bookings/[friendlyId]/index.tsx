@@ -12,6 +12,7 @@ import { CardType } from "../../../components/Card/Card";
 import {IoHome, IoPieChart, IoFlash, IoList, IoLogOut} from "react-icons/io5";
 import { getDayMonth } from "../../../lib/utils/dates";
 import { ToSeriableBooking } from "../../../lib/utils/json";
+import Home from "../../../db/models/Home";
 
 
 // TO DO - UPDATE LINKS
@@ -78,8 +79,8 @@ export default function Index(props) {
                 <link rel="icon" href="/favicon.ico" />
             </Head>
             <Body menuItems={navItems} statItems={stats} 
-                welcomeText={`Welcome to, ${"test"}`}
-                welcomeImage={"test"}
+                welcomeText={`Welcome to, ${props.booking.home.name}`}
+                welcomeImage={props.booking.home.image}
                 currentPage={`Booking (${startDate} - ${endDate})`}
             >
                 <div className="w-full flex justify-evenly md:hidden">
@@ -108,11 +109,14 @@ export async function getServerSideProps({ req, res, params }) {
 
 
     try {
-        let b = await Booking.findOne({friendlyId : params.friendlyId});
+        let b = await Booking.findOne({friendlyId : params.friendlyId})
+        .populate("home", "-_id name image", Home)
+        .lean();
         // get home image and home name when obtaining book
 
         // get readings between start and end date, +1 day each side as one mongoose query
         // get range, then get one before (if exists), then get one after (if exists)
+        console.log(b.home)
 
         return {
             props: {
