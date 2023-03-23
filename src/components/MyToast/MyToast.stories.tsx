@@ -27,6 +27,6 @@ export const InteractiveMyToast = Template.bind({});
 InteractiveMyToast.args = {
 	text: "Delegate removed",
 	icon: <IoClose />,
-	interactive: { href: "#", icon: "Undo" },
+	interactive: { href: "#", text: "Undo" },
 	duration: 10000,
 };

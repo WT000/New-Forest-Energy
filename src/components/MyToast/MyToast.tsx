@@ -1,12 +1,17 @@
-import toast, { Toast, Toaster } from "react-hot-toast";
+import toast from "react-hot-toast";
 
 interface ToastProp {
 	icon: React.ReactElement;
 	text: string;
-	interactive?: { href: string; icon: string };
+	interactive?: { href: string; text: string };
 	duration?: number;
 }
 
+/**
+ *
+ * @param props icon, text, interactive, duration
+ * @returns
+ */
 export default function MyToast(props: ToastProp) {
 	const { icon, text, interactive, duration } = props;
 
@@ -57,7 +62,7 @@ export default function MyToast(props: ToastProp) {
 									href={interactive.href}
 									className="inline-flex justify-center w-full text-base font-bold text-center text-white hover:scale-110 transition ease-in-out"
 								>
-									{interactive.icon}
+									{interactive.text}
 								</a>
 							</div>
 							<div className="inline-flex justify-center">
@@ -73,71 +78,5 @@ export default function MyToast(props: ToastProp) {
 		);
 	};
 
-	// toast.custom(
-	// 	(t) => (
-	// 		<div
-	// 			id="toast-default"
-	// 			className="flex items-center py-4 w-full pr-5 max-w-xs bg-[#051821] rounded-lg shadow"
-	// 			role="alert"
-	// 			style={{
-	// 				opacity: t.visible ? 1 : 0,
-	// 				transition: "opacity 250ms ease-in-out",
-	// 			}}
-	// 		>
-	// 			<div className="ml-3 text-base font-normal text-white">
-	// 				{text}
-	// 			</div>
-	// 			{!interactive && (
-	// 				<IconButton icon={icon} parentToastId={t.id} />
-	// 			)}
-	// 			{interactive && (
-	// 				<div className="grid grid-cols-2 gap-2 ml-auto">
-	// 					<div>
-	// 						<a
-	// 							href={interactive.href}
-	// 							className="inline-flex justify-center w-full text-base font-bold text-center text-white hover:scale-110 transition ease-in-out"
-	// 						>
-	// 							{interactive.text}
-	// 						</a>
-	// 					</div>
-	// 					<div className="inline-flex justify-center">
-	// 						<IconButton icon={icon} parentToastId={t.id} />
-	// 					</div>
-	// 				</div>
-	// 			)}
-	// 		</div>
-	// 	),
-	// 	{
-	// 		duration: 5000,
-	// 	}
-	// );
-
 	return notify;
-	// <div
-	// 	id="toast-default"
-	// 	className="flex items-center py-4 w-full pr-5 max-w-xs bg-[#051821] rounded-lg shadow"
-	// 	role="alert"
-	// 	style={{
-	// 		opacity: parentToast.visible ? 1 : 0,
-	// 		transition: "opacity 250ms ease-in-out",
-	// 	}}
-	// >
-	// 	<div className="ml-3 text-base font-normal text-white">{text}</div>
-	// 	{!interactive && <IconButton icon={icon} parentToastId={t.id} />}
-	// 	{interactive && (
-	// 		<div className="grid grid-cols-2 gap-2 ml-auto">
-	// 			<div>
-	// 				<a
-	// 					href={interactive.href}
-	// 					className="inline-flex justify-center w-full text-base font-bold text-center text-white hover:scale-110 transition ease-in-out"
-	// 				>
-	// 					{interactive.text}
-	// 				</a>
-	// 			</div>
-	// 			<div className="inline-flex justify-center">
-	// 				<IconButton icon={icon} parentToastId={t.id} />
-	// 			</div>
-	// 		</div>
-	// 	)}
-	// </div>
 }
