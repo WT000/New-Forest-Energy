@@ -5,7 +5,7 @@ import Reading from "../../../db/models/Reading";
 import User from "../../../db/models/User";
 import mongoose from "mongoose";
 import ReadingContainer from "../../../components/ReadingContainer/ReadingContainer";
-import { ToSeriable } from "../../../lib/utils/homes";
+import { ToSeriableHome } from "../../../lib/utils/json";
 
 function randomDate(start, end) {
     return new Date(start.getTime() + Math.random() * (end.getTime() - start.getTime()))
@@ -97,7 +97,7 @@ export async function getServerSideProps({ req, res, params }) {
 
         return {
             props: {
-                home: ToSeriable(seededHome),
+                home: ToSeriableHome(seededHome),
                 readings: JSON.stringify(seededReadings)
             },
         };

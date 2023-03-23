@@ -15,7 +15,7 @@ import Link from "next/link";
 import { getServerSession } from "next-auth/next";
 import mongoose, { set } from "mongoose";
 import Booking from "../../db/models/Booking";
-import { ToSeriable } from "../../lib/utils/homes";
+import { ToSeriableHome } from "../../lib/utils/json";
 
 import { useState } from "react";
 

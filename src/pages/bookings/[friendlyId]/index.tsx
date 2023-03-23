@@ -11,6 +11,7 @@ import Card from "../../../components/Card/Card";
 import { CardType } from "../../../components/Card/Card";
 import {IoHome, IoPieChart, IoFlash, IoList, IoLogOut} from "react-icons/io5";
 import { getDayMonth } from "../../../lib/utils/dates";
+import { ToSeriableBooking } from "../../../lib/utils/json";
 
 
 // TO DO - UPDATE LINKS
@@ -64,9 +65,9 @@ export default function Index(props) {
         //     text: "Bookings (Last 12 Months)"
         // }
     ]
-    console.log(new Date(props?.booking?.startDateTime))
-    const startDate = getDayMonth(props?.booking?.startDateTime);
-    const endDate = getDayMonth(props.booking.endDateTime, true);
+
+    const startDate = getDayMonth(new Date(props?.booking?.startDateTime));
+    const endDate = getDayMonth(new Date(props.booking.endDateTime), true);
 
     return (
         <>
@@ -113,9 +114,11 @@ export async function getServerSideProps({ req, res, params }) {
         // get readings between start and end date, +1 day each side as one mongoose query
         // get range, then get one before (if exists), then get one after (if exists)
 
+        console.log("100", b)
+
         return {
             props: {
-                booking: JSON.stringify(b),
+                booking: ToSeriableBooking(b),
             },
         };
 
