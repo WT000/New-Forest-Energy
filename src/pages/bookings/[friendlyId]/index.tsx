@@ -14,7 +14,7 @@ import {IoHome, IoPieChart, IoFlash, IoList, IoLogOut} from "react-icons/io5";
 
 // TO DO - UPDATE LINKS
 
-export default function Index({props}) {
+export default function Index(props) {
     const { data: session } = useSession();
 
     const isAgency = session?.user?.isAgency;
@@ -73,8 +73,9 @@ export default function Index({props}) {
                 <link rel="icon" href="/favicon.ico" />
             </Head>
             <Body menuItems={navItems} statItems={stats} 
-                welcomeText={`Booking (${props.booking.startDateTime.getDate()} - ${props.booking.endDateTime.getDate()} ${props.booking.startDateTime.toLocaleString('default', { month: 'long'})})`}
+                welcomeText={`Welcome to, ${props.home.name}`}
                 welcomeImage={props.home.image}
+                currentPage={`Booking (${props.booking.startDateTime.getDate()} ${props.booking.startDateTime.toLocaleString('default', { month: 'long'})} - ${props.booking.endDateTime.getDate()} ${props.booking.endDateTime.toLocaleString('default', { month: 'long'})})`}
             >
                 <div className="space-x-6 w-full flex md:hidden">
                     {stats.map((stat) => (
@@ -103,7 +104,14 @@ export async function getServerSideProps({ req, res, params }) {
     const userId = session?.user?.id ?? "";
 
 
-    try{
+    try {
+        let b = await Booking.findById(params.friendlyId).lean();
+
+        return {
+            props: {
+                booking: b
+            },
+        };
 
     }
     catch (e) {
