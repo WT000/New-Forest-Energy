@@ -38,6 +38,8 @@ export default function Body(props: BodyProps){
         return (<NavbarStats stat={x.stat} text={x.text} key={x.text}/>)
     })
 
+    console.log(menuItems)
+
     return(
         <div>
             <DesktopNavbar 

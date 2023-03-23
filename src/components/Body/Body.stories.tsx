@@ -1,7 +1,6 @@
 import { ComponentMeta, ComponentStory } from "@storybook/react";
 import Body from "./Body";
 
-import NavbarMenuItem from "../navbar/NavbarMenuItem/NavbarMenuItem";
 import NavbarStats from "../Stats/Stats";
 import {IoHome, IoPieChart} from "react-icons/io5";
 
@@ -16,6 +15,7 @@ const navItems = [
     {
         icon:<IoPieChart />,
         text:"Dashboard",
+        path:"/temp",
         activePage:true 
     }]
 
