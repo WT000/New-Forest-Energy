@@ -116,8 +116,6 @@ export async function getServerSideProps({ req, res, params }) {
 
         // get readings between start and end date, +1 day each side as one mongoose query
         // get range, then get one before (if exists), then get one after (if exists)
-        console.log(b.home)
-
         return {
             props: {
                 booking: ToSeriableBooking(b),

@@ -13,8 +13,6 @@ export function ToSeriableHome(home){
 
 export function ToSeriableBooking(booking){
 
-    console.log(booking.home)
-
     return (
         {
             ...booking._doc,
