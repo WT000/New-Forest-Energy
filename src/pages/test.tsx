@@ -30,8 +30,6 @@ export default function test() {
     return (
         <Body currentPage="dashboard" menuItems={navItems} statItems={statItems} welcomeText="Welcome, Rachel" welcomeImage="/stories/rachel.jpeg">
             <p>The Body</p>
-            <p>asdfasdf</p>
-            </>
 
         </Body>
 
