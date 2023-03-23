@@ -1,6 +1,6 @@
 import toast from "react-hot-toast";
 
-interface ToastProp {
+interface NotificationProp {
 	icon: React.ReactElement;
 	text: string;
 	interactive?: { href: string; text: string };
@@ -12,7 +12,7 @@ interface ToastProp {
  * @param props icon, text, interactive, duration
  * @returns
  */
-export default function MyToast(props: ToastProp) {
+export default function Notification(props: NotificationProp) {
 	const { icon, text, interactive, duration } = props;
 
 	/**
