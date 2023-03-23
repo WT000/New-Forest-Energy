@@ -11,8 +11,8 @@ function display(text: string, editable: boolean) {
         if(text == "") { placeholder = "Enter instructions"} 
         return(
             <textarea 
-                className="placeholder:text-black text-xs w-full md:text-base bg-transparent
-                    file:border-none file:bg-transparent file:cursor-pointer" 
+                className="h-20 placeholder:text-black text-xs w-full md:text-base bg-transparent
+                    file:border-none file:bg-transparent file:cursor-pointer resize-none" 
                 name="instructions"
                 placeholder={placeholder}
                 rows={4}
@@ -31,7 +31,7 @@ export default function InstructionsLayout(props: InstructionsLayoutProps) {
             <div className="w-[94%] h-[90%] p-2">
                 <div className="flex flex-row">
                     <div className="py-1 md:py-2 pr-6"><IoFootsteps size="32" /></div>
-                    <div className="py-2 md:py-3 text-lg font-bold">Instructions</div>
+                    <div className="py-2 md:py-3 text-lg font-bold">Energy Instructions</div>
                 </div>
                 <div className="">{display(text, editable)}</div>
             </div>
