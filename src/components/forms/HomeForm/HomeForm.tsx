@@ -1,6 +1,7 @@
 import { IoBed, IoFlash, IoFootsteps, IoImages, IoSave, IoText, IoWallet } from "react-icons/io5";
 import Button from "../../Button/Button";
 import InputLayout from "../../layouts/InputLayout/InputLayout";
+import InstructionsLayout from "../../layouts/InstructionsLayout/InstructionsLayout";
 import Tile, { TileType } from "../../Tile/Tile";
 
 export default function HomeForm() {
@@ -48,12 +49,9 @@ export default function HomeForm() {
             {/* Instructions */}
             {/* May need a custom size set on md: breakpoint */}
             <Tile tileType={TileType.fill} customClass="row-span-2" clickable={false}>
-                <InputLayout
-                    icon={<IoFootsteps size="32px" />}
-                    text={"Instructions"}
-                    type={"textarea"}
-                    name={"instructions"}
-                    placeholder={"Enter the room to.."}
+                <InstructionsLayout
+                    text=""
+                    editable={true}
                 />
             </Tile>
 
