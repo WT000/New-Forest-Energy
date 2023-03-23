@@ -32,9 +32,7 @@ export default function NewHome(props) {
                 <div className="mx-12 my-2">
                     {/* To become the form component */}
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-x-40 gap-y-5">
-                        <h1 className="text-3xl col-span-1 md:col-span-2">
-                            New Home
-                        </h1>
+                        <h1 className="text-3xl col-span-1 md:col-span-2">New Home</h1>
 
                         {/* Image */}
                         <div className="w-full h-5">
