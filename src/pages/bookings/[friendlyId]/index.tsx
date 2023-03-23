@@ -17,6 +17,7 @@ import { getDayMonth } from "../../../lib/utils/dates";
 
 export default function Index(props) {
     const { data: session } = useSession();
+    console.log(props.booking)
 
     const isAgency = session?.user?.isAgency;
 
@@ -51,20 +52,20 @@ export default function Index(props) {
 
     const stats = [
         {
-            stat: props?.stats?.homes,
+            stat: "£1.77",
             text: "Homes"
         },
         {
-            stat: props?.stats?.bookingsLast3Months,
+            stat: "test",
             text: "Bookings (Last 3 Months)"
         },
-        {
-            stat: props?.stats?.bookingsLast12Months,
-            text: "Bookings (Last 12 Months)"
-        }
+        // {
+        //     stat: props?.stats?.bookingsLast12Months,
+        //     text: "Bookings (Last 12 Months)"
+        // }
     ]
-
-    const startDate = getDayMonth(props.booking.startDateTime);
+    console.log(new Date(props?.booking?.startDateTime))
+    const startDate = getDayMonth(props?.booking?.startDateTime);
     const endDate = getDayMonth(props.booking.endDateTime, true);
 
     return (
@@ -76,8 +77,8 @@ export default function Index(props) {
                 <link rel="icon" href="/favicon.ico" />
             </Head>
             <Body menuItems={navItems} statItems={stats} 
-                welcomeText={`Welcome to, ${props.home.name}`}
-                welcomeImage={props.home.image}
+                welcomeText={`Welcome to, ${"test"}`}
+                welcomeImage={"test"}
                 currentPage={`Booking (${startDate} - ${endDate})`}
             >
                 <div className="space-x-6 w-full flex md:hidden">
@@ -106,7 +107,7 @@ export async function getServerSideProps({ req, res, params }) {
 
 
     try {
-        let b = await Booking.find({friendlyId : params.friendlyId});
+        let b = await Booking.findOne({friendlyId : params.friendlyId});
         // get home image and home name when obtaining book
 
         // get readings between start and end date, +1 day each side as one mongoose query
@@ -114,10 +115,7 @@ export async function getServerSideProps({ req, res, params }) {
 
         return {
             props: {
-                booking: b,
-                stats: {
-                    totalCostStat: ""
-                }
+                booking: JSON.stringify(b),
             },
         };
 
