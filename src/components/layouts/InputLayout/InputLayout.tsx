@@ -4,6 +4,7 @@ interface InputLayoutProps {
     type: string;
     name: string;
     placeholder: string;
+    onChange?: (e) => void;
 }
 
 export default function InputLayout(props: InputLayoutProps) {
@@ -19,8 +20,9 @@ export default function InputLayout(props: InputLayoutProps) {
                 <p className="text-black-500 text-xs">{text}</p>
                 <p className="">
                     <input 
+                        onChange={(e) => props?.onChange(e)}
                         className="text-lg placeholder:text-black font-bold bg-transparent w-[95%] 
-                            file:border-none file:bg-transparent file:cursor-pointer :" 
+                            file:border-none file:bg-transparent file:cursor-pointer focus:outline-none focus:placeholder:text-black-500" 
                         type={type} 
                         name={name} 
                         placeholder={placeholder}

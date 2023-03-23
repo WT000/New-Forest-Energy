@@ -13,7 +13,7 @@ export default function DesktopNavbar(props: DesktopNavbarProps) {
     let welcome = text
     let name = ""
 
-    if(text.includes(",")){
+    if(text && text.includes(",")){
         const split = text.split(",");
         welcome = split[0];
         name = split[1]
