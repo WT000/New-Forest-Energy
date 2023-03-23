@@ -100,6 +100,7 @@ export async function getServerSideProps({ req, res, params }) {
                     ...seededHome, 
                     _id: seededHome._id.toString(),
                     owner: seededHome.owner.toString(),
+                    delegates: JSON.stringify(seededHome.delegates),
                     createdAt: JSON.stringify(seededHome.createdAt),
                     updatedAt: JSON.stringify(seededHome.createdAt),
                 },
