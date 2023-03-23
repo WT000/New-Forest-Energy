@@ -25,7 +25,7 @@ export default function InputLayout(props: InputLayoutProps) {
                         name={name} 
                         placeholder={placeholder}
                     />
-                    </p>
+                </p>
             </div>
         </div>
     )
