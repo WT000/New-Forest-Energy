@@ -1,10 +1,10 @@
 import Image from "next/image";
 
 interface PopupProps {
-    text1: string;
-    text2: string;
-    num1: number;
-    num2: number;
+    delegateName: string;
+    delegateProfession: string;
+    date: Date;
+    distance: number;
     image: string;
     name: string;
   }
@@ -12,7 +12,14 @@ interface PopupProps {
   
   
   export default function Popup(props: PopupProps) {
-    const { text1, text2, num1, num2, image, name } = props;
+    const { delegateName, delegateProfession, date, distance, image, name } = props;
+
+
+    var time = `${date.toLocaleTimeString("en-US", {hour: '2-digit', minute:'2-digit'})}`
+
+
+    var dayMonthYear = `${date.getDate()} ${date.toLocaleString('default', { month: 'long' })} ${date.getFullYear()}`
+    
 
   
     return (
@@ -43,7 +50,7 @@ interface PopupProps {
         
 
         <h3 className="text-xl font-semibold text-gray-900 dark:text-black pl-6">
-                    Josh (Gardener)
+                    {delegateName} ({delegateProfession})
                 </h3>
                 
 
@@ -52,11 +59,11 @@ interface PopupProps {
             <div className="flex items-start justify-between rounded-t dark:border-gray-600">
 
             <p className="text-s font-semibold text-gray-900 dark:text-black pt-1 pl-6">
-                    14th Feb 2023 at 15:01pm
+                    {dayMonthYear} at {time}
                 </p>
 
                 <p className="text-s font-semibold text-gray-900 dark:text-black pt-1 pr-6">
-                    77,426.5 kWh
+                    {distance} kWh
                 </p>
 
                 

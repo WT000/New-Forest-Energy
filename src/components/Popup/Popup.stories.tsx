@@ -15,4 +15,8 @@ export const Popup1 = Template.bind({});
 Popup1.args = {
     image: "/stories/popup1.jpg",
     name: "Reading 1",
+    date: new Date("2015-05-05T10:23:03.839Z"),
+    delegateName: "John",
+    delegateProfession: "Gardner",
+    distance: "52"
 };
