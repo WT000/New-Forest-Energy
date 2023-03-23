@@ -1,4 +1,4 @@
-import { IoBed, IoFlash, IoFootsteps, IoImages, IoSave, IoText, IoWallet } from "react-icons/io5";
+import { IoBed, IoFlash, IoFootsteps, IoImages, IoPerson, IoSave, IoText, IoWallet } from "react-icons/io5";
 import Button from "../../Button/Button";
 import InputLayout from "../../layouts/InputLayout/InputLayout";
 import InstructionsLayout from "../../layouts/InstructionsLayout/InstructionsLayout";
@@ -6,7 +6,7 @@ import Tile, { TileType } from "../../Tile/Tile";
 
 export default function HomeForm() {
     return (
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-x-24 gap-y-5">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-x-24 gap-y-3">
             {/* Image */}
             <Tile tileType={TileType.input} clickable={false}>
                 <InputLayout
@@ -21,7 +21,7 @@ export default function HomeForm() {
             {/* Image Preview */}
             {/* May need a custom size set on md: breakpoint */}
             <Tile tileType={TileType.fill} customClass="row-span-3 p-2" clickable={false}>
-                <p>Image Preview</p>
+                <p>Image Preview (invisible if none submitted)</p>
             </Tile>
 
             {/* Name */}
@@ -29,9 +29,25 @@ export default function HomeForm() {
                 <InputLayout icon={<IoText size="32px" />} text={"Home Name"} type={"text"} name={"name"} placeholder={"My New Home..."} />
             </Tile>
 
+            <Tile tileType={TileType.input} clickable={false}>
+                <InputLayout
+                    icon={<IoPerson size="32px" />}
+                    text={"Homeowner"}
+                    type={"text"}
+                    name={"owner"}
+                    placeholder={"john.doe@gmail..."}
+                />
+            </Tile>
+
             {/* Beds */}
             <Tile tileType={TileType.input} clickable={false}>
-                <InputLayout icon={<IoBed size="32px" />} text={"Number of Beds"} type={"number"} name={"beds"} placeholder={"4"} />
+                <InputLayout icon={<IoBed size="32px" />} text={"Total Beds"} type={"number"} name={"beds"} placeholder={"4"} />
+            </Tile>
+
+            {/* Instructions */}
+            {/* May need a custom size set on md: breakpoint */}
+            <Tile tileType={TileType.fill} customClass="row-span-3" clickable={false}>
+                <InstructionsLayout text="" editable={true} />
             </Tile>
 
             {/* Cost Buffer */}
@@ -41,17 +57,8 @@ export default function HomeForm() {
                     text={"Cost Buffer"}
                     type={"number"}
                     name={"costbuffer"}
-                    placeholder={"2.23"}
+                    placeholder={"0.50"}
                     currency={true}
-                />
-            </Tile>
-
-            {/* Instructions */}
-            {/* May need a custom size set on md: breakpoint */}
-            <Tile tileType={TileType.fill} customClass="row-span-2" clickable={false}>
-                <InstructionsLayout
-                    text=""
-                    editable={true}
                 />
             </Tile>
 
@@ -62,7 +69,7 @@ export default function HomeForm() {
                     text={"Energy Tariff (per Kwh)"}
                     type={"number"}
                     name={"energytariff"}
-                    placeholder={"2.23"}
+                    placeholder={"0.50"}
                     currency={true}
                 />
             </Tile>

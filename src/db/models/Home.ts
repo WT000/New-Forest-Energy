@@ -5,13 +5,13 @@ export interface HomeInterface {
   owner: mongoose.Schema.Types.ObjectId;
   delegates: [mongoose.Schema.Types.ObjectId];
   name: string;
-  description: string;
-  image: string;
+  description?: string;
+  image?: string;
   numBeds: Number;
   energyInstructions: string;
   energyTariff: Number;
   energyBuffer: Number;
-  isDeleted: Boolean;
+  isDeleted?: Boolean;
   createdAt: Date;
   updatedAt: Date;
 }

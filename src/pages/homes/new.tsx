@@ -13,7 +13,6 @@ import { ToSeriable } from "../../lib/utils/homes";
 import dbConnect from "../../db/dbcon/dbcon";
 
 
-
 export default function NewHome(props) {
     const {userSession} = props;
 
@@ -78,12 +77,8 @@ export async function getServerSideProps(context) {
         const filter = isAgency ? {} : { $or: [{ delegates: new mongoose.Types.ObjectId(userId) }, {owner: new mongoose.Types.ObjectId(userId)}] } 
 
         const homesTask = Home.find(filter);
-
         const homeCountTask = Home.count(filter);
-
         const homes = await homesTask;
-
-        console.log(homes);
 
         const homeIds = homes.map(x => x._id);
 
@@ -102,7 +97,6 @@ export async function getServerSideProps(context) {
                     $gte: new Date((new Date().getTime() - (365 * 24 * 60 * 60 * 1000)))
                 }
         });
-
 
         return {
             props: {
@@ -123,10 +117,4 @@ export async function getServerSideProps(context) {
             notFound: true,
         };
     }
-
-    // return {
-    //     props: {
-    //         userSession: session,
-    //     },
-    // };
 }
