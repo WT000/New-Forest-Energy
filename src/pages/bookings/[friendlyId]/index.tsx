@@ -1,60 +1,62 @@
-import NavbarMenuItem from "../../../components/navbar/NavbarMenuItem/NavbarMenuItem";
-import Stats from "../../../components/Stats/Stats";
-import {IoHome, IoPieChart, IoFlash, IoList, IoLogOut} from "react-icons/io5";
-import Body from "../../../components/Body/Body";
+import dbConnect from "../../../db/dbcon/dbcon";
+import mongoose from "mongoose";
+import { useSession } from "next-auth/react";
+import { authOptions } from "../../api/auth/[...nextauth]";
+import { getServerSession } from "next-auth/next";
+
 import Head from "next/head";
-import { useRouter } from "next/router";
+import Body from "../../../components/Body/Body";
 import Booking from "../../../db/models/Booking";
+import Stats from "../../../components/Stats/Stats";
 import Card from "../../../components/Card/Card";
 import { CardType } from "../../../components/Card/Card";
-import CompactLayout from "../../../components/layouts/CompactLayout/CompactLayout";
-import {GetServerSideProps} from "next";
-import dbConnect from "../../../db/dbcon/dbcon";
-import Home from "../../../db/models/Home";
-import Reading from "../../../db/models/Reading";
-import User from "../../../db/models/User";
-import mongoose from "mongoose";
+import {IoHome, IoPieChart, IoFlash, IoList, IoLogOut} from "react-icons/io5";
+
 
 // TO DO - UPDATE LINKS
 
-export default function Index({booking, sessionUser}) {
-    const router = useRouter();
+export default function Index({props}) {
+    const { data: session } = useSession();
+
+    const isAgency = session?.user?.isAgency;
 
     const navItems = [
-        <NavbarMenuItem
-                        icon={<IoHome />}
-                        text="All Homes"
-                        onClick={() => router.push(`/`)}
-                        activePage={false} 
-                    />,
-        <NavbarMenuItem
-                    icon={<IoPieChart />}
-                    text="Dashboard"
-                    onClick={() => router.push(`/`)}
-                    activePage={true} 
-        />,
-        <NavbarMenuItem
-                    icon={<IoFlash />}
-                    text="New Reading"
-                    onClick={() => router.push(`/`)}
-                    activePage={false} 
-        />,
-        <NavbarMenuItem
-                    icon={<IoList />}
-                    text="Instructions"
-                    onClick={() => router.push(`/`)}
-                    activePage={false} 
-        />,
-        <NavbarMenuItem
-                    icon={<IoLogOut />}
-                    text="Sign Out"
-                    onClick={() => router.push(`/`)}
-                    activePage={false} 
-        />]
+        {
+            icon: <IoHome />,
+            text: "All Homes",
+            path: "/homes",
+        },
+        {
+            icon: <IoPieChart />,
+            text: "Dashboard",
+            path: "/",
+            activePage: true
+        },
+        {
+            icon: <IoList />,
+            text: "Instructions",
+            path: "/"
+        },
+        {
+            icon: <IoLogOut />,
+            text: "Sign Out",
+            path: "/api/auth/signout"
+        }
+    ]
 
-    const statItems = [
-        <Stats stat="£1.77" text="Total Costs (minus Buffer)" />,
-        <Stats stat="27.2 kWh" text="Total Usage"/>,
+    const stats = [
+        {
+            stat: props?.stats?.homes,
+            text: "Homes"
+        },
+        {
+            stat: props?.stats?.bookingsLast3Months,
+            text: "Bookings (Last 3 Months)"
+        },
+        {
+            stat: props?.stats?.bookingsLast12Months,
+            text: "Bookings (Last 12 Months)"
+        }
     ]
 
 
@@ -66,14 +68,16 @@ export default function Index({booking, sessionUser}) {
                 <meta name="viewport" content="width=device-width, initial-scale=1" />
                 <link rel="icon" href="/favicon.ico" />
             </Head>
-            <Body menuItems={navItems} statItems={statItems}>
-                <div className="md:hidden">
-                    {statItems.map((stat) => (
+            <Body menuItems={navItems} statItems={stats} 
+                welcomeText={`Booking (${props.booking.startDateTime.getDate()} - ${props.booking.endDateTime.getDate()} ${props.booking.startDateTime.toLocaleString('default', { month: 'long'})})`}
+                welcomeImage={props.home.image}
+            >
+                <div className="space-x-6 w-full flex md:hidden">
+                    {stats.map((stat) => (
                         <Card cardType={CardType.stats}>
-                            {stat}
+                            <Stats stat={stat.stat} text={stat.text}/>
                         </Card>
                     ))}
-                    
                 </div>
                 
             </Body>
@@ -89,9 +93,16 @@ export default function Index({booking, sessionUser}) {
 export async function getServerSideProps({ req, res, params }) {
     await dbConnect();
 
-    try {
+    const session =  await getServerSession(req, res, authOptions)
 
-    } catch (e) {
+    const isAgency = session?.user?.isAgency == true;
+    const userId = session?.user?.id ?? "";
+
+
+    try{
+
+    }
+    catch (e) {
         console.log(e.message);
 
         return {
