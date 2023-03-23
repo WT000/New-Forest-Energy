@@ -92,8 +92,6 @@ export default function Index(props) {
         </>
         
 
-
-
        
     )
 }
@@ -108,11 +106,18 @@ export async function getServerSideProps({ req, res, params }) {
 
 
     try {
-        let b = await Booking.findById(params.friendlyId).lean();
+        let b = await Booking.find({friendlyId : params.friendlyId});
+        // get home image and home name when obtaining book
+
+        // get readings between start and end date, +1 day each side as one mongoose query
+        // get range, then get one before (if exists), then get one after (if exists)
 
         return {
             props: {
-                booking: b
+                booking: b,
+                stats: {
+                    totalCostStat: ""
+                }
             },
         };
 
