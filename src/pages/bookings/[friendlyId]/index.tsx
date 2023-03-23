@@ -1,5 +1,4 @@
 import dbConnect from "../../../db/dbcon/dbcon";
-import mongoose from "mongoose";
 import { useSession } from "next-auth/react";
 import { authOptions } from "../../api/auth/[...nextauth]";
 import { getServerSession } from "next-auth/next";
@@ -31,6 +30,11 @@ export default function Index({props}) {
             text: "Dashboard",
             path: "/",
             activePage: true
+        },
+        {
+            icon: <IoFlash />,
+            text: "New Reading",
+            path: "/"
         },
         {
             icon: <IoList />,
