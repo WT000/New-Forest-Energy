@@ -45,53 +45,43 @@ export default function NewHome(props) {
 
                 <div className="mx-12 my-2">
                     {/* To become the form component */}
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-x-20 gap-y-16">
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-x-20 gap-y-5">
                         {/* Image */}
-                        <div className="w-full h-5">
-                            <Tile tileType={TileType.input} clickable={false}>
-                                <InputLayout icon={<IoImages size="32px"/>} text={"Home Image"} type={"file"} name={"image"} placeholder={"Select Image"}/>
-                            </Tile>
-                        </div>
+                        <Tile tileType={TileType.input} clickable={false}>
+                            <InputLayout icon={<IoImages size="32px"/>} text={"Home Image"} type={"file"} name={"image"} placeholder={"Select Image"}/>
+                        </Tile>
 
                         {/* Image Preview */}
-                        <div className="w-full row-span-3">
+                        {/* May need a custom size set on md: breakpoint */}
+                        <Tile tileType={TileType.fill} customClass="row-span-3" clickable={false}>
                             <p>Image Preview</p>
-                        </div>
+                        </Tile>
 
                         {/* Name */}
-                        <div className="w-full h-5">
-                            <Tile tileType={TileType.input} clickable={false}>
-                                <InputLayout icon={<IoImages size="32px"/>} text={"Home Name"} type={"text"} name={"name"} placeholder={"My New Home..."}/>
-                            </Tile>
-                        </div>
+                        <Tile tileType={TileType.input} clickable={false}>
+                            <InputLayout icon={<IoImages size="32px"/>} text={"Home Name"} type={"text"} name={"name"} placeholder={"My New Home..."}/>
+                        </Tile>
 
                         {/* Beds */}
-                        <div className="w-full h-5">
-                            <Tile tileType={TileType.input} clickable={false}>
-                                <InputLayout icon={<IoImages size="32px"/>} text={"Number of Beds"} type={"number"} name={"beds"} placeholder={"4"}/>
-                            </Tile>
-                        </div>
+                        <Tile tileType={TileType.input} clickable={false}>
+                            <InputLayout icon={<IoImages size="32px"/>} text={"Number of Beds"} type={"number"} name={"beds"} placeholder={"4"}/>
+                        </Tile>
 
                         {/* Cost Buffer */}
-                        <div className="w-full h-5">
-                            <Tile tileType={TileType.input} clickable={false}>
-                                <InputLayout icon={<IoImages size="32px"/>} text={"Cost Buffer"} type={"number"} name={"costbuffer"} placeholder={"2.23"}/>
-                            </Tile>
-                        </div>
+                        <Tile tileType={TileType.input} clickable={false}>
+                            <InputLayout icon={<IoImages size="32px"/>} text={"Cost Buffer"} type={"number"} name={"costbuffer"} placeholder={"2.23"}/>
+                        </Tile>
 
                         {/* Instructions */}
-                        <div className="w-full row-span-2">
-                            <Tile tileType={TileType.input} clickable={false}>
-                                <InputLayout icon={<IoImages size="32px"/>} text={"Instructions"} type={"text"} name={"instructions"} placeholder={"Enter the room to the left of..."}/>
-                            </Tile>
-                        </div>
+                        {/* May need a custom size set on md: breakpoint */}
+                        <Tile tileType={TileType.fill} customClass="row-span-2" clickable={false}>
+                            <InputLayout icon={<IoImages size="32px"/>} text={"Instructions"} type={"textarea"} name={"instructions"} placeholder={"Enter the room to the left of..."}/>
+                        </Tile>
 
                         {/* Energy Tariff (per kWh) */}
-                        <div className="w-full h-5">
-                            <Tile tileType={TileType.input} clickable={false}>
-                                <InputLayout icon={<IoImages size="32px"/>} text={"Energy Tariff (per Kwh)"} type={"number"} name={"energytariff"} placeholder={"2.23"}/>
-                            </Tile>
-                        </div>
+                        <Tile tileType={TileType.input} clickable={false}>
+                            <InputLayout icon={<IoImages size="32px"/>} text={"Energy Tariff (per Kwh)"} type={"number"} name={"energytariff"} placeholder={"2.23"}/>
+                        </Tile>
                     </div>
                 </div>
             </Body>
