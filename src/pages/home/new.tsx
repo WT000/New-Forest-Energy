@@ -70,7 +70,7 @@ export default function NewHome(props) {
 
                         {/* Cost Buffer */}
                         <Tile tileType={TileType.input} clickable={false}>
-                            <InputLayout icon={<IoWallet size="32px"/>} text={"Cost Buffer"} type={"number"} name={"costbuffer"} placeholder={"2.23"}/>
+                            <InputLayout icon={<IoWallet size="32px"/>} text={"Cost Buffer"} type={"number"} name={"costbuffer"} placeholder={"2.23"} currency={true}/>
                         </Tile>
 
                         {/* Instructions */}
@@ -81,7 +81,7 @@ export default function NewHome(props) {
 
                         {/* Energy Tariff (per kWh) */}
                         <Tile tileType={TileType.input} clickable={false}>
-                            <InputLayout icon={<IoFlash size="32px"/>} text={"Energy Tariff (per Kwh)"} type={"number"} name={"energytariff"} placeholder={"2.23"}/>
+                            <InputLayout icon={<IoFlash size="32px"/>} text={"Energy Tariff (per Kwh)"} type={"number"} name={"energytariff"} placeholder={"2.23"} currency={true}/>
                         </Tile>
                         
                         <Button text="Submit" icon={<IoSave className="text-white"/>}/>
