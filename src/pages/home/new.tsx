@@ -1,8 +1,12 @@
+import { getServerSession } from "next-auth/next";
+import { authOptions } from "../api/auth/[...nextauth]";
 import Head from "next/head";
 import { IoHome, IoPieChart } from "react-icons/io5";
 import Body from "../../components/Body/Body";
 import NavbarMenuItem from "../../components/navbar/NavbarMenuItem/NavbarMenuItem";
 import NavbarStats from "../../components/Stats/Stats";
+import getRole from "../../lib/utils/getRole";
+import Role from "../../lib/utils/roles";
 
 const navItems = [
     <NavbarMenuItem key={"allhomes-link"} icon={<IoHome />} text="All Homes" onClick={() => console.log("AllHomes")} activePage={false} />,
@@ -29,4 +33,22 @@ export default function NewHome(props) {
             </Body>
         </>
     );
+}
+
+export async function getServerSideProps(context) {
+    const session = await getServerSession(context.req, context.res, authOptions)
+    const role = getRole(session);
+
+    if (role !== Role.Agency) {
+        return {
+            redirect: {
+                destination: "/",
+                permanent: false
+            }
+        }
+    }
+
+    return {
+        props: { session }
+    }
 }

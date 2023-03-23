@@ -1,4 +1,3 @@
-import { useSession } from "next-auth/react";
 import Head from "next/head";
 import { IoHome, IoPieChart } from "react-icons/io5";
 import Body from "../../../components/Body/Body";
@@ -16,9 +15,7 @@ const statItems = [
     <NavbarStats key={"cool-stats"}  stat="60" text="some more stats (that are cool)" />,
 ];
 
-export default function NewHome() {
-    const { data: session } = useSession();
-
+export default function EditHome() {
     return (
         <>
             <Head>
