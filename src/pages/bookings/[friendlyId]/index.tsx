@@ -10,6 +10,7 @@ import Stats from "../../../components/Stats/Stats";
 import Card from "../../../components/Card/Card";
 import { CardType } from "../../../components/Card/Card";
 import {IoHome, IoPieChart, IoFlash, IoList, IoLogOut} from "react-icons/io5";
+import { getDayMonth } from "../../../lib/utils/dates";
 
 
 // TO DO - UPDATE LINKS
@@ -63,6 +64,8 @@ export default function Index(props) {
         }
     ]
 
+    const startDate = getDayMonth(props.booking.startDateTime);
+    const endDate = getDayMonth(props.booking.endDateTime, true);
 
     return (
         <>
@@ -75,7 +78,7 @@ export default function Index(props) {
             <Body menuItems={navItems} statItems={stats} 
                 welcomeText={`Welcome to, ${props.home.name}`}
                 welcomeImage={props.home.image}
-                currentPage={`Booking (${props.booking.startDateTime.getDate()} ${props.booking.startDateTime.toLocaleString('default', { month: 'long'})} - ${props.booking.endDateTime.getDate()} ${props.booking.endDateTime.toLocaleString('default', { month: 'long'})})`}
+                currentPage={`Booking (${startDate} - ${endDate})`}
             >
                 <div className="space-x-6 w-full flex md:hidden">
                     {stats.map((stat) => (
