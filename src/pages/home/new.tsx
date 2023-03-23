@@ -18,6 +18,7 @@ import mongoose from "mongoose";
 import Home from "../../db/models/Home";
 import Booking from "../../db/models/Booking";
 import { ToSeriable } from "../../lib/utils/homes";
+import dbConnect from "../../db/dbcon/dbcon";
 
 
 
@@ -69,6 +70,8 @@ export default function NewHome(props) {
 }
 
 export async function getServerSideProps(context) {
+    await dbConnect();
+
     const session = await getServerSession(context.req, context.res, authOptions);
     const role = getRole(session);
 
@@ -93,6 +96,8 @@ export async function getServerSideProps(context) {
         const homeCountTask = Home.count(filter);
 
         const homes = await homesTask;
+
+        console.log(homes);
 
         const homeIds = homes.map(x => x._id);
 
