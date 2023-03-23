@@ -18,10 +18,10 @@ export function ToSeriableBooking(booking){
     return (
         {
             ...booking._doc,
-            _id: booking._id.toString()?? null,
-            home: booking.home?.toString() ?? null,
-            startDateTime: booking.startDateTime?.toString()?? null,
-            endDateTime: booking.endDateTime?.toString() ?? null,
+            _id: booking._id.toString(),
+            home: booking.home?.toString(),
+            startDateTime: booking.startDateTime?.toString(),
+            endDateTime: booking.endDateTime?.toString(),
         }
     )
 }
