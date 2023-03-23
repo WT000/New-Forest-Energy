@@ -10,9 +10,9 @@ const navItems = [
 ];
 
 const statItems = [
-    <NavbarStats stat="30" text="some stats (testing)" />,
-    <NavbarStats stat="£4.50" text="cost" />,
-    <NavbarStats stat="60" text="some more stats (that are cool)" />,
+    <NavbarStats key={"somestats-stats"} stat="30" text="some stats (testing)" />,
+    <NavbarStats key={"cost-stats"} stat="£4.50" text="cost" />,
+    <NavbarStats key={"cool-stats"}  stat="60" text="some more stats (that are cool)" />,
 ];
 
 export default function NewHome(props) {
