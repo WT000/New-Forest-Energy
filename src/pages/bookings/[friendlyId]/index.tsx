@@ -75,6 +75,7 @@ export default function Index({props}) {
             <Body menuItems={navItems} statItems={stats} 
                 welcomeText={`Booking (${props.booking.startDateTime.getDate()} - ${props.booking.endDateTime.getDate()} ${props.booking.startDateTime.toLocaleString('default', { month: 'long'})})`}
                 welcomeImage={props.home.image}
+                currentPage="Dashboard"
             >
                 <div className="space-x-6 w-full flex md:hidden">
                     {stats.map((stat) => (
