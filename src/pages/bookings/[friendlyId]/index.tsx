@@ -81,15 +81,9 @@ export default function Index(props) {
             <Body menuItems={navItems} statItems={stats} 
                 welcomeText={`Welcome to, ${props.booking.home.name}`}
                 welcomeImage={props.booking.home.image}
-                currentPage={`Booking (${startDate} - ${endDate})`}
-            >
-                <div className="w-full flex justify-evenly md:hidden">
-                    {stats.map((stat) => (
-                        <Card cardType={CardType.stats}>
-                            <Stats stat={stat.stat} text={stat.text}/>
-                        </Card>
-                    ))}
-                </div>
+                currentPage={`Booking (${startDate} - ${endDate})`}>
+
+                    <p>Test</p>
                 
             </Body>
         </>

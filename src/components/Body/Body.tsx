@@ -6,6 +6,8 @@ import NavbarMenu from "../navbar/NavbarMenu/NavbarMenu";
 import NavbarMenuItem from "../navbar/NavbarMenuItem/NavbarMenuItem";
 import Image from 'next/image';
 import NavbarStats from '../Stats/Stats'
+import Card, { CardType } from "../Card/Card";
+import Stats from "../Stats/Stats";
 
 export interface BodyNavItem{
     icon: React.ReactElement,
@@ -36,6 +38,13 @@ export default function Body(props: BodyProps){
 
     const navBarStats = props.statItems.map(x => {
         return (<NavbarStats stat={x.stat} text={x.text} key={x.text}/>)
+    })
+
+    const mobileNavBarStats = props.statItems.map(x => {
+        return (
+        <Card key={x.text} cardType={CardType.stats}>
+            <Stats stat={x?.stat} text={x?.text}/>
+        </Card>)
     })
 
     let title = props.currentPage;
@@ -80,6 +89,11 @@ export default function Body(props: BodyProps){
             <main className="mt-[70px] md:mt-0 md:ml-[calc(260px+1rem)]">
                 <div className="p-5 md:px-10 lg:px-12 xl:px-20 md:mt-2">
                     <h1 className="hidden md:block text-3xl">{title} <span className="text-xl">{dates}</span></h1>
+
+                    <div className="w-full flex justify-evenly md:hidden">
+                        {mobileNavBarStats}
+                    </div>
+
                     {props.children}
                 </div>
             </main>
