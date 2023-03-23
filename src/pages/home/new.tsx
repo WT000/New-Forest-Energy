@@ -12,6 +12,7 @@ import InputLayout from "../../components/layouts/InputLayout/InputLayout";
 import Tile from "../../components/Tile/Tile";
 import { TileType } from "../../components/Tile/Tile";
 import Button from "../../components/Button/Button";
+import InstructionsLayout from "../../components/layouts/InstructionsLayout/InstructionsLayout";
 
 const navItems = [
     <NavbarMenuItem key={"allhomes-link"} icon={<IoHome />} text="All Homes" onClick={() => console.log("AllHomes")} activePage={false} />,
@@ -76,7 +77,7 @@ export default function NewHome(props) {
                         {/* Instructions */}
                         {/* May need a custom size set on md: breakpoint */}
                         <Tile tileType={TileType.fill} customClass="row-span-2" clickable={false}>
-                            <InputLayout icon={<IoFootsteps size="32px"/>} text={"Instructions"} type={"textarea"} name={"instructions"} placeholder={"Enter the room to.."}/>
+                            <InstructionsLayout text="" editable={true}/>
                         </Tile>
 
                         {/* Energy Tariff (per kWh) */}
