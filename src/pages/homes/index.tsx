@@ -140,7 +140,7 @@ export async function getServerSideProps({ req, res, params }) {
                     bookingsLast3Months: (await bookingsLast3MonthsTask).toString(),
                     bookingsLast12Months: (await bookingsLast12MonthsTask).toString()
                 },
-                homes: homes.map(x => ToSeriable(x))
+                homes: homes.map(x => ToSeriableHome(x))
             },
         };
     }
