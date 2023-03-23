@@ -45,7 +45,7 @@ export default function Body(props: BodyProps){
                 </div>                    
             </div>
 
-            <main className="mt-[70px] md:mt-0 md:ml-[calc(260px+1rem)]">
+            <main className="mt-[70px] md:mt-0 md:ml-[calc(260px+1rem)] mb-[70px] md:mb-0">
                 <div className="p-5">
                     {props.children}
                 </div>
