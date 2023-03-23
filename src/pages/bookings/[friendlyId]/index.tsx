@@ -3,12 +3,8 @@ import { useSession } from "next-auth/react";
 import { authOptions } from "../../api/auth/[...nextauth]";
 import { getServerSession } from "next-auth/next";
 
-import Head from "next/head";
 import Body from "../../../components/Body/Body";
 import Booking from "../../../db/models/Booking";
-import Stats from "../../../components/Stats/Stats";
-import Card from "../../../components/Card/Card";
-import { CardType } from "../../../components/Card/Card";
 import {IoHome, IoPieChart, IoFlash, IoList, IoLogOut} from "react-icons/io5";
 import { getDayMonth } from "../../../lib/utils/dates";
 import { ToSeriableBooking } from "../../../lib/utils/json";
@@ -19,7 +15,6 @@ import Home from "../../../db/models/Home";
 
 export default function Index(props) {
     const { data: session } = useSession();
-    console.log(props.booking)
 
     const isAgency = session?.user?.isAgency;
 
@@ -54,42 +49,32 @@ export default function Index(props) {
 
     const stats = [
         {
-            stat: "£1.77",
-            text: "Homes"
+            stat: "to do",
+            text: "Total Cost (minus Buffer)"
         },
         {
-            stat: "test",
-            text: "Bookings (Last 3 Months)"
+            stat: "to do",
+            text: "Total Usage"
         },
-        // {
-        //     stat: props?.stats?.bookingsLast12Months,
-        //     text: "Bookings (Last 12 Months)"
-        // }
+        {
+            stat: `${props?.booking?.home?.energyTariff}p`,
+            text: "Current Tariff (per kWh)"
+        }
     ]
 
     const startDate = getDayMonth(new Date(props?.booking?.startDateTime));
-    const endDate = getDayMonth(new Date(props.booking.endDateTime), true);
+    const endDate = getDayMonth(new Date(props?.booking?.endDateTime), true);
 
     return (
-        <>
-            <Head>
-                <title>Energise</title>
-                <meta name="description" content="Booking Dashboard" />
-                <meta name="viewport" content="width=device-width, initial-scale=1" />
-                <link rel="icon" href="/favicon.ico" />
-            </Head>
-            <Body menuItems={navItems} statItems={stats} 
-                welcomeText={`Welcome to, ${props.booking.home.name}`}
-                welcomeImage={props.booking.home.image}
-                currentPage={`Booking (${startDate} - ${endDate})`}>
+        <Body menuItems={navItems} statItems={stats} 
+            welcomeText={`Welcome to, ${props?.booking?.home.name}`}
+            welcomeImage={props?.booking?.home?.image}
+            currentPage={`Booking (${startDate} - ${endDate})`}>
 
-                    <p>Test</p>
-                
-            </Body>
-        </>
-        
+                <p>Test</p>
+            
+        </Body>
 
-       
     )
 }
 
@@ -104,9 +89,9 @@ export async function getServerSideProps({ req, res, params }) {
 
     try {
         let b = await Booking.findOne({friendlyId : params.friendlyId})
-        .populate("home", "-_id name image", Home)
+        .populate("home", "_id name image energyBuffer energyTariff", Home)
         .lean();
-        // get home image and home name when obtaining book
+
 
         // get readings between start and end date, +1 day each side as one mongoose query
         // get range, then get one before (if exists), then get one after (if exists)
