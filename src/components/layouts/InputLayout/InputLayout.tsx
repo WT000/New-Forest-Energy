@@ -5,6 +5,7 @@ interface InputLayoutProps {
     name: string;
     placeholder: string;
     currency?: boolean;
+    onChange?: (e) => void;
 }
 
 export default function InputLayout(props: InputLayoutProps) {
@@ -17,11 +18,12 @@ export default function InputLayout(props: InputLayoutProps) {
                 <p className="text-black-500 text-xs">{text}</p>
                 <p className="">
                     {currency ? <span className="text-lg font-bold bg-transparent w-[95%] ">£</span> : <></>}
-                    <input
+                    <input 
+                        onChange={(e) => {props?.onChange && props.onChange(e)}}
                         className="text-lg placeholder:text-black font-bold bg-transparent w-[95%] 
-                            file:border-none file:bg-transparent file:cursor-pointer :"
-                        type={type}
-                        name={name}
+                            file:border-none file:bg-transparent file:cursor-pointer focus:outline-none focus:placeholder:text-black-500" 
+                        type={type} 
+                        name={name} 
                         placeholder={placeholder}
                     />
                 </p>
