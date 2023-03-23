@@ -5,32 +5,30 @@ import DesktopNavbar from "../components/navbar/DesktopNavbar/DesktopNavbar";
 import MobileNavbar from "../components/navbar/MobileNavbar/MobileNavbar";
 import MobileHeader from "../components/navbar/MobileHeader/MobileHeader";
 import {IoHome, IoPieChart, IoFlash, IoCalendar, IoList, IoLogOut, IoAdd} from "react-icons/io5";
-import Body from "../components/Body/Body";
+import Body, { BodyNavItem } from "../components/Body/Body";
 
 
 export default function test() {
-    const navItems = [
-        <NavbarMenuItem
-                        icon={<IoHome />}
-                        text="All Homes"
-                        onClick={() => console.log("AllHomes")}
-                        activePage={false} 
-                    />,
-        <NavbarMenuItem
-                    icon={<IoPieChart />}
-                    text="Dashboard"
-                    onClick={() => console.log("Dashboard")}
-                    activePage={true} 
-        />]
+    const navItems: BodyNavItem[] = [
+        {
+            icon: <IoHome />,
+            text:"All Homes",
+            path:"/homes"
+        },
+        {
+            icon: <IoPieChart />,
+            text:"Dashboard",
+            path: "/dashboard",
+            activePage:true
+        }] 
 
     const statItems = [
-        <NavbarStats stat="30" text="some stats (testing)" />,
-        <NavbarStats stat="£4.50" text="cost"/>,
-        <NavbarStats stat="60" text="some more stats (that are cool)"/>
+        {stat:"30", text:"some stats (testing)"},
+        {stat:"£4.50", text:"cost"},
+        {stat:"60", text:"some more stats (that are cool)"}
     ]
     return (
-        <Body menuItems={navItems} statItems={statItems}>
-            <>
+        <Body currentPage="dashboard" menuItems={navItems} statItems={statItems} welcomeText="Welcome, Rachel" welcomeImage="/stories/rachel.jpeg">
             <p>The Body</p>
             <p>asdfasdf</p>
             </>
