@@ -12,7 +12,7 @@ interface QRCodeProp {
 }
 
 export default function QRCode(props: QRCodeProp) {
-	const { text } = props;
+	const { text, width, margin, color } = props;
 	const { SVG } = useQRCode();
 
 	return (
@@ -20,12 +20,14 @@ export default function QRCode(props: QRCodeProp) {
 			<SVG
 				text={text}
 				options={{
-					margin: 0,
-					width: 200,
-					color: {
-						dark: "#010599FF",
-						light: "#FFBF60FF",
-					},
+					margin: margin ? margin : 0,
+					width: width ? width : 200,
+					color: color
+						? color
+						: {
+								dark: "#010599FF",
+								light: "#FFBF60FF",
+						  },
 				}}
 			/>
 		</a>
