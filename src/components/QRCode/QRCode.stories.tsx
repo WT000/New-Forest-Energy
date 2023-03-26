@@ -1,6 +1,5 @@
 import { ComponentMeta, ComponentStory } from "@storybook/react";
 import QRCode from "./QRCode";
-import { IoSave } from "react-icons/io5";
 
 export default {
 	title: "QRCode",
@@ -21,5 +20,5 @@ QRCodeCustom.args = {
 	text: "https://www.npmjs.com/package/next-qrcode",
 	margin: 4,
 	width: 750,
-	color: { dark: "#000000", light: "#FFFFFF" },
+	color: { dark: "#010599FF", light: "#FFBF60FF" },
 };

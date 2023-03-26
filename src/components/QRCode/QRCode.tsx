@@ -25,8 +25,8 @@ export default function QRCode(props: QRCodeProp) {
 					color: color
 						? color
 						: {
-								dark: "#010599FF",
-								light: "#FFBF60FF",
+								dark: "#000000",
+								light: "#FFFFFF",
 						  },
 				}}
 			/>
