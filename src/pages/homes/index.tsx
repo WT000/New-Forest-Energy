@@ -66,13 +66,19 @@ export default function AllHomes(props){
         )
     }
 
+    function deleteHome(e, id){
+        e.preventDefault()
+        //TODO - delete this log & replace with deleting home API call?
+        console.log("tmp deleting:", id);
+    }
+
     const homeTiles = props?.homes
             ?.filter(x => searchQuery == null || searchQuery == "" || 
                 x.name.toLowerCase().split(" ").some(y => y.startsWith(searchQuery.toLowerCase()))).map(x => {
         return (
             <Link key={x._id} href={`/homes/${x._id}`}>
-                <Tile  tileType ={TileType.home} clickable={true} onClick={() => console.log("Clicked")}>
-                    <HomeLayout image={x.image} name={x.name} sleeps={x.numBeds}/>
+                <Tile tileType ={TileType.home} clickable={true} onClick={() => console.log("Clicked")}>
+                    <HomeLayout onClick={isAgency ? (e) => deleteHome(e, x._id) : null} image={x.image} name={x.name} sleeps={x.numBeds}/>
                 </Tile>
             </Link>
 
