@@ -15,7 +15,7 @@ export default function Popup(props: PopupProps) {
   const { delegateName, delegateProfession, date, distance, image, name } =
     props;
 
-  var time = `${date.toLocaleTimeString("en-US", {
+  var time = `${date.toLocaleTimeString("en-GB", {
     hour: "2-digit",
     minute: "2-digit",
   })}`;

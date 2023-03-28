@@ -58,7 +58,6 @@ export default function Popup(props: PopupProps) {
         </div>
 
         
-        {/* everything in this div to below to be a child component */}
 
         <ReadingPopupLayout delegateName={delegateName} delegateProfession={delegateProfession} date={date} distance={distance} image={image} name={name}>
   
