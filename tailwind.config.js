@@ -32,6 +32,7 @@ module.exports = {
                 100: "#FAFAFA",
                 300: "#EDEEF0"
             },
+            red: "#C82D2D"
         },
         extend: {
             fontFamily: {

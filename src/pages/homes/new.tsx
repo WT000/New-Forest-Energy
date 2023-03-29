@@ -11,6 +11,7 @@ import Booking from "../../db/models/Booking";
 import { ToSeriable } from "../../lib/utils/homes";
 import dbConnect from "../../db/dbcon/dbcon";
 import { useRouter } from "next/router";
+import axios from "axios";
 
 
 export default function NewHome(props) {
@@ -53,6 +54,22 @@ export default function NewHome(props) {
                 <HomeForm
                     onSubmit={(home) => {}}
                     onCancel={() => {router.push("/")}}
+                    userFinder={async (email) => {
+                        try {
+                            // Attempt to find email
+                            const res = await axios.get(`/api/checkemail?email=${email}`)
+                            
+                            if (res.status == 200) {
+                                return true;
+                            }
+
+                        } catch (e) {
+                            console.log(e);
+                            return false;
+                        }
+
+                        return false;
+                    }}
                 />
             </Body>
         </>

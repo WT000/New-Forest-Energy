@@ -24,9 +24,9 @@ export interface EditHomeFormData extends HomeFormData {
 interface HomeFormProps {
     onSubmit: SubmitHandler<HomeFormData>;
     onCancel: () => void;
+    userFinder:(email: string) => Promise<boolean>;
     isLoading?: boolean;
     triggerReset?: boolean;
-
     edit?: {
         onDelete: () => void;
         onDeleteLoading: boolean;
@@ -34,8 +34,25 @@ interface HomeFormProps {
     };
 }
 
+function countDecimal(num: number) {
+    if (typeof num !== "number") return false;
+    
+    const numSplit = num.toString().split(".");
+    if (numSplit.length == 1) return true;
+    if (numSplit[1].length <= 2) return true;
+
+    return false;
+}
+
+async function findUser(email: string, userFinder: (email: string) => Promise<boolean>) {
+    if (typeof email !== "string") return false;
+    if (!email.match("[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?")) return false;
+    if (await userFinder(email)) return true;
+    return false;
+}
+
 export default function HomeForm(props: HomeFormProps) {
-    const { onSubmit, onCancel, isLoading, triggerReset, edit } = props;
+    const { onSubmit, onCancel, userFinder, isLoading, triggerReset, edit } = props;
 
     const {
         register,
@@ -57,7 +74,6 @@ export default function HomeForm(props: HomeFormProps) {
 
     return (
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-x-24 gap-y-3 mb-14 md:mb-0">
-            {/* Image */}
             <Tile tileType={TileType.input} clickable={false}>
                 <InputLayout
                     icon={<IoImages size="32px" />}
@@ -83,11 +99,16 @@ export default function HomeForm(props: HomeFormProps) {
                     name={"name"}
                     placeholder={"My New Home..."}
                     register={register}
+                    registerSettings={{
+                        required: true,
+                        minLength: 5,
+                    }}
+                    errors={errors.name}
+                    errorMessage={"*Must be at least 5 characters."}
                 />
             </Tile>
 
-            {/* Look for the email after a short period, checking if it actually exists */}
-            {/* Pass optional function to InputLayout */}
+            {/* Look for the email as validation */}
             <Tile tileType={TileType.input} clickable={false}>
                 <InputLayout
                     icon={<IoPerson size="32px" />}
@@ -96,6 +117,14 @@ export default function HomeForm(props: HomeFormProps) {
                     name={"owner"}
                     placeholder={"john.doe@gmail..."}
                     register={register}
+                    registerSettings={{
+                        required: true,
+                        validate: {
+                            real: user => findUser(user, userFinder)
+                        }
+                    }}
+                    errors={errors.owner}
+                    errorMessage={"*Must be a signed-up user."}
                 />
             </Tile>
 
@@ -108,13 +137,32 @@ export default function HomeForm(props: HomeFormProps) {
                     name={"numBeds"}
                     placeholder={"4"}
                     register={register}
+                    registerSettings={{
+                        required: true,
+                        valueAsNumber: true,
+                        validate: {
+                            pos: val => val > 0,
+                            int: val => Number.isInteger(val)
+                        },
+                    }}
+                    errors={errors.numBeds}
+                    errorMessage={"*Must be at least 1 and whole."}
                 />
             </Tile>
 
             {/* Instructions */}
             {/* May need a custom size set on md: breakpoint */}
             <Tile tileType={TileType.fill} customClass="row-span-3" clickable={false}>
-                <InstructionsLayout text="" editable={true} register={register} />
+                <InstructionsLayout
+                    text=""
+                    editable={true}
+                    register={register}
+                    registerSettings={{
+                        required: true,
+                    }}
+                    errors={errors.energyInstructions}
+                    errorMessage={"*Required"}
+                />
             </Tile>
 
             {/* Cost Buffer */}
@@ -127,6 +175,16 @@ export default function HomeForm(props: HomeFormProps) {
                     placeholder={"0.50"}
                     currency={true}
                     register={register}
+                    registerSettings={{
+                        required: true,
+                        valueAsNumber: true,
+                        validate: {
+                            pos: val => val >= 0,
+                            decimals: val => countDecimal(val)
+                        },
+                    }}
+                    errors={errors.energyBuffer}
+                    errorMessage={"*Must be at least £0."}
                 />
             </Tile>
 
@@ -140,6 +198,16 @@ export default function HomeForm(props: HomeFormProps) {
                     placeholder={"0.50"}
                     currency={true}
                     register={register}
+                    registerSettings={{
+                        required: true,
+                        valueAsNumber: true,
+                        validate: {
+                            pos: val => val >= 0,
+                            decimals: val => countDecimal(val)
+                        },
+                    }}
+                    errors={errors.energyTariff}
+                    errorMessage={"*Must be at least £0.01."}
                 />
             </Tile>
 
