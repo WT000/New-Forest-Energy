@@ -1,6 +1,5 @@
 import { getServerSession } from "next-auth/next";
 import { authOptions } from "../api/auth/[...nextauth]";
-import Head from "next/head";
 import { IoHome,IoLogOut } from "react-icons/io5";
 import Body from "../../components/Body/Body";
 import getRole from "../../lib/utils/getRole";
@@ -11,6 +10,7 @@ import Home from "../../db/models/Home";
 import Booking from "../../db/models/Booking";
 import { ToSeriable } from "../../lib/utils/homes";
 import dbConnect from "../../db/dbcon/dbcon";
+import { useRouter } from "next/router";
 
 
 export default function NewHome(props) {
@@ -45,10 +45,15 @@ export default function NewHome(props) {
         }
     ]
 
+    const router = useRouter();
+
     return (
         <>
             <Body statItems={stats} menuItems={navItems} welcomeText={`Welcome back, ${userSession?.user?.name}`} welcomeImage={userSession?.user?.image} currentPage="New Home">
-                <HomeForm/>
+                <HomeForm
+                    onSubmit={(home) => {}}
+                    onCancel={() => {router.push("/")}}
+                />
             </Body>
         </>
     );
@@ -71,7 +76,6 @@ export async function getServerSideProps(context) {
 
     const isAgency = session?.user?.isAgency == true;
     const userId = session?.user?.id ?? "";
-
 
     try{
         const filter = isAgency ? {} : { $or: [{ delegates: new mongoose.Types.ObjectId(userId) }, {owner: new mongoose.Types.ObjectId(userId)}] } 

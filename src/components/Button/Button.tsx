@@ -15,7 +15,7 @@ export default function Button(props: ButtonProp) {
 	return (
 		<button
 			onClick={onClick}
-			className={`${backgroundColour} rounded-lg ${shadowType} w-100 md:w-[368px] shadow-md flex gap-4 justify-center items-center py-2 px-4`}
+			className={`${backgroundColour} rounded-lg ${shadowType} w-100 md:w-[150px] shadow-md flex gap-4 justify-center items-center py-2 px-4`}
 		>
 			<div>{icon}</div>
 			<div className={`${textClassName}`}>{text}</div>
