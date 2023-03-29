@@ -35,19 +35,19 @@ export default function Popup(props: PopupProps) {
       id="defaultModal"
       tabIndex={-1}
       aria-hidden="true"
-      className="fixed top-0 left-0 right-0 z-50 w-full p-4 overflow-x-hidden overflow-y-auto md:inset-0 h-[calc(100%-1rem)] md:h-full bg-opacity-10 bg-darkblue-900/90"
+      className="fixed top-0 left-0 right-0 z-50 w-full p-4 overflow-x-hidden overflow-y-auto md:inset-0 h-[calc(100%-1rem)] md:h-full bg-opacity-10 bg-darkblue-900/90 "
     >
       <div className="relative w-full h-full max-w-2xl md:h-auto ">
         <div className="text-right ">
           <button
             type="button"
-            className="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center dark:hover:bg-gray-600 dark:hover:text-grey"
+            className="text-white bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5  ml-auto inline-flex items-center dark:hover:bg-gray-600 dark:hover:text-grey"
             data-modal-target="defaultModal" 
             data-modal-hide="defaultModal"
           >
             <svg
               aria-hidden="true"
-              className="w-5 h-5"
+              className="w-10 h-7"
               fill="currentColor"
               viewBox="0 0 20 20"
               xmlns="http://www.w3.org/2000/svg"

@@ -8,7 +8,6 @@ import {IoHome, IoPieChart, IoFlash, IoCalendar, IoList, IoLogOut, IoAdd} from "
 import Body from "../components/Body/Body";
 
 
-import Popup from "../components/Popup/Popup";
 
 
 export default function test() {
@@ -35,7 +34,6 @@ export default function test() {
         <Body menuItems={navItems} statItems={statItems}>
             <p>The Body</p>
 
-            <Popup delegateName={"Jack"} delegateProfession={"Builder"} date={new Date("2015-05-05T10:23:03.839Z")} distance={5} image={"/stories/popup1.jpg"} name={"image"} children={""}></Popup>
 
 
         </Body>

@@ -32,16 +32,16 @@ export default function Popup(props: PopupProps) {
 
 
         <div className="relative  rounded-lg dark:bg-gray-700 ">
-            <h3 className="text-xl font-semibold text-gray-900 dark:text-black pl-6">
+            <h3 className="text-xl font-semibold text-white dark:text-black pl-6">
                 {delegateName} ({delegateProfession})
             </h3>
 
             <div className="flex items-start justify-between rounded-t dark:border-gray-600">
-                <p className="text-s font-semibold text-gray-900 dark:text-black pt-1 pl-6">
+                <p className="text-s font-semibold text-white dark:text-black pt-1 pl-6">
                 {dayMonthYear} at {time}
                 </p>
 
-                <p className="text-s font-semibold text-gray-900 dark:text-black pt-1 pr-6">
+                <p className="text-s font-semibold text-white dark:text-black pt-1 pr-6">
                 {distance} kWh
                 </p>
             </div>
