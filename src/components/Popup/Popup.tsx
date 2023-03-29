@@ -27,6 +27,9 @@ export default function Popup(props: PopupProps) {
   })} ${date.getFullYear()}`;
 
   return (
+
+    <div>
+
     <div
       id="defaultModal"
       tabIndex={-1}
@@ -63,6 +66,8 @@ export default function Popup(props: PopupProps) {
   
         </ReadingPopupLayout>  
       </div>
+    </div>
+
     </div>
   );
 }
