@@ -31,7 +31,7 @@ export default function Popup(props: PopupProps) {
         
 
 
-        <div className="relative bg-white rounded-lg dark:bg-gray-700 ">
+        <div className="relative  rounded-lg dark:bg-gray-700 ">
             <h3 className="text-xl font-semibold text-gray-900 dark:text-black pl-6">
                 {delegateName} ({delegateProfession})
             </h3>
