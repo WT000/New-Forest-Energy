@@ -1,3 +1,6 @@
+import { UseFormRegister } from "react-hook-form";
+import { HomeFormData } from "../../forms/HomeForm/HomeForm";
+
 interface InputLayoutProps {
     icon: React.ReactElement;
     text: string;
@@ -5,11 +8,13 @@ interface InputLayoutProps {
     name: string;
     placeholder: string;
     currency?: boolean;
+    // Add HomeFormData | xFormData | yFormData in the future
+    register?: UseFormRegister<HomeFormData>;
     onChange?: (e) => void;
 }
 
 export default function InputLayout(props: InputLayoutProps) {
-    const { icon, text, type, name, placeholder, currency } = props;
+    const { icon, text, type, name, placeholder, currency, register } = props;
 
     return (
         <div className="grid grid-cols-5 m-auto w-full">
@@ -25,6 +30,8 @@ export default function InputLayout(props: InputLayoutProps) {
                         type={type} 
                         name={name} 
                         placeholder={placeholder}
+                        //@ts-ignore
+                        {...register && {...register(name)}}
                     />
                 </p>
             </div>
