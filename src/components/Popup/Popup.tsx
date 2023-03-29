@@ -1,6 +1,7 @@
 import Image from "next/image";
 import { ReactNode } from "react";
 import ReadingPopupLayout from "../layouts/ReadingPopupLayout/ReadingPopupLayout";
+import 'flowbite';
 
 interface PopupProps {
   delegateName: string;
@@ -41,6 +42,7 @@ export default function Popup(props: PopupProps) {
           <button
             type="button"
             className="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center dark:hover:bg-gray-600 dark:hover:text-grey"
+            data-modal-target="defaultModal" 
             data-modal-hide="defaultModal"
           >
             <svg
