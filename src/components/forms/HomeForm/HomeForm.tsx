@@ -5,6 +5,7 @@ import InputLayout from "../../layouts/InputLayout/InputLayout";
 import InstructionsLayout from "../../layouts/InstructionsLayout/InstructionsLayout";
 import Tile, { TileType } from "../../Tile/Tile";
 import { useEffect } from "react";
+import Role from "../../../lib/utils/roles";
 
 export interface HomeFormData {
     name: string;
@@ -31,6 +32,7 @@ interface HomeFormProps {
         onDelete: () => void;
         onDeleteLoading: boolean;
         editHome: EditHomeFormData;
+        role?: Role
     };
 }
 
@@ -134,6 +136,7 @@ export default function HomeForm(props: HomeFormProps) {
                     }}
                     errors={errors.owner}
                     errorMessage={"*Must be a signed-up user."}
+                    disabled={edit?.role != Role.Agency}
                 />
             </Tile>
 
@@ -232,7 +235,7 @@ export default function HomeForm(props: HomeFormProps) {
                     disabled={isLoading}
                 />
 
-                {edit && (
+                {edit && edit.role == Role.Agency && (
                     <Button
                         text="Delete"
                         icon={<IoTrashBin className="text-white" />}

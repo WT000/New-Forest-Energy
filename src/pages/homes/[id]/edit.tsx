@@ -16,7 +16,7 @@ import axios from "axios";
 import User from "../../../db/models/User";
 
 export default function EditHome(props) {
-    const { userSession, home } = props;
+    const { userSession, home, role } = props;
 
     const navItems = [
         {
@@ -91,7 +91,8 @@ export default function EditHome(props) {
                     edit={{
                         onDelete: () => mutateDelete(home.id),
                         onDeleteLoading: isLoadingDelete,
-                        editHome: home
+                        editHome: home,
+                        role: role,
                     }}
                     userFinder={async (email) => {
                         try {
@@ -170,6 +171,7 @@ export async function getServerSideProps(context) {
                 homes: homes.map((x) => ToSeriable(x)),
                 home: ToSeriable(home, "email"),
                 userSession: session,
+                role: role,
             },
         };
     } catch (e) {

@@ -14,10 +14,11 @@ interface InputLayoutProps {
     errors?: object;
     errorMessage?: string;
     onChange?: (e) => void;
+    disabled?: boolean;
 }
 
 export default function InputLayout(props: InputLayoutProps) {
-    const { icon, text, type, name, placeholder, currency, register, registerSettings, errors, errorMessage } = props;
+    const { icon, text, type, name, placeholder, currency, register, registerSettings, errors, errorMessage, disabled } = props;
 
     return (
         <div className="grid grid-cols-5 m-auto w-full">
@@ -32,13 +33,14 @@ export default function InputLayout(props: InputLayoutProps) {
                         onChange={(e) => {
                             props?.onChange && props.onChange(e);
                         }}
-                        className="text-lg placeholder:text-black font-bold bg-transparent w-[95%] 
+                        className="text-lg placeholder:text-black font-bold bg-transparent w-[95%] disabled:bg-white
                             file:border-none file:bg-transparent file:cursor-pointer focus:outline-none focus:placeholder:text-black-500"
                         type={type}
                         name={name}
                         placeholder={placeholder}
                         //@ts-ignore
                         {...(register && { ...register(name, registerSettings) })}
+                        disabled={disabled ? true : false}
                     />
                 </p>
             </div>
