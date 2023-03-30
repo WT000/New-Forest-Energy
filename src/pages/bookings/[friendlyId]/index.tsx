@@ -3,19 +3,23 @@ import { useSession } from "next-auth/react";
 import { authOptions } from "../../api/auth/[...nextauth]";
 import { getServerSession } from "next-auth/next";
 
-import Body from "../../../components/Body/Body";
 import Booking from "../../../db/models/Booking";
-import {IoHome, IoPieChart, IoFlash, IoList, IoLogOut, IoTrendingDown, IoTrendingUp} from "react-icons/io5";
-import { getDayMonth } from "../../../lib/utils/dates";
-import { ToSeriableBooking } from "../../../lib/utils/json";
 import Home from "../../../db/models/Home";
 import Reading from "../../../db/models/Reading";
+import User from "../../../db/models/User";
+
+import { getDayMonth } from "../../../lib/utils/dates";
+import { ToSeriableBooking } from "../../../lib/utils/json";
+
+import Body from "../../../components/Body/Body";
 import ProgressBar from "../../../components/ProgressBar/ProgressBar";
 import CompactLayout from "../../../components/layouts/CompactLayout/CompactLayout";
 import Card, { CardType } from "../../../components/Card/Card";
 import BarChart, { ChartDateType } from "../../../components/BarChart/BarChart";
 import ReadingContainer from "../../../components/ReadingContainer/ReadingContainer";
 import Subtitle from "../../../components/Subtitle/Subtitle";
+import { ReadingComponentInterface } from "../../../components/Reading/Reading";
+import {IoHome, IoPieChart, IoFlash, IoList, IoLogOut, IoTrendingDown, IoTrendingUp} from "react-icons/io5";
 
 
 // TO DO - UPDATE LINKS
@@ -71,6 +75,9 @@ export default function Index(props) {
         }
     ]
 
+
+    const readings = props.readings ? JSON.parse(props.readings) : null
+    
     const basicReadings = [
         {
           value: 100,
@@ -98,8 +105,6 @@ export default function Index(props) {
         }
     ]
 
-    const readings = props.readings ? JSON.parse(props.readings) : null
-
     const startDate = getDayMonth(new Date(props?.booking?.startDateTime));
     const endDate = getDayMonth(new Date(props?.booking?.endDateTime), true);
 
@@ -109,13 +114,13 @@ export default function Index(props) {
             welcomeImage={props?.booking?.home?.image}
             currentPage={`Booking (${startDate} - ${endDate})`}>
                 <div className="flex justify-between">
-                    <div className="md:w-[30%] md:my-10">
+                    <div className="md:w-[40%] md:my-10">
                         <div className="">
                             <ProgressBar num1={props?.booking?.home.energyBuffer} num2={4.50}
                                 text1="Buffer" text2="Total Cost" />
                         </div>
                         <div className="md:my-16">
-                            <div className="flex justify-between">
+                            <div className="flex justify-evenly">
                                 <Card cardType={CardType.comparison}>
                                     <CompactLayout 
                                         icon={<IoTrendingUp size="34px" className="text-green-500"/>}
@@ -136,7 +141,7 @@ export default function Index(props) {
                             dateType={ChartDateType.DayMonth} unitOfMeasure={"kWh"} />
                     </div>
                 </div>
-                <div className="md:w-[30%]">
+                <div className="md:w-[40%]">
                     <Subtitle text1="Latest Readings" text2="View More" showbar={true}/>
                     <ReadingContainer readings={readings}/>
                 </div>
@@ -165,8 +170,11 @@ export async function getServerSideProps({ req, res, params }) {
         // get readings between start and end date, +1 day each side as one mongoose query
         // get range, then get one before (if exists), then get one after (if exists)
 
-        const r = await Reading.find({ home: b.home._id})
-            .sort("-createdAt");
+        //@ts-ignore
+        const r = await Reading.find({ home: b.home._id })
+            .populate("user", "name", User)
+            .sort("-createdAt")
+            .limit(10);
 
 
         return {
