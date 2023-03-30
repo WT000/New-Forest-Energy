@@ -142,27 +142,29 @@ export async function getServerSideProps({ req, res, params }) {
             .populate("home", "_id name image energyBuffer energyTariff", Home)
             .lean();
 
-
-
         //@ts-ignore
-        const rBefore = await Reading.findOne({ home: b.home._id,  createdAt: { $lt:b.startDateTime } })
+        const rBefore = await Reading.find({ home: b.home._id,  createdAt: { $lt:b.startDateTime } })
             .populate("user", "name", User)
             .sort("-createdAt")
+            .limit(1);
         
         //@ts-ignore
-        const rAfter = await Reading.findOne({ home: b.home._id,  createdAt: { $gte:b.endDateTime } })
+        const rAfter = await Reading.find({ home: b.home._id,  createdAt: { $gte:b.endDateTime } })
             .populate("user", "name", User)
             .sort("createdAt")
+            .limit(1);
 
         //@ts-ignore
-        const r = await Reading.find({ home: b.home._id, createdAt: { $gte:b.startDateTime, $lt:b.endDateTime } })
+        const rRange = await Reading.find({ home: b.home._id, createdAt: { $gte:b.startDateTime, $lt:b.endDateTime } })
             .populate("user", "name", User)
-            .sort("-createdAt")
+            .sort("-createdAt");
 
-        
-        // get readings between start and end date, +1 day each side as one mongoose query
-        // get range, then get one before (if exists), then get one after (if exists)
 
+        const r = [
+            ...rBefore,
+            ...rRange,
+            ...rAfter
+        ]
 
         return {
             props: {
@@ -170,7 +172,6 @@ export async function getServerSideProps({ req, res, params }) {
                 readings: JSON.stringify(r),
             },
         };
-
     }
     catch (e) {
         console.log(e.message);
