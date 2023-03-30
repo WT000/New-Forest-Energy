@@ -39,19 +39,6 @@ export default function Index(props) {
         }
     ]
 
-    if(props?.userRole == Role.Guest) {
-        stats.push(
-            {
-                stat: `${props?.booking?.home?.energyTariff}p`,
-                text: "Current Tariff (per kWh)"
-            }
-        )
-    }
-
-    
-
-    // TO DO - make dynamic depending on user
-
     const navItems = [
         {
             icon: <IoHome />,
@@ -80,6 +67,16 @@ export default function Index(props) {
             path: "/api/auth/signout"
         }
     ]
+
+    if(props?.userRole == Role.Guest) {
+        stats.push({
+            stat: `${props?.booking?.home?.energyTariff}p`,
+            text: "Current Tariff (per kWh)" 
+        });
+        navItems.splice(0,1);
+    }
+
+    
 
     const startDate = getDayMonth(new Date(props?.booking?.startDateTime));
     const endDate = getDayMonth(new Date(props?.booking?.endDateTime), true);
