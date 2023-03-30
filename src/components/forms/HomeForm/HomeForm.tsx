@@ -47,7 +47,11 @@ function countDecimal(num: number) {
 async function findUser(email: string, userFinder: (email: string) => Promise<boolean>) {
     if (typeof email !== "string") return false;
     if (!email.match("[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?")) return false;
-    if (await userFinder(email)) return true;
+    try {
+        if (await userFinder(email)) return true;
+    } catch (e) {
+        console.log(e);
+    }
     return false;
 }
 
@@ -220,7 +224,7 @@ export default function HomeForm(props: HomeFormProps) {
                     })}
                 />
 
-                {edit && <Button text="Delete" icon={<IoTrashBin className="text-white" />} />}
+                {edit && <Button text="Delete" icon={<IoTrashBin className="text-white" />} warn={true} />}
             </div>
         </div>
     );
