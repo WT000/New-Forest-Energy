@@ -12,7 +12,7 @@ function getRole(session?: Session, home?: HomeInterface) {
     }
 
     // Check if Homeowner (owns the home)
-    if (home.owner.toString() == session.user.id.toString()) return Role.Homeowner;
+    if (home.owner.toString().includes(session.user.id.toString())) return Role.Homeowner;
 
     // Check if delegate (id is included within the list)
     if (home.delegates.toString().includes(session.user.id.toString())) return Role.Delegate;

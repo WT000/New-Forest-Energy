@@ -120,10 +120,10 @@ export async function getServerSideProps(context) {
     const session = await getServerSession(context.req, context.res, authOptions);
 
     // Find the home to be edited
-    const home = await Home.findOne({_id: context.params.id}).populate("owner", "-_id email", User);
+    const home = await Home.findOne({_id: context.params.id}).populate("owner", "email", User);
     const role = getRole(session, home);
-    
-    if (role !== Role.Agency && role !== Role.Homeowner) {
+
+    if (role != Role.Agency && role != Role.Homeowner) {
         return {
             redirect: {
                 destination: "/",
