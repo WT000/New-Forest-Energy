@@ -156,23 +156,23 @@ export async function getServerSideProps({ req, res, params }) {
 
 
     try {
-        let b = await Booking.findOne({friendlyId : params.friendlyId})
-        .populate("home", "_id name image energyBuffer energyTariff", Home)
-        .lean();
+        const b = await Booking.findOne({ friendlyId : params.friendlyId })
+            .populate("home", "_id name image energyBuffer energyTariff", Home)
+            .lean();
+        
 
 
         // get readings between start and end date, +1 day each side as one mongoose query
         // get range, then get one before (if exists), then get one after (if exists)
 
-        const seededReadings = await Reading.find({
-            home: params.id,
-        }).populate("user").sort("-createdAt");
+        const r = await Reading.find({ home: b.home._id})
+            .sort("-createdAt");
 
 
         return {
             props: {
                 booking: ToSeriableBooking(b),
-                readings: JSON.stringify(seededReadings)
+                readings: JSON.stringify(r)
             },
         };
 
