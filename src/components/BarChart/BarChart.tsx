@@ -20,9 +20,8 @@ export default function BarChart(props: ChartProps) {
   const { rawData } = props;
 
   let dates = rawData.map(reading => {
-    let date = reading.createdAt;
-    console.log(date.getDate())
-    
+    let date = new Date(reading.createdAt);
+   
 
     if(props.dateType == ChartDateType.DayMonth){
       return `${date.getDate()} ${date.toLocaleString('default', { month: 'long' })}`

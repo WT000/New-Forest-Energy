@@ -77,34 +77,7 @@ export default function Index(props) {
 
 
     const readings = props.readings ? JSON.parse(props.readings) : null
-    
-    const basicReadings = [
-        {
-          value: 100,
-          createdAt: new Date("2014-05-01T10:02:03.839Z"),
-        },
-        {
-          value: 102,
-          createdAt: new Date("2015-05-02T10:02:03.839Z"),
-        },
-        {
-          value: 110,
-          createdAt: new Date("2015-05-03T10:02:03.839Z"),
-        },
-        {
-          value: 125,
-          createdAt: new Date("2015-05-04T10:02:03.839Z"),
-        },
-        {
-          value: 70,
-          createdAt: new Date("2015-05-05T10:02:03.839Z"),
-        },
-        {
-          value: 130,
-          createdAt: new Date("2020-05-06T10:02:03.839Z"),
-        }
-    ]
-
+    const readingsRange = props.readingsRange ? JSON.parse(props.readingsRange) : null
     const startDate = getDayMonth(new Date(props?.booking?.startDateTime));
     const endDate = getDayMonth(new Date(props?.booking?.endDateTime), true);
 
@@ -136,9 +109,14 @@ export default function Index(props) {
                             </div>
                         </div>
                     </div>
-                    <div className="md:w-[60%] flex justify-center">
-                        <BarChart rawData={props?.rRange} beginAtZero={true} 
-                            dateType={ChartDateType.DayMonth} unitOfMeasure={"kWh"} />
+                    <div className="md:w-[60%] flex justify-center" >
+                        <div>
+                            <Subtitle text1="Usage Per Day (kWh)" text2="" showbar={false}/>
+                            <div className="md:ml-2 md:mt-3">
+                                <BarChart rawData={readingsRange} beginAtZero={true} 
+                                    dateType={ChartDateType.DayMonth} unitOfMeasure={"kWh"} />
+                            </div>
+                        </div>
                     </div>
                 </div>
                 <div className="md:w-[40%]">
@@ -170,7 +148,7 @@ export async function getServerSideProps({ req, res, params }) {
             .populate("user", "name", User)
             .sort("-createdAt")
             .limit(10);
-
+        
         // get readings between start and end date, +1 day each side as one mongoose query
         // get range, then get one before (if exists), then get one after (if exists)
 
@@ -178,7 +156,6 @@ export async function getServerSideProps({ req, res, params }) {
         const rRange = await Reading.find({ home: b.home._id, createdAt:{ $gte:b.startDateTime, $lt:b.endDateTime } })
             .select("-_id value createdAt")
             .lean();
-        console.log(rRange)
 
         return {
             props: {
