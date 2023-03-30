@@ -34,7 +34,7 @@ export default function Index(props) {
 
     const stats = [
         {
-            stat: `£${Math.round(props?.totalCost * 100) / 100}`,
+            stat: `£${Math.round(props?.totalCostMinusBuffer * 100) / 100}`,
             text: "Total Cost (minus Buffer)"
         },
         {
@@ -160,20 +160,21 @@ export async function getServerSideProps({ req, res, params }) {
         
         let usageList = rRange.map(a => a.value)
         let totalUsage = 0
-        let totalCost = 0
-
+        
         if (usageList.length == 1) {
             totalUsage = totalUsage[0];
         } else if (usageList.length > 1) {
             // @ts-ignore
             totalUsage = usageList.reduce(function(a, b) { return parseInt(a) + parseInt(b);})
-            //@ts-ignore
-            totalCost = Number(b.home.energyTariff) * totalUsage - Number(b.home.energyBuffer)
         }
 
         const readings = [ ...rAfter, ...rRange, ...rBefore ];
         const userRole = getRole(session)
-        
+        //@ts-ignore
+        const totalCost = Number(b.home.energyTariff) * totalUsage
+        //@ts-ignore
+        let totalCostMinusBuffer = totalCost - Number(b.home.energyBuffer)
+        if(totalCostMinusBuffer < 0)  totalCostMinusBuffer = 0
         
         return {
             props: {
@@ -182,6 +183,7 @@ export async function getServerSideProps({ req, res, params }) {
                 userRole: userRole,
                 totalUsage: totalUsage,
                 totalCost: totalCost,
+                totalCostMinusBuffer: totalCostMinusBuffer,
             },
         };
     }
