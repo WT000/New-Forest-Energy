@@ -15,6 +15,10 @@ export default function Button(props: ButtonProp) {
 	let shadowType = "shadow-neutral-350";
 	let textClassName = text && icon ? "text-white md:text-base" : "text-white";
 
+	// Trick tailwind into making these classes for the component, not sure why this needs to be done but it works
+	// let colours = "bg-red-500";
+	// let colours2 = "bg-red-400";
+
 	return (
 		<button
 			onClick={onClick}
