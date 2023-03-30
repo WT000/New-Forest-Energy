@@ -39,7 +39,7 @@ export async function getServerSideProps({ req, res, params }) {
 
     try {
         // Try to find the home (will fail if not a valid id and return 404)
-        let seededHome = await Home.findById(params.id).lean();
+        let seededHome = await Home.find({_id: params.id, isDeleted: false}).lean();
 
         if (!seededHome) {
             // If it doesn't exist then it needs to be seeded, make a home under this ID

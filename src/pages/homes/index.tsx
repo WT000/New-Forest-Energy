@@ -23,6 +23,8 @@ export default function AllHomes(props){
 
     const [searchQuery, setSearchQuery] = useState(null)
 
+    const [homes, setHomes] = useState(props?.homes)
+
     const { data: session } = useSession();
 
     const isAgency = session?.user?.isAgency;
@@ -70,9 +72,18 @@ export default function AllHomes(props){
         e.preventDefault()
         //TODO - delete this log & replace with deleting home API call?
         console.log("tmp deleting:", id);
+        fetch(`/api/homes/${id}`, { method: 'DELETE' })
+        .then((res) => res.json())
+        .then((data) => {
+            if(data.success){
+                let filteredArray = homes.filter(home => home._id !== id)
+                setHomes(filteredArray)
+            }
+        })
+    
     }
 
-    const homeTiles = props?.homes
+    const homeTiles = homes
             ?.filter(x => searchQuery == null || searchQuery == "" || 
                 x.name.toLowerCase().split(" ").some(y => y.startsWith(searchQuery.toLowerCase()))).map(x => {
         return (
@@ -107,12 +118,14 @@ export async function getServerSideProps({ req, res, params }) {
 
     const session =  await getServerSession(req, res, authOptions)
 
+    
+
+
     const isAgency = session?.user?.isAgency == true;
     const userId = session?.user?.id ?? "";
 
-
     try{
-        const filter = isAgency ? {} : { $or: [{ delegates: new mongoose.Types.ObjectId(userId) }, {owner: new mongoose.Types.ObjectId(userId)}] } 
+        const filter = isAgency ? {isDeleted: { $ne: true }} : {$and: [ {isDeleted: { $ne: true }} , { $or: [{ delegates: new mongoose.Types.ObjectId(userId) }, {owner: new mongoose.Types.ObjectId(userId)}]}] } 
 
         const homesTask = Home.find(filter);
 
