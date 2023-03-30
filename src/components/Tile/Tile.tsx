@@ -28,7 +28,7 @@ export default function Tile(props: TileProps) {
     if(clickable) {cursorStyle = "cursor-pointer"}
 
     return (
-        <div className={`${styling} ${customClass} ${cursorStyle} bg-transparent flex border-solid border-[1px] border-[#DCDCDD]`}
+        <div className={`${styling} ${customClass} ${cursorStyle} group/tile bg-transparent flex border-solid border-[1px] border-[#DCDCDD]`}
             onClick={onClick}
         >
             {children}

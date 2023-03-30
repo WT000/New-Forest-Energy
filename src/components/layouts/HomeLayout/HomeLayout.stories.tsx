@@ -12,5 +12,6 @@ export const RowesCottage = Template.bind({});
 RowesCottage.args = {
     image: "/stories/home1.jpg",
     name: "Rowes Cottage",
-    sleeps: 4
+    sleeps: 4,
+    onClick: (e) => console.log("clicked")
 };
