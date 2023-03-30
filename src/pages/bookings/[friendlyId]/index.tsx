@@ -77,7 +77,6 @@ export default function Index(props) {
 
 
     const readings = props.readings ? JSON.parse(props.readings) : null
-    const readingsRange = props.readingsRange ? JSON.parse(props.readingsRange) : null
     const startDate = getDayMonth(new Date(props?.booking?.startDateTime));
     const endDate = getDayMonth(new Date(props?.booking?.endDateTime), true);
 
@@ -113,7 +112,7 @@ export default function Index(props) {
                         <div>
                             <Subtitle text1="Usage Per Day (kWh)" text2="" showbar={false}/>
                             <div className="md:ml-2 md:mt-3">
-                                <BarChart rawData={readingsRange} beginAtZero={true} 
+                                <BarChart rawData={readings} beginAtZero={true} 
                                     dateType={ChartDateType.DayMonth} unitOfMeasure={"kWh"} />
                             </div>
                         </div>
@@ -143,25 +142,32 @@ export async function getServerSideProps({ req, res, params }) {
             .populate("home", "_id name image energyBuffer energyTariff", Home)
             .lean();
 
+
+
         //@ts-ignore
-        const r = await Reading.find({ home: b.home._id })
+        const rBefore = await Reading.findOne({ home: b.home._id,  createdAt: { $lt:b.startDateTime } })
             .populate("user", "name", User)
             .sort("-createdAt")
-            .limit(10);
+        
+        //@ts-ignore
+        const rAfter = await Reading.findOne({ home: b.home._id,  createdAt: { $gte:b.endDateTime } })
+            .populate("user", "name", User)
+            .sort("createdAt")
+
+        //@ts-ignore
+        const r = await Reading.find({ home: b.home._id, createdAt: { $gte:b.startDateTime, $lt:b.endDateTime } })
+            .populate("user", "name", User)
+            .sort("-createdAt")
+
         
         // get readings between start and end date, +1 day each side as one mongoose query
         // get range, then get one before (if exists), then get one after (if exists)
 
-        //@ts-ignore
-        const rRange = await Reading.find({ home: b.home._id, createdAt:{ $gte:b.startDateTime, $lt:b.endDateTime } })
-            .select("-_id value createdAt")
-            .lean();
 
         return {
             props: {
                 booking: ToSeriableBooking(b),
                 readings: JSON.stringify(r),
-                readingsRange: JSON.stringify(rRange)
             },
         };
 
