@@ -2,6 +2,7 @@ import mongoose, { Model, Schema, models, model } from "mongoose";
 
 export interface BookingInterface {
   _id?: string;
+  surname: string;
   friendlyId: string;
   urlId: string;
   home: mongoose.Schema.Types.ObjectId;
@@ -14,6 +15,10 @@ export interface BookingInterface {
 
 const bookingSchema = new Schema<BookingInterface, Model<BookingInterface>>(
   {
+    surname: {
+      type: String,
+      required: true,
+    },
     friendlyId: {
       type: String,
       required: true,

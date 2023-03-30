@@ -67,7 +67,7 @@ export default function ReadingContainer(props: ReadingContainertInterface) {
                         //@ts-ignore
                         creator={reading.user?.name ? reading.user.name : "Guest"}
                         //@ts-ignore
-                        kwhValue={reading.value}
+                        value={reading.value}
                         //@ts-ignore
                         image={reading.image}
                         //@ts-ignore
