@@ -86,7 +86,7 @@ export default function Body(props: BodyProps){
                 </div>                    
             </div>
 
-            <main className="mt-[70px] md:mt-0 md:ml-[calc(260px+1rem)]">
+            <main className="mt-[70px] md:mt-0 mb-[70px] md:mb-0 md:ml-[calc(260px+1rem)]">
                 <div className="p-5 md:px-10 lg:px-12 xl:px-20 md:mt-2">
                     <h1 className="hidden md:block text-3xl">{title} <span className="text-xl">{dates}</span></h1>
 
