@@ -10,6 +10,8 @@ import User from "../../../db/models/User";
 
 import { getDayMonth } from "../../../lib/utils/dates";
 import { ToSeriableBooking } from "../../../lib/utils/json";
+import getRole from "../../../lib/utils/getRole";
+import Role from "../../../lib/utils/roles";
 
 import Body from "../../../components/Body/Body";
 import ProgressBar from "../../../components/ProgressBar/ProgressBar";
@@ -18,16 +20,35 @@ import Card, { CardType } from "../../../components/Card/Card";
 import BarChart, { ChartDateType } from "../../../components/BarChart/BarChart";
 import ReadingContainer from "../../../components/ReadingContainer/ReadingContainer";
 import Subtitle from "../../../components/Subtitle/Subtitle";
-import { ReadingComponentInterface } from "../../../components/Reading/Reading";
 import {IoHome, IoPieChart, IoFlash, IoList, IoLogOut, IoTrendingDown, IoTrendingUp} from "react-icons/io5";
 
 
 // TO DO - UPDATE LINKS
 
 export default function Index(props) {
-    const { data: session } = useSession();
+    const readings = props.readings ? JSON.parse(props.readings) : null
+    
+    const stats = [
+        {
+            stat: "£1.77",
+            text: "Total Cost (minus Buffer)"
+        },
+        {
+            stat: "27.2 kWh",
+            text: "Total Usage"
+        }
+    ]
 
-    const isAgency = session?.user?.isAgency;
+    if(props?.userRole == Role.Guest) {
+        stats.push(
+            {
+                stat: `${props?.booking?.home?.energyTariff}p`,
+                text: "Current Tariff (per kWh)"
+            }
+        )
+    }
+
+    
 
     // TO DO - make dynamic depending on user
 
@@ -60,23 +81,6 @@ export default function Index(props) {
         }
     ]
 
-    const stats = [
-        {
-            stat: "£1.77",
-            text: "Total Cost (minus Buffer)"
-        },
-        {
-            stat: "27.2 kWh",
-            text: "Total Usage"
-        },
-        {
-            stat: `${props?.booking?.home?.energyTariff}p`,
-            text: "Current Tariff (per kWh)"
-        }
-    ]
-
-
-    const readings = props.readings ? JSON.parse(props.readings) : null
     const startDate = getDayMonth(new Date(props?.booking?.startDateTime));
     const endDate = getDayMonth(new Date(props?.booking?.endDateTime), true);
 
@@ -89,7 +93,7 @@ export default function Index(props) {
                     <div className="md:w-[40%] md:my-10">
                         <div className="">
                             <ProgressBar num1={props?.booking?.home.energyBuffer} num2={4.50}
-                                text1="Buffer" text2="Total Cost" />
+                                text1="Total Cost" text2="Buffer" />
                         </div>
                         <div className="md:mt-16 md:mb-8">
                             <div className="flex justify-evenly">
@@ -135,10 +139,6 @@ export async function getServerSideProps({ req, res, params }) {
 
     const session =  await getServerSession(req, res, authOptions)
 
-    const isAgency = session?.user?.isAgency == true;
-    const userId = session?.user?.id ?? "";
-
-
     try {
         const b = await Booking.findOne({ friendlyId : params.friendlyId })
             .populate("home", "_id name image energyBuffer energyTariff", Home)
@@ -161,17 +161,15 @@ export async function getServerSideProps({ req, res, params }) {
             .populate("user", "name", User)
             .sort("-createdAt");
 
+        const readings = [ ...rBefore, ...rRange, ...rAfter ];
 
-        const r = [
-            ...rBefore,
-            ...rRange,
-            ...rAfter
-        ]
+        const userRole = getRole(session)
 
         return {
             props: {
                 booking: ToSeriableBooking(b),
-                readings: JSON.stringify(r),
+                readings: JSON.stringify(readings),
+                userRole: userRole
             },
         };
     }
