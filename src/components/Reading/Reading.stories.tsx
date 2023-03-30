@@ -11,7 +11,7 @@ const Template: ComponentStory<typeof Reading> = (args) => <Reading {...args} />
 export const SimpleReading = Template.bind({});
 SimpleReading.args = {
     creator: "Guest",
-    kwhValue: 5,
+    value: 5,
     image: "",
     createdAt: new Date(),
     onClick: () => {
@@ -22,7 +22,7 @@ SimpleReading.args = {
 export const MobileReading = Template.bind({});
 MobileReading.args = {
     creator: "Guest",
-    kwhValue: 5,
+    value: 5,
     image: "",
     createdAt: new Date(),
     onClick: () => {
