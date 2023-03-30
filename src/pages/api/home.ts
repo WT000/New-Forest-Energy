@@ -101,7 +101,7 @@ export default async function handler(req, res) {
                 owner = await User.findOne({email: home.owner});
                 const editHome = await Home.findByIdAndUpdate(homedb._id, {
                     name: home.name,
-                    owner: owner._id,
+                    owner: role == Role.Agency ? owner._id : homedb.owner,
                     numBeds: home.numBeds,
                     energyInstructions: home.energyInstructions,
                     energyTariff: home.energyTariff,
