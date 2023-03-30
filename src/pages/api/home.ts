@@ -49,8 +49,10 @@ export default async function handler(req, res) {
         const session = await getServerSession(req, res, authOptions);
 
         let home;
+        let homedb;
         let valid;
         let role;
+        let owner;
         
         switch (method) {
             case "POST":
@@ -67,8 +69,7 @@ export default async function handler(req, res) {
 
                 console.log(`Creating home ${home.name}`);
                 
-                const owner = await User.findOne({email: home.owner});
-
+                owner = await User.findOne({email: home.owner});
                 const newHome = await Home.create({
                     name: home.name,
                     owner: owner._id,
@@ -78,38 +79,51 @@ export default async function handler(req, res) {
                     energyBuffer: home.energyBuffer
                 })
 
-                console.log(`Home ${home.name} created: ${newHome._id}`)
-                return res.json({success: true, id: newHome._id})
+                return res.json({success: true, id: newHome._id});
 
             case "PUT":
                 home = req.body;
                 valid = checkFormErrors(home, method);
 
-                home = await Home.findOne({_id: home._id});
-                role = getRole(session, home);
+                if (!valid) {
+                    return res.status(400).json({ success: false });
+                }
+
+                homedb = await Home.findOne({_id: home._id});
+                role = getRole(session, homedb);
                 
                 if (role != Role.Agency && role != Role.Homeowner) {
                     return res.status(401).json({ success: false });
                 }
 
-                if (!valid) {
-                    return res.status(400).json({ success: false });
-                }
+                console.log(`Editing home ${homedb.name}`);
 
-                console.log(`Editing home ${home.name}`);
+                owner = await User.findOne({email: home.owner});
+                const editHome = await Home.findByIdAndUpdate(homedb._id, {
+                    name: home.name,
+                    owner: owner._id,
+                    numBeds: home.numBeds,
+                    energyInstructions: home.energyInstructions,
+                    energyTariff: home.energyTariff,
+                    energyBuffer: home.energyBuffer
+                })
+                if (editHome) return res.json({success: true, id: homedb._id});
                 break;
 
             case "DELETE":
                 const homeId = req.query.id;
 
-                home = await Home.findOne({_id: homeId});
-                role = getRole(session, home);
+                homedb = await Home.findOne({_id: homeId});
+                role = getRole(session, homedb);
                 
                 if (role != Role.Agency) {
                     return res.status(401).json({ success: false });
                 }
 
-                console.log(`Deleting home ${homeId}`);
+                console.log(`Deleting home ${homedb.name}`);
+
+                const homeDelete = await Home.findByIdAndDelete(homedb._id);
+                if (homeDelete) return res.json({success: true});
                 break;
         }
         
