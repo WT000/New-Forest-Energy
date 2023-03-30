@@ -137,7 +137,7 @@ export default function Index(props) {
                         </div>
                     </div>
                     <div className="md:w-[60%] flex justify-center">
-                        <BarChart rawData={basicReadings} beginAtZero={true} 
+                        <BarChart rawData={props?.rRange} beginAtZero={true} 
                             dateType={ChartDateType.DayMonth} unitOfMeasure={"kWh"} />
                     </div>
                 </div>
@@ -164,11 +164,6 @@ export async function getServerSideProps({ req, res, params }) {
         const b = await Booking.findOne({ friendlyId : params.friendlyId })
             .populate("home", "_id name image energyBuffer energyTariff", Home)
             .lean();
-        
-
-
-        // get readings between start and end date, +1 day each side as one mongoose query
-        // get range, then get one before (if exists), then get one after (if exists)
 
         //@ts-ignore
         const r = await Reading.find({ home: b.home._id })
@@ -176,11 +171,20 @@ export async function getServerSideProps({ req, res, params }) {
             .sort("-createdAt")
             .limit(10);
 
+        // get readings between start and end date, +1 day each side as one mongoose query
+        // get range, then get one before (if exists), then get one after (if exists)
+
+        //@ts-ignore
+        const rRange = await Reading.find({ home: b.home._id, createdAt:{ $gte:b.startDateTime, $lt:b.endDateTime } })
+            .select("-_id value createdAt")
+            .lean();
+        console.log(rRange)
 
         return {
             props: {
                 booking: ToSeriableBooking(b),
-                readings: JSON.stringify(r)
+                readings: JSON.stringify(r),
+                readingsRange: JSON.stringify(rRange)
             },
         };
 
