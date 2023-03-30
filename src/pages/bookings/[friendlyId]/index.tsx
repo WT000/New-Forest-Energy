@@ -15,7 +15,7 @@ import CompactLayout from "../../../components/layouts/CompactLayout/CompactLayo
 import Card, { CardType } from "../../../components/Card/Card";
 import BarChart, { ChartDateType } from "../../../components/BarChart/BarChart";
 import ReadingContainer from "../../../components/ReadingContainer/ReadingContainer";
-import Subtitles from "../../../components/subtitles/Subtitles";
+import Subtitles from "../../../components/Subtitle/Subtitle";
 
 
 // TO DO - UPDATE LINKS

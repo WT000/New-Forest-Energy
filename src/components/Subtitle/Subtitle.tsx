@@ -1,10 +1,10 @@
-interface ProgressBarProps {
+interface SubtitleProps {
 	text1: string;
 	text2: string;
 	showbar: boolean;
 }
 
-export default function ProgressBar(props: ProgressBarProps) {
+export default function Subtitle(props: SubtitleProps) {
 	const { text1, text2, showbar } = props;
 
 	if (showbar) {
