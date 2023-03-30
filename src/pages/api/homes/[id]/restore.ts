@@ -1,9 +1,9 @@
 import { getServerSession } from "next-auth/next";
-import { authOptions } from "../../api/auth/[...nextauth]";
-import dbConnect from "../../../db/dbcon/dbcon";
-import Home from "../../../db/models/Home";
-import getRole from "../../../lib/utils/getRole";
-import Role from "../../../lib/utils/roles";
+import { authOptions } from "../../auth/[...nextauth]";
+import dbConnect from "../../../../db/dbcon/dbcon";
+import Home from "../../../../db/models/Home";
+import getRole from "../../../../lib/utils/getRole";
+import Role from "../../../../lib/utils/roles";
 
 export default async function handler(req, res) {
     try {
@@ -17,10 +17,10 @@ export default async function handler(req, res) {
             return res.status(400).json({ success: false });
         }
 
-        if (req.method === "DELETE") {
+        if (req.method === "PUT") {
             await dbConnect();
 
-            const deletedHome = await Home.updateOne({_id: id}, {isDeleted: true})
+            const deletedHome = await Home.updateOne({_id: id}, {isDeleted: false})
 
             return res.json({success: deletedHome.matchedCount > 0})
           }
