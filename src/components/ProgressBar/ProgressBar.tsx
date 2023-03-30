@@ -5,7 +5,6 @@ interface ProgressBarProps {
   num2: number;
 }
 
-import CSS from "csstype";
 
 export default function ProgressBar(props: ProgressBarProps) {
   const { text1, text2, num1, num2 } = props;
@@ -39,9 +38,7 @@ export default function ProgressBar(props: ProgressBarProps) {
   }
   
 
-  const progressStyle: CSS.Properties = {
-    width: `${prnct}%`,
-  };
+  const progressStyle = { width: `${prnct}%` };
 
   return (
     <div className=" ">
@@ -50,7 +47,7 @@ export default function ProgressBar(props: ProgressBarProps) {
          {stringlargenum} <span className="text-black-500">/ {stringsmallnum}</span>
         </div>
         <div className="text-2xl font-normal text-[18px]">
-          £{smallnum} <span className="text-black-500">/ £{largenum}</span>
+          £{smallnum.toFixed(2)} <span className="text-black-500">/ £{largenum.toFixed(2)}</span>
         </div>
       </div>
 

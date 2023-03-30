@@ -87,7 +87,7 @@ export default function Index(props) {
                 <div className="flex justify-between">
                     <div className="md:w-[40%] md:my-10">
                         <div className="">
-                            <ProgressBar num1={props?.booking?.home.energyBuffer} num2={4.50}
+                            <ProgressBar num1={props?.booking?.home.energyBuffer} num2={props?.totalCost}
                                 text1="Total Cost" text2="Buffer" />
                         </div>
                         <div className="md:mt-16 md:mb-8">
@@ -118,7 +118,7 @@ export default function Index(props) {
                     </div>
                 </div>
                 <div className="md:w-[40%]">
-                    <Subtitle text1="Latest Readings" text2="View More" showbar={true}/>
+                    <Subtitle text1="Latest Readings" showbar={true}/>
                     <div className="mt-3">
                         <ReadingContainer readings={readings}/>
                     </div>
