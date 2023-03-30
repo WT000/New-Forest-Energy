@@ -14,8 +14,14 @@ export function getDayMonth(date, withYear=false) {
     return `${d} ${m}${y}`
 }
 
-export function sortDateAscending(array: any[]) {
-    return array.sort(function(a: { createdAt : Date }, b: { createdAt : Date }) {
+export function sortDatesAscending(array) {
+    return array.sort(function(a, b) {
         return new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime()
+     } )
+}
+
+export function sortDatesDescending(array) {
+    return array.sort(function(a, b) {
+        return new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
      } )
 }

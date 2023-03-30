@@ -8,7 +8,7 @@ import Home from "../../../db/models/Home";
 import Reading from "../../../db/models/Reading";
 import User from "../../../db/models/User";
 
-import { getDayMonth, sortDateAscending } from "../../../lib/utils/dates";
+import { getDayMonth, sortDatesAscending, sortDatesDescending } from "../../../lib/utils/dates";
 import { ToSeriableBooking } from "../../../lib/utils/json";
 import getRole from "../../../lib/utils/getRole";
 import Role from "../../../lib/utils/roles";
@@ -29,11 +29,12 @@ export default function Index(props) {
     const readings = props.readings ? JSON.parse(props.readings) : null
     const startDate = getDayMonth(new Date(props?.booking?.startDateTime));
     const endDate = getDayMonth(new Date(props?.booking?.endDateTime), true);
-    const ascendingDates = sortDateAscending(readings);
+    const ascendingDates = sortDatesAscending(readings);
+
     
     const stats = [
         {
-            stat: `£${Math.round(props?.totalCost * 100) / 100}p`,
+            stat: `£${Math.round(props?.totalCost * 100) / 100}`,
             text: "Total Cost (minus Buffer)"
         },
         {
@@ -159,19 +160,21 @@ export async function getServerSideProps({ req, res, params }) {
         
         let usageList = rRange.map(a => a.value)
         let totalUsage = 0
+        let totalCost = 0
 
         if (usageList.length == 1) {
             totalUsage = totalUsage[0];
         } else if (usageList.length > 1) {
             // @ts-ignore
             totalUsage = usageList.reduce(function(a, b) { return parseInt(a) + parseInt(b);})
+            //@ts-ignore
+            totalCost = Number(b.home.energyTariff) * totalUsage - Number(b.home.energyBuffer)
         }
 
         const readings = [ ...rAfter, ...rRange, ...rBefore ];
         const userRole = getRole(session)
-        //@ts-ignore
-        const totalCost = Number(b.home.energyTariff) * totalUsage - Number(b.home.energyBuffer)
-
+        
+        
         return {
             props: {
                 booking: ToSeriableBooking(b),
