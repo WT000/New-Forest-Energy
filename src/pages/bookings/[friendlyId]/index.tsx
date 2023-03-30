@@ -5,10 +5,14 @@ import { getServerSession } from "next-auth/next";
 
 import Body from "../../../components/Body/Body";
 import Booking from "../../../db/models/Booking";
-import {IoHome, IoPieChart, IoFlash, IoList, IoLogOut} from "react-icons/io5";
+import {IoHome, IoPieChart, IoFlash, IoList, IoLogOut, IoTrendingDown, IoTrendingUp} from "react-icons/io5";
 import { getDayMonth } from "../../../lib/utils/dates";
 import { ToSeriableBooking } from "../../../lib/utils/json";
 import Home from "../../../db/models/Home";
+import ProgressBar from "../../../components/ProgressBar/ProgressBar";
+import CompactLayout from "../../../components/layouts/CompactLayout/CompactLayout";
+import Card from "../../../components/Card/Card";
+import { CardType } from "../../../components/Card/Card";
 
 
 // TO DO - UPDATE LINKS
@@ -17,6 +21,8 @@ export default function Index(props) {
     const { data: session } = useSession();
 
     const isAgency = session?.user?.isAgency;
+
+    // TO DO - make dynamic depending on user
 
     const navItems = [
         {
@@ -70,8 +76,36 @@ export default function Index(props) {
             welcomeText={`Welcome to, ${props?.booking?.home.name}`}
             welcomeImage={props?.booking?.home?.image}
             currentPage={`Booking (${startDate} - ${endDate})`}>
+                <div className="gird col-span-2">
+                    <div className="md:w-[30%] md:my-10">
+                        <div className="md:mb-12">
+                            <ProgressBar num1={props?.booking?.home.energyBuffer} num2={4.50}
+                                text1="Buffer" text2="Total Cost" />
+                        </div>
+                        <div className="md:my-12">
+                            <div className="flex justify-between">
+                                <Card cardType={CardType.comparison}>
+                                    <CompactLayout 
+                                        icon={<IoTrendingUp size="34px" className="text-green-500"/>}
+                                        textLine1={"vs Other Guests"}
+                                        textLine2={"10% less"} />
+                                </Card>
+                                <Card cardType={CardType.comparison}>
+                                    <CompactLayout 
+                                        icon={<IoTrendingDown size="34px" className="text-orange"/>}
+                                        textLine1={"vs Similar Homes"}
+                                        textLine2={"12% more"} />
+                                </Card>
+                            </div>
 
-                <p>Test</p>
+                        </div>
+
+                    </div>
+                    <div className="md:w-[40%]">
+
+                    </div>
+
+                </div>
             
         </Body>
 
