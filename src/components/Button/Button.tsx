@@ -2,20 +2,28 @@ interface ButtonProp {
 	icon?: React.ReactElement;
 	text?: string;
 	onClick?: (event: React.MouseEvent<HTMLButtonElement>) => void;
+	warn?: boolean;
+	disabled?: boolean;
 }
 
 export default function Button(props: ButtonProp) {
-	const { icon, text, onClick } = props;
+	const { icon, text, onClick, warn, disabled} = props;
 
+	let colour = !warn ? "green" : "red";
 	let backgroundColour =
-		"bg-gradient-to-br bg-green-400 hover:to-green-400 hover:from-green-500 hover:scale-105 transition ease-in-out";
+		`bg-gradient-to-br bg-${colour}-400 hover:to-${colour}-400 hover:from-${colour}-500 hover:scale-105 transition ease-in-out`;
 	let shadowType = "shadow-neutral-350";
 	let textClassName = text && icon ? "text-white md:text-base" : "text-white";
+
+	// Trick tailwind into making these classes for the component, not sure why this needs to be done but it works
+	// let colours = "bg-red-500";
+	// let colours2 = "bg-red-400";
 
 	return (
 		<button
 			onClick={onClick}
-			className={`${backgroundColour} rounded-lg ${shadowType} shadow-md flex gap-4 justify-center items-center py-2 px-4`}
+			className={`${backgroundColour} rounded-lg ${shadowType} w-100 md:w-[150px] shadow-md flex gap-4 justify-center items-center py-2 px-4`}
+			disabled={disabled ? true : false}
 		>
 			<div>{icon}</div>
 			<div className={`${textClassName}`}>{text}</div>

@@ -25,12 +25,17 @@ module.exports = {
             black: {
                 DEFAULT: "#051821",
                 500: "#77767A",
+                700: "#DCDCDD"
             },
             white: {
                 DEFAULT: "#FFFFFF",
                 100: "#FAFAFA",
                 300: "#EDEEF0"
             },
+            red: {
+                400: "#C82D2D",
+                500: "#DB2727"
+            }
         },
         extend: {
             fontFamily: {
