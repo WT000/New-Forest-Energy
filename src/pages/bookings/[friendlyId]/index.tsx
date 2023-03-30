@@ -9,10 +9,13 @@ import {IoHome, IoPieChart, IoFlash, IoList, IoLogOut, IoTrendingDown, IoTrendin
 import { getDayMonth } from "../../../lib/utils/dates";
 import { ToSeriableBooking } from "../../../lib/utils/json";
 import Home from "../../../db/models/Home";
+import Reading from "../../../db/models/Reading";
 import ProgressBar from "../../../components/ProgressBar/ProgressBar";
 import CompactLayout from "../../../components/layouts/CompactLayout/CompactLayout";
-import Card from "../../../components/Card/Card";
-import { CardType } from "../../../components/Card/Card";
+import Card, { CardType } from "../../../components/Card/Card";
+import BarChart, { ChartDateType } from "../../../components/BarChart/BarChart";
+import ReadingContainer from "../../../components/ReadingContainer/ReadingContainer";
+import Subtitles from "../../../components/subtitles/Subtitles";
 
 
 // TO DO - UPDATE LINKS
@@ -55,11 +58,11 @@ export default function Index(props) {
 
     const stats = [
         {
-            stat: "to do",
+            stat: "£1.77",
             text: "Total Cost (minus Buffer)"
         },
         {
-            stat: "to do",
+            stat: "27.2 kWh",
             text: "Total Usage"
         },
         {
@@ -67,6 +70,35 @@ export default function Index(props) {
             text: "Current Tariff (per kWh)"
         }
     ]
+
+    const basicReadings = [
+        {
+          value: 100,
+          createdAt: new Date("2014-05-01T10:02:03.839Z"),
+        },
+        {
+          value: 102,
+          createdAt: new Date("2015-05-02T10:02:03.839Z"),
+        },
+        {
+          value: 110,
+          createdAt: new Date("2015-05-03T10:02:03.839Z"),
+        },
+        {
+          value: 125,
+          createdAt: new Date("2015-05-04T10:02:03.839Z"),
+        },
+        {
+          value: 70,
+          createdAt: new Date("2015-05-05T10:02:03.839Z"),
+        },
+        {
+          value: 130,
+          createdAt: new Date("2020-05-06T10:02:03.839Z"),
+        }
+    ]
+
+    const readings = props.readings ? JSON.parse(props.readings) : null
 
     const startDate = getDayMonth(new Date(props?.booking?.startDateTime));
     const endDate = getDayMonth(new Date(props?.booking?.endDateTime), true);
@@ -76,13 +108,13 @@ export default function Index(props) {
             welcomeText={`Welcome to, ${props?.booking?.home.name}`}
             welcomeImage={props?.booking?.home?.image}
             currentPage={`Booking (${startDate} - ${endDate})`}>
-                <div className="gird col-span-2">
+                <div className="flex justify-between">
                     <div className="md:w-[30%] md:my-10">
-                        <div className="md:mb-12">
+                        <div className="">
                             <ProgressBar num1={props?.booking?.home.energyBuffer} num2={4.50}
                                 text1="Buffer" text2="Total Cost" />
                         </div>
-                        <div className="md:my-12">
+                        <div className="md:my-16">
                             <div className="flex justify-between">
                                 <Card cardType={CardType.comparison}>
                                     <CompactLayout 
@@ -97,14 +129,15 @@ export default function Index(props) {
                                         textLine2={"12% more"} />
                                 </Card>
                             </div>
-
                         </div>
-
                     </div>
-                    <div className="md:w-[40%]">
-
+                    <div className="md:w-[60%] flex justify-center">
+                        <BarChart rawData={basicReadings} beginAtZero={true} 
+                            dateType={ChartDateType.DayMonth} unitOfMeasure={"kWh"} />
                     </div>
-
+                </div>
+                <div className="md:w-[30%]">
+                    <ReadingContainer readings={readings}/>
                 </div>
             
         </Body>
@@ -129,9 +162,16 @@ export async function getServerSideProps({ req, res, params }) {
 
         // get readings between start and end date, +1 day each side as one mongoose query
         // get range, then get one before (if exists), then get one after (if exists)
+
+        const seededReadings = await Reading.find({
+            home: params.id,
+        }).populate("user").sort("-createdAt");
+
+
         return {
             props: {
                 booking: ToSeriableBooking(b),
+                readings: JSON.stringify(seededReadings)
             },
         };
 
