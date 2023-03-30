@@ -156,10 +156,19 @@ export async function getServerSideProps({ req, res, params }) {
             .populate("user", "name", User)
             .sort("createdAt");
 
-        const totalUsage = rRange.map(a => a.value).reduce(function(a, b) { return Number(a) + Number(b);});
+        
+        let usageList = rRange.map(a => a.value)
+        let totalUsage = 0
+
+        if (usageList.length == 1) {
+            totalUsage = totalUsage[0];
+        } else if (usageList.length > 1) {
+            // @ts-ignore
+            totalUsage = usageList.reduce(function(a, b) { return parseInt(a) + parseInt(b);})
+        }
+
         const readings = [ ...rAfter, ...rRange, ...rBefore ];
         const userRole = getRole(session)
-
         //@ts-ignore
         const totalCost = Number(b.home.energyTariff) * totalUsage - Number(b.home.energyBuffer)
 
