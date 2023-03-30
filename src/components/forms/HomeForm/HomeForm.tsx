@@ -220,7 +220,9 @@ export default function HomeForm(props: HomeFormProps) {
                     text="Submit"
                     icon={<IoSave className="text-white" />}
                     onClick={handleSubmit((data) => {
-                        console.log(data);
+                        onSubmit({
+                            ...data
+                        })
                     })}
                 />
 
