@@ -17,6 +17,7 @@ export default async function handler(req, res) {
             // Find email in db
             const user = await User.findOne({email: email})
             if (user) return res.json({success: true});
+            return res.status(404).json({success: false});
         }
 
         res.status(401).json({success: false});

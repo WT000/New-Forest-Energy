@@ -28,6 +28,7 @@ const homeSchema = new Schema<HomeInterface, Model<HomeInterface>>(
         type: mongoose.Schema.Types.ObjectId,
         ref: "User",
         required: true,
+        default: [],
       },
     ],
     name: {

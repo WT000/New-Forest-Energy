@@ -54,8 +54,7 @@ export default function NewHome(props) {
         },
         {
             onSuccess: (data) => {
-                console.log(data);
-                // router.push(`/recipes/${data?.data?.data?.id?._id}`);
+                router.push(`/homes/${data?.data?.id}`);
             },
         }
     );

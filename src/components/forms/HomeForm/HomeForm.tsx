@@ -34,7 +34,7 @@ interface HomeFormProps {
     };
 }
 
-function countDecimal(num: number) {
+export function countDecimal(num: number) {
     if (typeof num !== "number") return false;
     
     const numSplit = num.toString().split(".");
@@ -105,10 +105,10 @@ export default function HomeForm(props: HomeFormProps) {
                     register={register}
                     registerSettings={{
                         required: true,
-                        minLength: 5,
+                        minLength: 4,
                     }}
                     errors={errors.name}
-                    errorMessage={"*Must be at least 5 characters."}
+                    errorMessage={"*Must be at least 4 characters."}
                 />
             </Tile>
 

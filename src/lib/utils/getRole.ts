@@ -2,7 +2,6 @@ import Role from "./roles";
 import { HomeInterface } from "../../db/models/Home";
 import { Session } from "next-auth";
 
-// Takes in a Home and User, returns an enum based on the type
 function getRole(session?: Session, home?: HomeInterface) {
     // Immediately check if Agency (admin)
     if (session?.user?.isAgency) return Role.Agency;
