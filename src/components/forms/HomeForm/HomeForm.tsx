@@ -83,6 +83,8 @@ export default function HomeForm(props: HomeFormProps) {
         }
     }, [triggerReset, reset]);
 
+    console.log(edit?.role)
+
     return (
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-x-24 gap-y-3 mb-14 md:mb-0">
             <Tile tileType={TileType.input} clickable={false}>
@@ -136,7 +138,7 @@ export default function HomeForm(props: HomeFormProps) {
                     }}
                     errors={errors.owner}
                     errorMessage={"*Must be a signed-up user."}
-                    disabled={edit?.role != Role.Agency}
+                    disabled={edit?.role == Role.Homeowner}
                 />
             </Tile>
 
