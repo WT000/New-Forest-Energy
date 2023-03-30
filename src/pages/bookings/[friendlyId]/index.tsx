@@ -29,9 +29,9 @@ export default function Index(props) {
     const readings = props.readings ? JSON.parse(props.readings) : null
     const startDate = getDayMonth(new Date(props?.booking?.startDateTime));
     const endDate = getDayMonth(new Date(props?.booking?.endDateTime), true);
-    const ascendingDates = sortDatesAscending(readings);
+    const ascendingDates = [...readings];
+    sortDatesAscending(ascendingDates)
 
-    
     const stats = [
         {
             stat: `£${Math.round(props?.totalCost * 100) / 100}`,
