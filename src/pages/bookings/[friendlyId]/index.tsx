@@ -73,7 +73,7 @@ export default function Index(props) {
 
     if(props?.userRole == Role.Guest) {
         stats.push({
-            stat: `${props?.booking?.home?.energyTariff}p`,
+            stat: `${props?.booking?.home?.energyTariff * 100}p`,
             text: "Current Tariff (per kWh)" 
         });
         navItems.splice(0,1);
@@ -84,14 +84,14 @@ export default function Index(props) {
             welcomeText={`Welcome to, ${props?.booking?.home.name}`}
             welcomeImage={props?.booking?.home?.image}
             currentPage={`Booking (${startDate} - ${endDate})`}>
-                <div className="flex justify-between">
-                    <div className="md:w-[40%] md:my-10">
+                <div className="md:flex md:justify-between ">
+                    <div className="md:w-[42%] my-10 ">
                         <div className="">
                             <ProgressBar num1={props?.booking?.home.energyBuffer} num2={props?.totalCost}
                                 text1="Total Cost" text2="Buffer" />
                         </div>
-                        <div className="md:mt-16 md:mb-8">
-                            <div className="flex justify-evenly">
+                        <div className="mt-10 md:mt-16 mb-8">
+                            <div className="flex justify-between">
                                 <Card cardType={CardType.comparison}>
                                     <CompactLayout 
                                         icon={<IoTrendingUp size="34px" className="text-green-500"/>}
@@ -107,17 +107,17 @@ export default function Index(props) {
                             </div>
                         </div>
                     </div>
-                    <div className="md:w-[60%] flex justify-center" >
+                    <div className="md:w-[42%] flex justify-center" >
                         <div>
                             <Subtitle text1="Usage Per Day (kWh)" showbar={false}/>
-                            <div className="md:ml-2 md:mt-3">
+                            <div className="ml-2 mt-3">
                                 <BarChart rawData={ascendingDates} beginAtZero={true} 
                                     dateType={ChartDateType.DayMonth} unitOfMeasure={"kWh"} />
                             </div>
                         </div>
                     </div>
                 </div>
-                <div className="md:w-[40%]">
+                <div className="mt-14 md:mt-0 md:w-[42%]">
                     <Subtitle text1="Latest Readings" showbar={true}/>
                     <div className="mt-3">
                         <ReadingContainer readings={readings}/>
