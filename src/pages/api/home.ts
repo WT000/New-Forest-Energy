@@ -122,7 +122,9 @@ export default async function handler(req, res) {
 
                 console.log(`Deleting home ${homedb.name}`);
 
-                const homeDelete = await Home.findByIdAndDelete(homedb._id);
+                const homeDelete = await Home.findByIdAndUpdate(homedb._id, {
+                    isDeleted: true
+                });
                 if (homeDelete) return res.json({success: true});
                 break;
         }
