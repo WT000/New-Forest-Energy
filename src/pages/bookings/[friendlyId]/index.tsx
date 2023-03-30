@@ -8,7 +8,7 @@ import Home from "../../../db/models/Home";
 import Reading from "../../../db/models/Reading";
 import User from "../../../db/models/User";
 
-import { getDayMonth } from "../../../lib/utils/dates";
+import { getDayMonth, sortDateAscending } from "../../../lib/utils/dates";
 import { ToSeriableBooking } from "../../../lib/utils/json";
 import getRole from "../../../lib/utils/getRole";
 import Role from "../../../lib/utils/roles";
@@ -27,14 +27,17 @@ import {IoHome, IoPieChart, IoFlash, IoList, IoLogOut, IoTrendingDown, IoTrendin
 
 export default function Index(props) {
     const readings = props.readings ? JSON.parse(props.readings) : null
+    const startDate = getDayMonth(new Date(props?.booking?.startDateTime));
+    const endDate = getDayMonth(new Date(props?.booking?.endDateTime), true);
+    const ascendingDates = sortDateAscending(readings);
     
     const stats = [
         {
-            stat: "£1.77",
+            stat: `£${Math.round(props?.totalCost * 100) / 100}p`,
             text: "Total Cost (minus Buffer)"
         },
         {
-            stat: "27.2 kWh",
+            stat: `${props?.totalUsage} kWh`,
             text: "Total Usage"
         }
     ]
@@ -76,11 +79,6 @@ export default function Index(props) {
         navItems.splice(0,1);
     }
 
-    
-
-    const startDate = getDayMonth(new Date(props?.booking?.startDateTime));
-    const endDate = getDayMonth(new Date(props?.booking?.endDateTime), true);
-
     return (
         <Body menuItems={navItems} statItems={stats} 
             welcomeText={`Welcome to, ${props?.booking?.home.name}`}
@@ -113,7 +111,7 @@ export default function Index(props) {
                         <div>
                             <Subtitle text1="Usage Per Day (kWh)" showbar={false}/>
                             <div className="md:ml-2 md:mt-3">
-                                <BarChart rawData={readings} beginAtZero={true} 
+                                <BarChart rawData={ascendingDates} beginAtZero={true} 
                                     dateType={ChartDateType.DayMonth} unitOfMeasure={"kWh"} />
                             </div>
                         </div>
@@ -156,17 +154,22 @@ export async function getServerSideProps({ req, res, params }) {
         //@ts-ignore
         const rRange = await Reading.find({ home: b.home._id, createdAt: { $gte:b.startDateTime, $lt:b.endDateTime } })
             .populate("user", "name", User)
-            .sort("-createdAt");
+            .sort("createdAt");
 
-        const readings = [ ...rBefore, ...rRange, ...rAfter ];
-
+        const totalUsage = rRange.map(a => a.value).reduce(function(a, b) { return Number(a) + Number(b);});
+        const readings = [ ...rAfter, ...rRange, ...rBefore ];
         const userRole = getRole(session)
+
+        //@ts-ignore
+        const totalCost = Number(b.home.energyTariff) * totalUsage - Number(b.home.energyBuffer)
 
         return {
             props: {
                 booking: ToSeriableBooking(b),
                 readings: JSON.stringify(readings),
-                userRole: userRole
+                userRole: userRole,
+                totalUsage: totalUsage,
+                totalCost: totalCost,
             },
         };
     }

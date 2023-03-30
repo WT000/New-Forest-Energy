@@ -13,3 +13,9 @@ export function getDayMonth(date, withYear=false) {
     
     return `${d} ${m}${y}`
 }
+
+export function sortDateAscending(array: any[]) {
+    return array.sort(function(a: { createdAt : Date }, b: { createdAt : Date }) {
+        return new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime()
+     } )
+}
