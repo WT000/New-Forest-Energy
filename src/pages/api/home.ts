@@ -48,41 +48,71 @@ export default async function handler(req, res) {
         await dbConnect();
         const session = await getServerSession(req, res, authOptions);
 
-        if (getRole(session) == Role.Agency) {
-            const home = req.body;
-            const valid = checkFormErrors(home, method);
+        let home;
+        let valid;
+        let role;
+        
+        switch (method) {
+            case "POST":
+                if (getRole(session) != Role.Agency) {
+                    return res.status(400).json({ success: false });
+                }
 
-            if (!valid) {
-                return res.status(400).json({ success: false });
-            }
+                home = req.body;
+                valid = checkFormErrors(home, method);
 
-            switch (method) {
-                case "POST":
-                    console.log(`Creating home ${home.name}`);
-                    
-                    const owner = await User.findOne({email: home.owner});
+                if (!valid) {
+                    return res.status(400).json({ success: false });
+                }
 
-                    const newHome = await Home.create({
-                        name: home.name,
-                        owner: owner._id,
-                        numBeds: home.numBeds,
-                        energyInstructions: home.energyInstructions,
-                        energyTariff: home.energyTariff,
-                        energyBuffer: home.energyBuffer
-                    })
+                console.log(`Creating home ${home.name}`);
+                
+                const owner = await User.findOne({email: home.owner});
 
-                    console.log(`Home ${home.name} created: ${newHome._id}`)
-                    return res.json({success: true, id: newHome._id})
+                const newHome = await Home.create({
+                    name: home.name,
+                    owner: owner._id,
+                    numBeds: home.numBeds,
+                    energyInstructions: home.energyInstructions,
+                    energyTariff: home.energyTariff,
+                    energyBuffer: home.energyBuffer
+                })
 
-                case "PUT":
-                    console.log(`Editing home ${home.name}`);
-                    break;
+                console.log(`Home ${home.name} created: ${newHome._id}`)
+                return res.json({success: true, id: newHome._id})
 
-                case "DELETE":
-                    console.log(`Deleting home ${home.name}`);
-                    break;
-            }
+            case "PUT":
+                home = req.body;
+                valid = checkFormErrors(home, method);
+
+                home = await Home.findOne({_id: home._id});
+                role = getRole(session, home);
+                
+                if (role != Role.Agency && role != Role.Homeowner) {
+                    return res.status(401).json({ success: false });
+                }
+
+                if (!valid) {
+                    return res.status(400).json({ success: false });
+                }
+
+                console.log(`Editing home ${home.name}`);
+                break;
+
+            case "DELETE":
+                const homeId = req.query.id;
+
+                home = await Home.findOne({_id: homeId});
+                role = getRole(session, home);
+                
+                if (role != Role.Agency) {
+                    return res.status(401).json({ success: false });
+                }
+
+                console.log(`Deleting home ${homeId}`);
+                break;
         }
+        
 
         res.status(401).json({ success: false });
     } catch (e) {

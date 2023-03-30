@@ -24,7 +24,7 @@ export interface EditHomeFormData extends HomeFormData {
 interface HomeFormProps {
     onSubmit: SubmitHandler<HomeFormData>;
     onCancel: () => void;
-    userFinder:(email: string) => Promise<boolean>;
+    userFinder: (email: string) => Promise<boolean>;
     isLoading?: boolean;
     triggerReset?: boolean;
     edit?: {
@@ -36,7 +36,7 @@ interface HomeFormProps {
 
 export function countDecimal(num: number) {
     if (typeof num !== "number") return false;
-    
+
     const numSplit = num.toString().split(".");
     if (numSplit.length == 1) return true;
     if (numSplit[1].length <= 2) return true;
@@ -46,7 +46,12 @@ export function countDecimal(num: number) {
 
 async function findUser(email: string, userFinder: (email: string) => Promise<boolean>) {
     if (typeof email !== "string") return false;
-    if (!email.match("[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?")) return false;
+    if (
+        !email.match(
+            "[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?"
+        )
+    )
+        return false;
     try {
         if (await userFinder(email)) return true;
     } catch (e) {
@@ -124,8 +129,8 @@ export default function HomeForm(props: HomeFormProps) {
                     registerSettings={{
                         required: true,
                         validate: {
-                            real: user => findUser(user, userFinder)
-                        }
+                            real: (user) => findUser(user, userFinder),
+                        },
                     }}
                     errors={errors.owner}
                     errorMessage={"*Must be a signed-up user."}
@@ -145,8 +150,8 @@ export default function HomeForm(props: HomeFormProps) {
                         required: true,
                         valueAsNumber: true,
                         validate: {
-                            pos: val => val > 0,
-                            int: val => Number.isInteger(val)
+                            pos: (val) => val > 0,
+                            int: (val) => Number.isInteger(val),
                         },
                     }}
                     errors={errors.numBeds}
@@ -183,8 +188,8 @@ export default function HomeForm(props: HomeFormProps) {
                         required: true,
                         valueAsNumber: true,
                         validate: {
-                            pos: val => val >= 0,
-                            decimals: val => countDecimal(val)
+                            pos: (val) => val >= 0,
+                            decimals: (val) => countDecimal(val),
                         },
                     }}
                     errors={errors.energyBuffer}
@@ -206,8 +211,8 @@ export default function HomeForm(props: HomeFormProps) {
                         required: true,
                         valueAsNumber: true,
                         validate: {
-                            pos: val => val >= 0,
-                            decimals: val => countDecimal(val)
+                            pos: (val) => val >= 0,
+                            decimals: (val) => countDecimal(val),
                         },
                     }}
                     errors={errors.energyTariff}
@@ -221,12 +226,21 @@ export default function HomeForm(props: HomeFormProps) {
                     icon={<IoSave className="text-white" />}
                     onClick={handleSubmit((data) => {
                         onSubmit({
-                            ...data
-                        })
+                            ...data,
+                        });
                     })}
+                    disabled={isLoading}
                 />
 
-                {edit && <Button text="Delete" icon={<IoTrashBin className="text-white" />} warn={true} />}
+                {edit && (
+                    <Button
+                        text="Delete"
+                        icon={<IoTrashBin className="text-white" />}
+                        warn={true}
+                        onClick={edit?.onDelete}
+                        disabled={edit?.onDeleteLoading}
+                    />
+                )}
             </div>
         </div>
     );

@@ -75,6 +75,7 @@ export default function NewHome(props) {
                     onCancel={() => {
                         router.push("/");
                     }}
+                    isLoading={isLoading}
                     userFinder={async (email) => {
                         try {
                             // Attempt to find email

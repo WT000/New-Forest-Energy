@@ -24,7 +24,7 @@ export default function InputLayout(props: InputLayoutProps) {
             <div className="col-span-1 m-auto">{icon}</div>
             <div className="col-span-4 pl-1">
                 <p className="text-black-500 text-xs">
-                    {text} {errors && <span className="text-xs text-red">{errorMessage}</span>}
+                    {text} {errors && <span className="text-xs text-red-400">{errorMessage}</span>}
                 </p>
                 <p className="">
                     {currency ? <span className="text-lg font-bold bg-transparent w-[95%] ">£</span> : <></>}

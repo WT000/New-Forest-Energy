@@ -44,7 +44,7 @@ export default function InstructionsLayout(props: InstructionsLayoutProps) {
                         <IoFootsteps size="32" />
                     </div>
                     <div className="py-2 md:py-3 text-lg font-bold">
-                        Meter Instructions {errors && <span className="text-xs text-red font-normal">{errorMessage}</span>}
+                        Meter Instructions {errors && <span className="text-xs text-red-400 font-normal">{errorMessage}</span>}
                     </div>
                 </div>
                 <div className="">{display(text, editable, register, registerSettings)}</div>
