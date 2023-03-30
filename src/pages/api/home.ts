@@ -111,13 +111,15 @@ export default async function handler(req, res) {
                 break;
 
             case "DELETE":
+                if (getRole(session) != Role.Agency) {
+                    return res.status(400).json({ success: false });
+                }
+            
                 const homeId = req.query.id;
-
                 homedb = await Home.findOne({_id: homeId});
-                role = getRole(session, homedb);
                 
-                if (role != Role.Agency) {
-                    return res.status(401).json({ success: false });
+                if (!homedb) {
+                    return res.status(404).json({success: false});
                 }
 
                 console.log(`Deleting home ${homedb.name}`);
