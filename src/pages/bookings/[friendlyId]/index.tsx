@@ -15,7 +15,7 @@ import CompactLayout from "../../../components/layouts/CompactLayout/CompactLayo
 import Card, { CardType } from "../../../components/Card/Card";
 import BarChart, { ChartDateType } from "../../../components/BarChart/BarChart";
 import ReadingContainer from "../../../components/ReadingContainer/ReadingContainer";
-import Subtitles from "../../../components/Subtitle/Subtitle";
+import Subtitle from "../../../components/Subtitle/Subtitle";
 
 
 // TO DO - UPDATE LINKS
@@ -137,6 +137,7 @@ export default function Index(props) {
                     </div>
                 </div>
                 <div className="md:w-[30%]">
+                    <Subtitle text1="Latest Readings" text2="View More" showbar={true}/>
                     <ReadingContainer readings={readings}/>
                 </div>
             
