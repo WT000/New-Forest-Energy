@@ -91,7 +91,7 @@ export default function Index(props) {
                             <ProgressBar num1={props?.booking?.home.energyBuffer} num2={4.50}
                                 text1="Buffer" text2="Total Cost" />
                         </div>
-                        <div className="md:my-16">
+                        <div className="md:mt-16 md:mb-8">
                             <div className="flex justify-evenly">
                                 <Card cardType={CardType.comparison}>
                                     <CompactLayout 
@@ -110,7 +110,7 @@ export default function Index(props) {
                     </div>
                     <div className="md:w-[60%] flex justify-center" >
                         <div>
-                            <Subtitle text1="Usage Per Day (kWh)" text2="" showbar={false}/>
+                            <Subtitle text1="Usage Per Day (kWh)" showbar={false}/>
                             <div className="md:ml-2 md:mt-3">
                                 <BarChart rawData={readings} beginAtZero={true} 
                                     dateType={ChartDateType.DayMonth} unitOfMeasure={"kWh"} />
@@ -120,7 +120,9 @@ export default function Index(props) {
                 </div>
                 <div className="md:w-[40%]">
                     <Subtitle text1="Latest Readings" text2="View More" showbar={true}/>
-                    <ReadingContainer readings={readings}/>
+                    <div className="mt-3">
+                        <ReadingContainer readings={readings}/>
+                    </div>
                 </div>
             
         </Body>
