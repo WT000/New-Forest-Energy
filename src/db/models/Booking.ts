@@ -19,10 +19,12 @@ const bookingSchema = new Schema<BookingInterface, Model<BookingInterface>>(
       required: true,
       minlength: [5, "Friendly booking id must be 5 characters."],
       maxlength: [5, "Friendly booking id must be 5 characters."],
+      // unique: true
     },
     urlId: {
       type: String,
       required: true,
+      // unique: true
     },
     home: {
       type: mongoose.Schema.Types.ObjectId,
