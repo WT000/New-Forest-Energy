@@ -12,9 +12,9 @@ export default function Subtitle(props: SubtitleProps) {
 
 	return (
 		<div className="">
-			<div className="mb-4 grid grid-cols-2">
-				<div className="font-bold text-lg">{text1}</div>
-				<div className="text-right text-black-500 text-sm align-baseline">{text2}</div>
+			<div className="mb-4 flex">
+				<div className="font-bold text-lg w-[80%]">{text1}</div>
+				<div className="text-right text-black-500 text-sm w-[20%]">{text2}</div>
 			</div>
 			<div className={`${bar}`}></div>
 		</div>

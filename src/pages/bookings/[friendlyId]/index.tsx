@@ -107,7 +107,7 @@ export default function Index(props) {
                             </div>
                         </div>
                     </div>
-                    <div className="md:w-[42%] flex justify-center" >
+                    <div className="md:w-[42%] md:flex md:justify-center" >
                         <div>
                             <Subtitle text1="Usage Per Day (kWh)" showbar={false}/>
                             <div className="ml-2 mt-3">
