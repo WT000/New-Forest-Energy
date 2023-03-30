@@ -1,36 +1,24 @@
 interface SubtitleProps {
 	text1: string;
-	text2: string;
+	text2?: string;
 	showbar: boolean;
 }
 
 export default function Subtitle(props: SubtitleProps) {
 	const { text1, text2, showbar } = props;
 
-	if (showbar) {
-		return (
-			<div>
-				<div className="flex flex-row pb-3">
-					<h3>
-						{text1}
-						<small className="text-muted ml-16 display-6 text-black-500">
-							{text2}
-						</small>
-					</h3>
-				</div>
-				<hr className="border-top-3 w-80" />
+	let bar = ""
+	if(showbar) bar = "h-[0px] w-full mx-auto border-b-2 border-[#DCDCDD]" 
+
+	return (
+		<div className="">
+			<div className="mb-4 grid grid-cols-2">
+				<div className="font-bold text-lg">{text1}</div>
+				<div className="text-right text-black-500 text-sm align-baseline">{text2}</div>
 			</div>
-		);
-	} else {
-		return (
-			<div className="flex flex-row pb-3">
-				<h3>
-					{text1}
-					<small className="text-muted ml-16 display-6 text-black-500">
-						{text2}
-					</small>
-				</h3>
-			</div>
-		);
-	}
+			<div className={`${bar}`}></div>
+		</div>
+		
+	);
+	
 }
