@@ -22,6 +22,12 @@ import ReadingContainer from "../../../components/ReadingContainer/ReadingContai
 import Subtitle from "../../../components/Subtitle/Subtitle";
 import {IoHome, IoPieChart, IoFlash, IoList, IoLogOut, IoTrendingDown, IoTrendingUp} from "react-icons/io5";
 
+function displayCost(cost) {
+    let costString = "0"
+    if(cost > 0.00 && cost < 1) { costString = `${cost * 100}p` } 
+    else { costString = `£${Math.round(cost * 100) / 100}`}
+    return costString
+}
 
 // TO DO - UPDATE LINKS
 
@@ -34,7 +40,7 @@ export default function Index(props) {
 
     const stats = [
         {
-            stat: `£${Math.round(props?.totalCostMinusBuffer * 100) / 100}`,
+            stat: displayCost(props?.totalCostMinusBuffer),
             text: "Total Cost (minus Buffer)"
         },
         {
@@ -74,7 +80,7 @@ export default function Index(props) {
 
     if(props?.userRole == Role.Guest) {
         stats.push({
-            stat: `${props?.booking?.home?.energyTariff * 100}p`,
+            stat: displayCost(props?.booking?.home?.energyTariff),
             text: "Current Tariff (per kWh)" 
         });
         navItems.splice(0,1);
@@ -162,7 +168,6 @@ export async function getServerSideProps({ req, res, params }) {
         let totalUsage = 0
         let totalCost = 0
         let totalCostMinusBuffer = 0
-
         
         if (readings.length > 0) {
             totalUsage =  Number(readings[0].value) - Number(readings[readings.length -1].value)
