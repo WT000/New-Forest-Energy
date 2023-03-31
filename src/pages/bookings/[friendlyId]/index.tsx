@@ -157,24 +157,25 @@ export async function getServerSideProps({ req, res, params }) {
             .populate("user", "name", User)
             .sort("createdAt");
 
-        
-        let usageList = rRange.map(a => a.value)
-        let totalUsage = 0
-        
-        if (usageList.length == 1) {
-            totalUsage = totalUsage[0];
-        } else if (usageList.length > 1) {
-            // @ts-ignore
-            totalUsage = usageList.reduce(function(a, b) { return parseInt(a) + parseInt(b);})
-        }
-
         const readings = [ ...rAfter, ...rRange, ...rBefore ];
+
+        let totalUsage = 0
+        let totalCost = 0
+        let totalCostMinusBuffer = 0
+
+        
+        if (readings.length > 0) {
+            totalUsage =  Number(readings[0].value) - Number(readings[readings.length -1].value)
+            //@ts-ignore
+            totalCost = totalUsage * Number(b.home.energyTariff)
+            //@ts-ignore
+            if(totalCost > Number(b.home.energyBuffer)) {
+                //@ts-ignore
+                totalCostMinusBuffer = totalCost - Number(b.home.energyBuffer)
+            }
+        } 
+        
         const userRole = getRole(session)
-        //@ts-ignore
-        const totalCost = Number(b.home.energyTariff) * totalUsage
-        //@ts-ignore
-        let totalCostMinusBuffer = totalCost - Number(b.home.energyBuffer)
-        if(totalCostMinusBuffer < 0)  totalCostMinusBuffer = 0
         
         return {
             props: {
