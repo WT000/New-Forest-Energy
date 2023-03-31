@@ -140,6 +140,8 @@ export async function getServerSideProps({ req, res, params }) {
             .populate("home", "_id name image energyBuffer energyTariff", Home)
             .lean();
 
+        console.log(b);
+
         //@ts-ignore
         const rBefore = await Reading.find({ home: b.home._id,  createdAt: { $lt:b.startDateTime } })
             .populate("user", "name", User)
