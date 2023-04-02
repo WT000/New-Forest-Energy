@@ -3,11 +3,15 @@ import Popup from "../components/Popup/Popup";
 
 import ReadingPopupLayout from "../components/layouts/ReadingPopupLayout/ReadingPopupLayout";
 
+import Reading from "../components/Reading/Reading"
+
 
 
 
 
 export default function test() {
+
+    const datea = new Date()
 
 
     const popupitems = [
@@ -16,7 +20,20 @@ export default function test() {
     ]
     return (
 
-        <Popup delegateName={"Jack"} delegateProfession={"Builder"} date={new Date("2015-05-05T11:23:03.839Z")} distance={5} image={"/stories/popup1.jpg"} name={"image"} children={""}></Popup>
+        // <Popup > 
+        //     <ReadingPopupLayout date={new Date()}/>
+                
+            
+        // </Popup>
+        
+
+        // <p> hello {datea.toLocaleTimeString("en-GB", {hour12: true})}</p>
+
+        <Reading creator={"eee"} value={0} image={""} createdAt={new Date("2023-02-25T11:19:31.608Z")} onClick={function (): void {
+                throw new Error("Function not implemented.");
+            } }></Reading>
+
+
 
     )
 }
