@@ -1,20 +1,33 @@
 import Image from "next/image";
+import { useEffect, useState } from "react";
+
+import Role from "../../../lib/utils/roles"
 
 
-interface PopupProps {
-  // delegateName: string;
-  // delegateProfession: string;
+
+
+
+
+interface ReadingPopupProps {
+  name: string;
+  role: Role;
   date: Date;
-  // distance: number;
-  // image: string;
-  // name: string;
-  // children: React.ReactNode;
+  distance: number;
+  image: string;
+  imgname: string;
 }
 
-export default function Popup(props: PopupProps) {
-  const { date} = props;
+export default function ReadingPopup(props: ReadingPopupProps) {
+  const { name, role, date, distance, image, imgname} = props;
 
-  // var time = `${date.toLocaleTimeString("en-GB", {hour12: true})}`
+
+
+  const [createdAtV, setCreatedAtV] = useState("e ");
+
+  useEffect(()=> {
+      setCreatedAtV(date.toLocaleTimeString("en-GB", {hour12: true, month:"long", day: "numeric", hour:"numeric", minute: "numeric"}))
+  });
+  
 
 
 
@@ -41,7 +54,6 @@ export default function Popup(props: PopupProps) {
   return (
 
 
-    <p> hello {date.toLocaleTimeString("en-GB", {hour12: true, hour: "numeric", minute: "numeric"} )}</p>
 
     
 
@@ -49,33 +61,33 @@ export default function Popup(props: PopupProps) {
 
         
 
-        // <div className="relative  rounded-lg dark:bg-gray-700 ">
-        //     <h3 className="text-xl font-semibold text-white dark:text-black pl-6">
-        //         {delegateName} ({delegateProfession})
-        //     </h3>
+        <div className="relative  rounded-lg dark:bg-gray-700 ">
+            <h3 className="text-xl font-semibold text-white dark:text-black pl-6">
+                {name} ({role})
+            </h3>
 
-        //     <div className="flex items-start justify-between rounded-t dark:border-gray-600">
-        //         <p className="text-s font-semibold text-white dark:text-black pt-1 pl-6">
-        //         {dayMonthYear} at {time}
-        //         </p>
+            <div className="flex items-start justify-between rounded-t dark:border-gray-600">
+                <p className="text-s font-semibold text-white dark:text-black pt-1 pl-6">
+                {createdAtV}
+                </p>
 
-        //         <p className="text-s font-semibold text-white dark:text-black pt-1 pr-6">
-        //         {distance} kWh
-        //         </p>
-        //     </div>
+                <p className="text-s font-semibold text-white dark:text-black pt-1 pr-6">
+                {distance} kWh
+                </p>
+            </div>
 
-        //     <div className="p-6 space-y-6">
-        //         <Image
-        //         className="rounded-[20px]"
-        //         src={image}
-        //         alt={name}
-        //         width="783"
-        //         height="636"
-        //         unoptimized={true}
-        //         />
-        //         </div>
+            <div className="p-6 space-y-6">
+                <Image
+                className="rounded-[20px]"
+                src={image}
+                alt={imgname}
+                width="783"
+                height="636"
+                unoptimized={true}
+                />
+                </div>
 
-        //     </div>
+            </div>
         
 
 
