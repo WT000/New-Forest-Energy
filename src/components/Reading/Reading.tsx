@@ -17,7 +17,7 @@ export default function Reading(props: ReadingComponentInterface) {
 
     const [createdAtV, setCreatedAtV] = useState(createdAt.toLocaleString("en-GB"));
     useEffect(()=> {
-        setCreatedAtV(createdAt.toLocaleString("en-GB", {hour12: true}))
+        setCreatedAtV(createdAt.toLocaleString("en-GB", {hour12: true}));
     });
     
     return (
