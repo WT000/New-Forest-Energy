@@ -1,3 +1,4 @@
+import { useEffect, useState } from "react";
 import {IoFlash} from "react-icons/io5";
 import {MdArrowForwardIos} from "react-icons/md";
 import Card from "../Card/Card";
@@ -13,6 +14,11 @@ export interface ReadingComponentInterface {
 
 export default function Reading(props: ReadingComponentInterface) {
     const {creator, value, image, createdAt, onClick} = props;
+
+    const [createdAtV, setCreatedAtV] = useState(createdAt.toLocaleString("en-GB"));
+    useEffect(()=> {
+        setCreatedAtV(createdAt.toLocaleString("en-GB", {hour12: true}))
+    });
     
     return (
         <div className="flex gap-x-4 w-full my-2 py-2 cursor-pointer" onClick={onClick}>
@@ -26,7 +32,7 @@ export default function Reading(props: ReadingComponentInterface) {
                 <span className="inline-block w-44">
                     <p className="align-top font-semibold text-black truncate ...">{creator}</p>
                 </span>
-                <p className="text-sm text-black-500">{createdAt.toLocaleDateString("en-GB")} at {createdAt.toLocaleTimeString("en-GB", {hour12: true})}</p>
+                <p className="text-sm text-black-500"> {createdAtV}</p>
             </div>
 
             <div className="flex flex-col justify-center ml-auto">
