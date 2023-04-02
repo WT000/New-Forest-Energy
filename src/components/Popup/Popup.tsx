@@ -15,17 +15,9 @@ interface PopupProps {
 }
 
 export default function Popup(props: PopupProps) {
-  const { delegateName, delegateProfession, date, distance, image, name } =
+  const { delegateName, delegateProfession, date, distance, image, name, children} =
     props;
 
-  var time = `${date.toLocaleTimeString("en-US", {
-    hour: "2-digit",
-    minute: "2-digit",
-  })}`;
-
-  var dayMonthYear = `${date.getDate()} ${date.toLocaleString("default", {
-    month: "long",
-  })} ${date.getFullYear()}`;
 
   return (
 
