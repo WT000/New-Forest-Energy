@@ -15,7 +15,7 @@ export interface ReadingComponentInterface {
 export default function Reading(props: ReadingComponentInterface) {
     const {creator, value, image, createdAt, onClick} = props;
 
-    const [createdAtV, setCreatedAtV] = useState(createdAt.toLocaleString("en-GB"));
+    const [createdAtV, setCreatedAtV] = useState(createdAt.toLocaleDateString("en-GB"));
     useEffect(()=> {
         setCreatedAtV(createdAt.toLocaleString("en-GB", {hour12: true}))
     });
