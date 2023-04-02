@@ -20,6 +20,17 @@ export default function Popup(props: PopupProps) {
     minute: "2-digit",
   })}`;
 
+  var hourValue = date.getHours();
+  var prefix = "";
+
+  if(hourValue >= 12){
+    prefix = "PM";
+  } else {
+    prefix = "AM";
+  }
+
+  time = time + prefix
+
   var dayMonthYear = `${date.getDate()} ${date.toLocaleString("default", {
     month: "long",
   })} ${date.getFullYear()}`;

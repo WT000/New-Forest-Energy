@@ -16,7 +16,7 @@ export default function test() {
     ]
     return (
 
-        <Popup delegateName={"Jack"} delegateProfession={"Builder"} date={new Date("2015-05-05T10:23:03.839Z")} distance={5} image={"/stories/popup1.jpg"} name={"image"} children={""}></Popup>
+        <Popup delegateName={"Jack"} delegateProfession={"Builder"} date={new Date("2015-05-05T11:23:03.839Z")} distance={5} image={"/stories/popup1.jpg"} name={"image"} children={""}></Popup>
 
     )
 }
