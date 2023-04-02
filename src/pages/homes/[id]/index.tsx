@@ -20,8 +20,12 @@ import Card, { CardType, BookingType } from "../../../components/Card/Card";
 import BarChart, { ChartDateType } from "../../../components/BarChart/BarChart";
 import ReadingContainer from "../../../components/ReadingContainer/ReadingContainer";
 import Subtitle from "../../../components/Subtitle/Subtitle";
-import {IoHome, IoPieChart, IoFlash, IoList, IoLogOut, IoTrendingDown, IoTrendingUp} from "react-icons/io5";
+import {IoHome, IoPieChart, IoFlash, IoList, IoLogOut, IoTrendingDown, IoTrendingUp, IoQrCode, IoCreateSharp} from "react-icons/io5";
 import BookingLayout from "../../../components/layouts/BookingLayout/BookingLayout";
+import DelegatesList from "../../../components/DelegatesList/DelegatesList";
+import DelegatesListItem from "../../../components/DelegatesListItem/DelegatesListItem";
+import { ColourThumbnailComplete } from "../../../components/Card/Card.stories";
+import Tile, { TileType } from "../../../components/Tile/Tile";
 
 function displayCost(cost) {
     let costString = "0"
@@ -33,17 +37,19 @@ function displayCost(cost) {
 // TO DO - UPDATE LINKS
 
 export default function Index(props) {
-    const readings = props.readings ? JSON.parse(props.readings) : null
-    const bookings = props.bookings ? JSON.parse(props.bookings) : null
+    const readings = props.readings ? JSON.parse(props.readings) : null;
+    const bookings = props.bookings ? JSON.parse(props.bookings) : null;
+    const delegates = props.delegates ? JSON.parse(props.delegates) : null;
+    const home = props.home;
+
     // const startDate = getDayMonth(new Date(props?.booking?.startDateTime));
     // const endDate = getDayMonth(new Date(props?.booking?.endDateTime), true);
     const ascendingDates = [...readings];
     sortDatesAscending(ascendingDates)
 
-    console.log(bookings)
+    console.log(home)
 
     let bookingCards = []
-
     bookings.map((item, index) => {
         let endDate: Date = new Date(item.endDateTime);
         let startDate: Date = new Date(item.startDateTime);
@@ -53,7 +59,7 @@ export default function Index(props) {
 
         if (endDate.getTime() < now) {
             // Finished
-            bookingCards.push((<Card cardType={CardType.booking} bookingType={BookingType.complete} children={bookingLayout}></Card>))
+            bookingCards.push((<Card key={index} cardType={CardType.booking} bookingType={BookingType.complete} children={bookingLayout}></Card>))
         } else if (startDate.getTime() > now ) {
             // Planned
             bookingCards.push(<p key={index}>Planned {startDate.toString()} {endDate.toString()}</p>)
@@ -62,6 +68,11 @@ export default function Index(props) {
             bookingCards.push(<p key={index}>In Progress {startDate.toString()} {endDate.toString()}</p>)
         }
 
+    })
+
+    let delegateItems = []
+    delegates.map((item, index) => {
+        delegateItems.push(<DelegatesListItem key={index} image={item.image} username={item.name} onClick={() => console.log("clicked")}></DelegatesListItem>)
     })
 
 
@@ -105,6 +116,7 @@ export default function Index(props) {
         }
     ]
 
+    // TODO: Necessary?
     if(props?.userRole == Role.Guest) {
         stats.push({
             stat: displayCost(props?.booking?.home?.energyTariff),
@@ -120,6 +132,20 @@ export default function Index(props) {
             currentPage='Dashboard'>
                 <div className="md:flex md:justify-between ">
                     <div className="md:w-[42%] my-10 ">
+                        <div className="md:flex md:justify-between mb-11">
+                            <Tile tileType={TileType.link} 
+                                children={<CompactLayout 
+                                icon={<IoCreateSharp size="34px"/>}
+                                textLine1="Edit Home"
+                                textLine2="Details"></CompactLayout>} 
+                                clickable={true} onClick={() => console.log("clicked")}></Tile>
+                            <Tile tileType={TileType.link} 
+                                children={<CompactLayout 
+                                icon={<IoQrCode size="34px"/>}
+                                textLine1="Print"
+                                textLine2="QR Code"></CompactLayout>} 
+                                clickable={true} onClick={() => console.log("clicked")}></Tile>
+                        </div>
                         <div className="">
                             <ProgressBar num1={props?.home.energyBuffer} num2={props?.averagePerDay}
                                 text1="Average per Day" text2="Buffer" />
@@ -151,14 +177,35 @@ export default function Index(props) {
                         </div>
                     </div>
                 </div>
-                <div className="mt-14 md:mt-0 md:w-[42%]">
-                    <Subtitle text1="Latest Readings" showbar={true}/>
-                    <div className="mt-3">
-                        <ReadingContainer readings={readings}/>
+                <div className="md:flex md:justify-between ">
+                    <div className="mt-14 md:mt-0 md:w-[42%]">
+                        <Subtitle text1="Latest Readings" showbar={true}/>
+                        <div className="mt-3">
+                            <ReadingContainer readings={readings}/>
+                        </div>
                     </div>
-                </div>
-                <div>
-                    {bookingCards}
+                    <div className="mt-14 md:mt-0 md:w-[42%]">
+                        <Subtitle text1="Delegates" showbar={true}/>
+                        <div className="mt-3">
+                            <DelegatesList children={delegateItems} onClick={null}></DelegatesList>
+                            {/* TODO: squares */}
+                        </div>
+                        <div className="mt-10">
+                        <Subtitle text1="Bookings" showbar={false}/>
+                            <div className="mt-3">
+                                {/* TODO: Horizontal Infinite Scroll */}
+                                {bookingCards}
+                            </div>
+                        </div>
+                        <div className="md:flex mt-16">
+                            <Card cardType={CardType.colourThumbnail} bookingType={BookingType.planned}></Card> 
+                            <div className="-mt-1 ml-1.5 mr-3 text-[#77767A]">Planned</div>
+                            <Card cardType={CardType.colourThumbnail} bookingType={BookingType.inProgress}></Card>
+                            <div className="-mt-1 ml-1.5 mr-3 text-[#77767A]">In Progress</div>
+                            <Card cardType={CardType.colourThumbnail} bookingType={BookingType.complete}></Card>
+                            <div className="-mt-1 ml-1.5 mr-3 text-[#77767A]">Complete</div>
+                        </div>
+                    </div>
                 </div>
         </Body>
 
@@ -171,24 +218,29 @@ export async function getServerSideProps({ req, res, params }) {
     const session =  await getServerSession(req, res, authOptions)
 
     try {
-        const h = await Home.findById(params.id).lean();     
+        const h = await Home.findById(params.id).populate({path: "delegates", populate: {path: 'name'}}).lean();
+
         //@ts-ignore
         const readings = await Reading.find({ home: h._id, })
             .populate("user", "name", User)
             .sort({"createdAt": -1});
 
         const bookings = await Booking.find({home: h._id}).sort({"createdAt": -1}).lean()
-        
+
+        const delegates = h.delegates;
+       
         const userRole = getRole(session)
+
+        console.log(delegates)
 
         /**
          * TODO: Average per day (overall) = (last - first) / days(dateN - date1)
          * Average per day (broken down by day) for chart
          * Readings for this home
          * TODO: Bookings for this home
-         * TODO: Delegates
+         * Delegates
          * TODO: Role specific info
-         * TODO: QR code 
+         * TODO: QR code & Edit Home tiles 
          * TODO: Comparisons
          */
         
@@ -197,6 +249,7 @@ export async function getServerSideProps({ req, res, params }) {
                 home: ToSeriableHome(h),
                 readings: JSON.stringify(readings),
                 bookings: JSON.stringify(bookings),
+                delegates: JSON.stringify(delegates),
                 averagePerDay: 3.24,
             },
         };
