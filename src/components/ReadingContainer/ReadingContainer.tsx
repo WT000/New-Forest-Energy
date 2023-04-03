@@ -34,7 +34,7 @@ const createNext =
     };
 
 export interface ReadingContainertInterface {
-    readings: [];
+    readings: any[];
 }
 
 export default function ReadingContainer(props: ReadingContainertInterface) {
@@ -50,6 +50,7 @@ export default function ReadingContainer(props: ReadingContainertInterface) {
     });
 
     const ref = useInfiniteScroll<HTMLDivElement>({
+        //@ts-ignore
         next: createNext({ setData, setCurrentOffset, offset: 6, currentOffset: offset, data: readings }),
         rowCount: readings.length,
         hasMore,
