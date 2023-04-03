@@ -143,7 +143,7 @@ export async function getServerSideProps({ req, res, params }) {
 
     try {
         const b = await Booking.findOne({ friendlyId : params.friendlyId })
-            .populate("home", "_id name image energyBuffer energyTariff", Home)
+            .populate("home", "_id owner delegates name image energyBuffer energyTariff", Home)
             .lean();
 
         //@ts-ignore
