@@ -20,12 +20,14 @@ import Card, { CardType, BookingType } from "../../../components/Card/Card";
 import BarChart, { ChartDateType } from "../../../components/BarChart/BarChart";
 import ReadingContainer from "../../../components/ReadingContainer/ReadingContainer";
 import Subtitle from "../../../components/Subtitle/Subtitle";
-import {IoHome, IoPieChart, IoFlash, IoList, IoLogOut, IoTrendingDown, IoTrendingUp, IoQrCode, IoCreateSharp} from "react-icons/io5";
+import {IoHome, IoPieChart, IoFlash, IoList, IoLogOut, IoTrendingDown, IoTrendingUp, IoQrCode, IoCreateSharp, IoClose} from "react-icons/io5";
 import BookingLayout from "../../../components/layouts/BookingLayout/BookingLayout";
 import DelegatesList from "../../../components/DelegatesList/DelegatesList";
 import DelegatesListItem from "../../../components/DelegatesListItem/DelegatesListItem";
 import { ColourThumbnailComplete } from "../../../components/Card/Card.stories";
 import Tile, { TileType } from "../../../components/Tile/Tile";
+import { Toaster } from "react-hot-toast";
+import Notification from "../../../components/Notification/Notifications";
 
 function displayCost(cost) {
     let costString = "0"
@@ -47,8 +49,6 @@ export default function Index(props) {
     const ascendingDates = [...readings];
     sortDatesAscending(ascendingDates)
 
-    console.log(home)
-
     let bookingCards = []
     bookings.map((item, index) => {
         let endDate: Date = new Date(item.endDateTime);
@@ -58,13 +58,10 @@ export default function Index(props) {
         const bookingLayout = (<BookingLayout cost={5} duration={4} dateRange="15th - 19th Feb" ></BookingLayout>)
 
         if (endDate.getTime() < now) {
-            // Finished
             bookingCards.push((<Card key={index} cardType={CardType.booking} bookingType={BookingType.complete} children={bookingLayout}></Card>))
         } else if (startDate.getTime() > now ) {
-            // Planned
             bookingCards.push(<p key={index}>Planned {startDate.toString()} {endDate.toString()}</p>)
         } else {
-            // In Progress
             bookingCards.push(<p key={index}>In Progress {startDate.toString()} {endDate.toString()}</p>)
         }
 
@@ -72,9 +69,9 @@ export default function Index(props) {
 
     let delegateItems = []
     delegates.map((item, index) => {
-        delegateItems.push(<DelegatesListItem key={index} image={item.image} username={item.name} onClick={() => console.log("clicked")}></DelegatesListItem>)
+        let interactive = { href: "../delegates/"+item._id, text: "Undo" }
+        delegateItems.push(<DelegatesListItem key={index} image={item.image} username={item.name} onClick={Notification({text: "Delegate removed.", icon: <IoClose />, interactive: interactive })}></DelegatesListItem>)
     })
-
 
     const stats = [
         {
@@ -188,7 +185,8 @@ export default function Index(props) {
                         <Subtitle text1="Delegates" showbar={true}/>
                         <div className="mt-3">
                             <DelegatesList children={delegateItems} onClick={null}></DelegatesList>
-                            {/* TODO: squares */}
+                            <Toaster></Toaster>
+                            {/* TODO: Horizontal Infinite Scroll */}
                         </div>
                         <div className="mt-10">
                         <Subtitle text1="Bookings" showbar={false}/>
@@ -224,22 +222,25 @@ export async function getServerSideProps({ req, res, params }) {
         const readings = await Reading.find({ home: h._id, })
             .populate("user", "name", User)
             .sort({"createdAt": -1});
+            let averagePerDay = 0;
+        if (readings.length > 0) {
+            const firstReading = readings[0];
+            const lastReading = readings[readings.length -1];
+            const daysElapsed = ((new Date(lastReading.createdAt).getTime() - new Date(firstReading.createdAt).getTime()) / (1000 * 60 * 60 * 24));
+            averagePerDay = (Number(lastReading.value) - Number(firstReading.value)) / daysElapsed;
+        }
 
         const bookings = await Booking.find({home: h._id}).sort({"createdAt": -1}).lean()
-
-        const delegates = h.delegates;
-       
-        const userRole = getRole(session)
-
-        console.log(delegates)
+        const delegates = h.delegates;       
+        const userRole = getRole(session);
 
         /**
-         * TODO: Average per day (overall) = (last - first) / days(dateN - date1)
+         * Average per day (overall) = (last - first) / days(dateN - date1)
          * Average per day (broken down by day) for chart
          * Readings for this home
          * TODO: Bookings for this home
          * Delegates
-         * TODO: Role specific info
+         * TODO: Role specific info?
          * TODO: QR code & Edit Home tiles 
          * TODO: Comparisons
          */
@@ -250,7 +251,8 @@ export async function getServerSideProps({ req, res, params }) {
                 readings: JSON.stringify(readings),
                 bookings: JSON.stringify(bookings),
                 delegates: JSON.stringify(delegates),
-                averagePerDay: 3.24,
+                userRole: userRole,
+                averagePerDay: averagePerDay,
             },
         };
     }
