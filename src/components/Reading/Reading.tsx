@@ -18,7 +18,7 @@ export default function Reading(props: ReadingComponentInterface) {
     const [createdAtV, setCreatedAtV] = useState(createdAt.toLocaleDateString("en-GB"));
     useEffect(()=> {
         setCreatedAtV(createdAt.toLocaleString("en-GB", {hour12: true}))
-    });
+    }, [createdAtV]);
     
     return (
         <div className="flex gap-x-4 w-full my-2 py-2 cursor-pointer" onClick={onClick}>
