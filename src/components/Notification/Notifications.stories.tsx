@@ -29,6 +29,11 @@ export const InteractiveNotification = Template.bind({});
 InteractiveNotification.args = {
 	text: "Delegate removed",
 	icon: <IoClose />,
-	interactive: { href: "#", text: "Undo" },
+	interactive: {
+		text: "Undo",
+		onClick: () => {
+			console.log("Clicked!");
+		},
+	},
 	duration: 2000,
 };
