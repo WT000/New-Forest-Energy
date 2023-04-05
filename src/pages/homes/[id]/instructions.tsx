@@ -16,6 +16,10 @@ import { getServerSession } from "next-auth/next";
 import mongoose, { set } from "mongoose";
 import Booking from "../../../db/models/Booking";
 import { ToSeriableHome } from "../../../lib/utils/json";
+import InstructionsLayout from "../../../components/layouts/InstructionsLayout/InstructionsLayout";
+
+
+
 
 import { useState } from "react";
 
@@ -99,7 +103,10 @@ export default function AllHomes(props){
     
     return (
         <Body statItems={stats} menuItems={navItems} welcomeText={`Welcome back, ${session?.user?.name}`} welcomeImage={session?.user?.image} currentPage="Instructions">
-            
+            <br></br>
+            <Tile tileType={TileType.box} clickable={false}>
+            <InstructionsLayout text={"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."} editable={false}></InstructionsLayout>
+            </Tile>
         </Body>
     )
 }
