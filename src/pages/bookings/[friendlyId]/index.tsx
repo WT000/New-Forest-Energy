@@ -8,7 +8,7 @@ import Home from "../../../db/models/Home";
 import Reading from "../../../db/models/Reading";
 import User from "../../../db/models/User";
 
-import { getDayMonth, sortDatesAscending, sortDatesDescending } from "../../../lib/utils/dates";
+import { dateDiffInDays, getDayMonth, sortDatesAscending, sortDatesDescending } from "../../../lib/utils/dates";
 import { ToSeriableBooking } from "../../../lib/utils/json";
 import getRole from "../../../lib/utils/getRole";
 import Role from "../../../lib/utils/roles";
@@ -21,6 +21,7 @@ import BarChart, { ChartDateType } from "../../../components/BarChart/BarChart";
 import ReadingContainer from "../../../components/ReadingContainer/ReadingContainer";
 import Subtitle from "../../../components/Subtitle/Subtitle";
 import {IoHome, IoPieChart, IoFlash, IoList, IoLogOut, IoTrendingDown, IoTrendingUp} from "react-icons/io5";
+import { percentageDiff } from "../../../lib/utils/nums";
 
 function displayCost(cost) {
     let costString = "0"
@@ -86,6 +87,13 @@ export default function Index(props) {
         navItems.splice(0,1);
     }
 
+    const otherGuestsComparisonTextWording = Math.abs((props.otherGuestsComparison * 100)).toFixed(0) + '%' + " " + (props.otherGuestsComparison > 0 ? "more" : "less")
+    const otherGuestsIcon = props.otherGuestsComparison > 0 ? <IoTrendingUp size="34px" className="text-orange"/> : <IoTrendingDown size="34px" className="text-green-500"/>
+
+    const otherHomesComparisonTextWording = Math.abs((props.similarHomesComparison * 100)).toFixed(0) + '%' + " " + (props.similarHomesComparison > 0 ? "more" : "less")
+    const otherHomesIcon = props.similarHomesComparison > 0 ? <IoTrendingUp size="34px" className="text-orange"/> : <IoTrendingDown size="34px" className="text-green-500"/>
+
+
     return (
         <Body menuItems={navItems} statItems={stats} 
             welcomeText={`Welcome to, ${props?.booking?.home.name}`}
@@ -101,15 +109,15 @@ export default function Index(props) {
                             <div className="flex justify-between">
                                 <Card cardType={CardType.comparison}>
                                     <CompactLayout 
-                                        icon={<IoTrendingUp size="34px" className="text-green-500"/>}
+                                        icon={otherGuestsIcon}
                                         textLine1={"vs Other Guests"}
-                                        textLine2={"10% less"} />
+                                        textLine2={otherGuestsComparisonTextWording} />
                                 </Card>
                                 <Card cardType={CardType.comparison}>
                                     <CompactLayout 
-                                        icon={<IoTrendingDown size="34px" className="text-orange"/>}
+                                        icon={otherHomesIcon}
                                         textLine1={"vs Similar Homes"}
-                                        textLine2={"12% more"} />
+                                        textLine2={otherHomesComparisonTextWording} />
                                 </Card>
                             </div>
                         </div>
@@ -143,7 +151,7 @@ export async function getServerSideProps({ req, res, params }) {
 
     try {
         const b = await Booking.findOne({ friendlyId : params.friendlyId })
-            .populate("home", "_id owner delegates name image energyBuffer energyTariff", Home)
+            .populate("home", "_id owner delegates name image energyBuffer energyTariff numBeds", Home)
             .lean();
 
         console.log(b);
@@ -170,11 +178,20 @@ export async function getServerSideProps({ req, res, params }) {
         let totalUsage = 0
         let totalCost = 0
         let totalCostMinusBuffer = 0
+        let totalDays = 0
         
         if (readings.length > 0) {
-            totalUsage =  Number(readings[readings.length -1].value) - Number(readings[0].value)
+            if(readings.length > 1){
+                totalUsage =  readings[readings.length -1].value - readings[0].value
+            }
+            else{
+                totalUsage =  readings[0].value
+            }
+            
+
+            totalDays = dateDiffInDays(readings[readings.length -1].createdAt, readings[0].createdAt) || 1
             //@ts-ignore
-            totalCost = totalUsage * Number(b.home.energyTariff)
+            totalCost = totalUsage * b.home.energyTariff
             //@ts-ignore
             if(totalCost > Number(b.home.energyBuffer)) {
                 //@ts-ignore
@@ -185,6 +202,25 @@ export async function getServerSideProps({ req, res, params }) {
         //@ts-ignore
         const userRole = getRole(session, b.home)
         
+        //@ts-ignore
+        const oldestReading = await Reading.findOne({home: b.home._id}, {}, { sort: { 'createdAt' : -1 } });
+
+        //@ts-ignore
+        const newestReading = await Reading.findOne({home: b.home._id}, {}, { sort: { 'createdAt' : 1 } });
+
+        const daysDiff = dateDiffInDays(oldestReading.createdAt, newestReading.createdAt) || 1;
+        const readingDiff = newestReading.value - oldestReading.value
+        const houseAveragePerDay = (readingDiff > 0 ? readingDiff : 0) / daysDiff
+    
+        const bookingAveragePerDay = (totalUsage > 0 ? totalUsage : 0) / totalDays
+        
+        const otherGuestsPercentageDiff = percentageDiff(bookingAveragePerDay, houseAveragePerDay, true);        
+
+        //https://www.ofgem.gov.uk/information-consumers/energy-advice-households/average-gas-and-electricity-use-explained
+        //@ts-ignore
+        const similarHomeUsageDaily = b.home.numBeds < 2 ? 4.93 : b.home.numBeds < 4 ? 7.94 : 11.78
+        const similarHomesPercentageDiff = percentageDiff(bookingAveragePerDay, similarHomeUsageDaily, true);    
+
         return {
             props: {
                 booking: ToSeriableBooking(b),
@@ -193,6 +229,8 @@ export async function getServerSideProps({ req, res, params }) {
                 totalUsage: totalUsage,
                 totalCost: totalCost,
                 totalCostMinusBuffer: totalCostMinusBuffer,
+                otherGuestsComparison : otherGuestsPercentageDiff,
+                similarHomesComparison: similarHomesPercentageDiff
             },
         };
     }
