@@ -3,9 +3,10 @@ import { authOptions } from "../api/auth/[...nextauth]";
 import Body from "../../components/Body/Body";
 import getRole from "../../lib/utils/getRole";
 import Home from "../../db/models/Home";
+import Notification from "../../components/Notification/Notifications";
 
 
-import {IoAdd, IoHome, IoLogOut, IoPieChart, IoSearch, IoText} from "react-icons/io5";
+import {IoAdd, IoClose, IoHome, IoLogOut, IoPieChart, IoSearch, IoText} from "react-icons/io5";
 import dbConnect from "../../db/dbcon/dbcon";
 import Tile, { TileType } from "../../components/Tile/Tile";
 import Image from "next/image";
@@ -17,13 +18,15 @@ import mongoose, { set } from "mongoose";
 import Booking from "../../db/models/Booking";
 import { ToSeriableHome } from "../../lib/utils/json";
 
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
+import { Toaster } from "react-hot-toast";
+import { useExtendedState } from "../../lib/utils/react";
 
 export default function AllHomes(props){
 
     const [searchQuery, setSearchQuery] = useState(null)
 
-    const [homes, setHomes] = useState(props?.homes)
+    const [homes, setHomes, getHomes] = useExtendedState(props?.homes)
 
     const { data: session } = useSession();
 
@@ -76,11 +79,32 @@ export default function AllHomes(props){
         .then((res) => res.json())
         .then((data) => {
             if(data.success){
+
                 let filteredArray = homes.filter(home => home._id !== id)
                 setHomes(filteredArray)
+
+                const notification = Notification({
+                    text: "Home Deleted",
+                    icon: <IoClose />,
+                    interactive: { text: "Undo", onClick: () => {
+                        fetch(`/api/homes/${id}/restore`, { method: 'PUT' })
+                        .then((res) => res.json())
+                        .then(async (data) => {
+                            if(data.home){
+                                var currentHomes = await getHomes();
+
+                                if (!currentHomes.some(e => e._id === data.home._id)){
+                                    setHomes([...currentHomes, data.home])
+                                }
+                            }
+                        });
+                    } },
+                    duration: 5000,
+                });
+
+                notification();
             }
         })
-    
     }
 
     const homeTiles = homes
@@ -108,6 +132,7 @@ export default function AllHomes(props){
                     {homeTiles}
                 </div>
             </section>
+            <Toaster/>
         </Body>
     )
 }
