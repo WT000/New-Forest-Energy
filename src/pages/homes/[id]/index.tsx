@@ -69,7 +69,7 @@ export default function Index(props) {
 
     let delegateItems = []
     delegates.map((item, index) => {
-        let interactive = { href: "../delegates/"+item._id, text: "Undo" }
+        let interactive = { onClick: () => {console.log("Clicked!");}, text: "Undo" }
         delegateItems.push(<DelegatesListItem key={index} image={item.image} username={item.name} onClick={Notification({text: "Delegate removed.", icon: <IoClose />, interactive: interactive })}></DelegatesListItem>)
     })
 
