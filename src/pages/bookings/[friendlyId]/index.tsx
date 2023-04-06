@@ -22,6 +22,12 @@ import ReadingContainer from "../../../components/ReadingContainer/ReadingContai
 import Subtitle from "../../../components/Subtitle/Subtitle";
 import {IoHome, IoPieChart, IoFlash, IoList, IoLogOut, IoTrendingDown, IoTrendingUp} from "react-icons/io5";
 
+function displayCost(cost) {
+    let costString = "0"
+    if(cost > 0.00 && cost < 1) { costString = `${cost * 100}p` } 
+    else { costString = `£${Math.round(cost * 100) / 100}`}
+    return costString
+}
 
 // TO DO - UPDATE LINKS
 
@@ -29,12 +35,12 @@ export default function Index(props) {
     const readings = props.readings ? JSON.parse(props.readings) : null
     const startDate = getDayMonth(new Date(props?.booking?.startDateTime));
     const endDate = getDayMonth(new Date(props?.booking?.endDateTime), true);
-    const ascendingDates = [...readings];
-    sortDatesAscending(ascendingDates)
+    const descendingDates = [...readings];
+    sortDatesDescending(descendingDates)
 
     const stats = [
         {
-            stat: `£${Math.round(props?.totalCostMinusBuffer * 100) / 100}`,
+            stat: displayCost(props?.totalCostMinusBuffer),
             text: "Total Cost (minus Buffer)"
         },
         {
@@ -74,7 +80,7 @@ export default function Index(props) {
 
     if(props?.userRole == Role.Guest) {
         stats.push({
-            stat: `${props?.booking?.home?.energyTariff * 100}p`,
+            stat: displayCost(props?.booking?.home?.energyTariff),
             text: "Current Tariff (per kWh)" 
         });
         navItems.splice(0,1);
@@ -112,7 +118,7 @@ export default function Index(props) {
                         <div>
                             <Subtitle text1="Usage Per Day (kWh)" showbar={false}/>
                             <div className="ml-2 mt-3">
-                                <BarChart rawData={ascendingDates} beginAtZero={true} 
+                                <BarChart rawData={readings} beginAtZero={true} 
                                     dateType={ChartDateType.DayMonth} unitOfMeasure={"kWh"} />
                             </div>
                         </div>
@@ -121,7 +127,7 @@ export default function Index(props) {
                 <div className="mt-14 md:mt-0 md:w-[42%]">
                     <Subtitle text1="Latest Readings" showbar={true}/>
                     <div className="mt-3">
-                        <ReadingContainer readings={readings}/>
+                        <ReadingContainer readings={descendingDates}/>
                     </div>
                 </div>
             
@@ -137,7 +143,7 @@ export async function getServerSideProps({ req, res, params }) {
 
     try {
         const b = await Booking.findOne({ friendlyId : params.friendlyId })
-            .populate("home", "_id name image energyBuffer energyTariff", Home)
+            .populate("home", "_id owner delegates name image energyBuffer energyTariff", Home)
             .lean();
 
         console.log(b);
@@ -159,24 +165,25 @@ export async function getServerSideProps({ req, res, params }) {
             .populate("user", "name", User)
             .sort("createdAt");
 
-        
-        let usageList = rRange.map(a => a.value)
-        let totalUsage = 0
-        
-        if (usageList.length == 1) {
-            totalUsage = totalUsage[0];
-        } else if (usageList.length > 1) {
-            // @ts-ignore
-            totalUsage = usageList.reduce(function(a, b) { return parseInt(a) + parseInt(b);})
-        }
+        const readings = [ ...rBefore, ...rRange, ...rAfter ];
 
-        const readings = [ ...rAfter, ...rRange, ...rBefore ];
-        const userRole = getRole(session)
+        let totalUsage = 0
+        let totalCost = 0
+        let totalCostMinusBuffer = 0
+        
+        if (readings.length > 0) {
+            totalUsage =  Number(readings[readings.length -1].value) - Number(readings[0].value)
+            //@ts-ignore
+            totalCost = totalUsage * Number(b.home.energyTariff)
+            //@ts-ignore
+            if(totalCost > Number(b.home.energyBuffer)) {
+                //@ts-ignore
+                totalCostMinusBuffer = totalCost - Number(b.home.energyBuffer)
+            }
+        } 
+        
         //@ts-ignore
-        const totalCost = Number(b.home.energyTariff) * totalUsage
-        //@ts-ignore
-        let totalCostMinusBuffer = totalCost - Number(b.home.energyBuffer)
-        if(totalCostMinusBuffer < 0)  totalCostMinusBuffer = 0
+        const userRole = getRole(session, b.home)
         
         return {
             props: {

@@ -95,7 +95,7 @@ export async function getServerSideProps({ req, res, params }) {
         // Seeded readings should exist if the home has been created or already exists
         const seededReadings = await Reading.find({
             home: params.id,
-        }).populate("user").sort("-createdAt");
+        }).populate("user", "", User).sort("-createdAt");
 
         return {
             props: {
