@@ -90,7 +90,7 @@ export default function HomeForm(props: HomeFormProps) {
       );
 
     return (
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-x-24 gap-y-3 mb-14 md:mb-0">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-x-24 gap-y-9 mb-14 md:mb-0 mt-10 ">
             <Controller
               control={control}
               name="image"
@@ -104,7 +104,6 @@ export default function HomeForm(props: HomeFormProps) {
 
               )}
             />
-            
 
             {/* Name */}
             <Tile tileType={TileType.input} clickable={false}>
