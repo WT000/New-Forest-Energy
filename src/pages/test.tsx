@@ -8,6 +8,8 @@ import {IoHome, IoPieChart, IoFlash, IoCalendar, IoList, IoLogOut, IoAdd} from "
 import Body from "../components/Body/Body";
 
 
+
+
 export default function test() {
     const navItems = [
         <NavbarMenuItem
@@ -31,6 +33,11 @@ export default function test() {
     return (
         <Body menuItems={navItems} statItems={statItems}>
             <p>The Body</p>
+
+            
+
+
+
         </Body>
 
 
