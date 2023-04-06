@@ -53,6 +53,7 @@ export default async function handler(req, res) {
         let valid;
         let role;
         let owner;
+        let image;
         
         switch (method) {
             case "POST":
@@ -76,7 +77,8 @@ export default async function handler(req, res) {
                     numBeds: home.numBeds,
                     energyInstructions: home.energyInstructions,
                     energyTariff: home.energyTariff,
-                    energyBuffer: home.energyBuffer
+                    energyBuffer: home.energyBuffer,
+                    image: home.image
                 })
 
                 return res.json({success: true, id: newHome._id});
@@ -105,7 +107,8 @@ export default async function handler(req, res) {
                     numBeds: home.numBeds,
                     energyInstructions: home.energyInstructions,
                     energyTariff: home.energyTariff,
-                    energyBuffer: home.energyBuffer
+                    energyBuffer: home.energyBuffer,
+                    image: home.image
                 })
                 if (editHome) return res.json({success: true, id: homedb._id});
                 break;

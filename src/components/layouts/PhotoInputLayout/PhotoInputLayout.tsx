@@ -40,8 +40,8 @@ export default function PhotoInputLayout(props: PhotoInputLayoutProps) {
         },
         (error, result) => {
             if (!error && result && result.event === "success") {
-            setImage(result.info.public_id);
-            props.onChange(result.info.public_id);
+            setImage(Cloudinary.image(image).toURL());
+            props.onChange(Cloudinary.image(image).toURL());
             }
         }
         );
@@ -69,7 +69,7 @@ export default function PhotoInputLayout(props: PhotoInputLayoutProps) {
             </Tile>
             <Tile tileType={TileType.fill} customClass="row-span-3 p-2" clickable={false}>
                 {image ? (
-                    <ImageLayout image={Cloudinary.image(image).toURL()} alt="Placeholder"/>
+                    <ImageLayout image={image} alt="Placeholder"/>
                 ) : (
                     <ImageLayout image="/img/placeholder-image.png" alt="Placeholder"/>
                 )}
