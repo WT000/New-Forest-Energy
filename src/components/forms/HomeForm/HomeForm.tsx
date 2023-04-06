@@ -4,8 +4,10 @@ import Button from "../../Button/Button";
 import InputLayout from "../../layouts/InputLayout/InputLayout";
 import InstructionsLayout from "../../layouts/InstructionsLayout/InstructionsLayout";
 import Tile, { TileType } from "../../Tile/Tile";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import Role from "../../../lib/utils/roles";
+import PhotoInputLayout from "../../layouts/PhotoInputLayout/PhotoInputLayout";
+import ImageLayout from "../../layouts/ImageLayout/ImageLayout";
 
 export interface HomeFormData {
     name: string;
@@ -83,23 +85,28 @@ export default function HomeForm(props: HomeFormProps) {
         }
     }, [triggerReset, reset]);
 
+    const [image, setImage] = useState(
+        edit?.editHome.image ? edit?.editHome.image : ""
+      );
+
+    console.log(image)
+
     return (
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-x-24 gap-y-3 mb-14 md:mb-0">
-            <Tile tileType={TileType.input} clickable={false}>
-                <InputLayout
-                    icon={<IoImages size="32px" />}
-                    text={"Home Image"}
-                    type={"file"}
-                    name={"image"}
-                    placeholder={"Select Image"}
-                />
-            </Tile>
+            <Controller
+              control={control}
+              name="image"
+              render={({field: {onChange}}) => (
 
-            {/* Image Preview */}
-            {/* May need a custom size set on md: breakpoint */}
-            <Tile tileType={TileType.fill} customClass="row-span-3 p-2" clickable={false}>
-                <p>Image Preview (invisible if none submitted, be sure to add appropriate validation to images)</p>
-            </Tile>
+                    <PhotoInputLayout
+                        image={image}
+                        setImage={setImage}
+                        onChange={onChange}
+                    />
+
+              )}
+            />
+            
 
             {/* Name */}
             <Tile tileType={TileType.input} clickable={false}>
