@@ -7,10 +7,10 @@ export interface HomeInterface {
   name: string;
   description?: string;
   image?: string;
-  numBeds: Number;
+  numBeds: number;
   energyInstructions: string;
-  energyTariff: Number;
-  energyBuffer: Number;
+  energyTariff: number;
+  energyBuffer: number;
   isDeleted?: Boolean;
   createdAt: Date;
   updatedAt: Date;

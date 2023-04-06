@@ -5,7 +5,7 @@ export interface ReadingInterface {
   home: mongoose.Schema.Types.ObjectId;
   booking?: mongoose.Schema.Types.ObjectId;
   user?: mongoose.Schema.Types.ObjectId;
-  value: Number;
+  value: number;
   image: string;
   createdAt: Date;
   updatedAt: Date;
