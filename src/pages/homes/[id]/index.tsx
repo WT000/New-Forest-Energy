@@ -39,61 +39,63 @@ export async function getServerSideProps({ req, res, params }) {
 
     try {
         // Try to find the home (will fail if not a valid id and return 404)
-        let seededHome = await Home.find({_id: params.id, isDeleted: false}).lean();
+        let seededHome = await Home.findOne({_id: params.id, isDeleted: false}).lean();
 
-        if (!seededHome) {
-            // If it doesn't exist then it needs to be seeded, make a home under this ID
-            await Home.create({
-                _id: new mongoose.Types.ObjectId(params.id),
-                owner: new mongoose.Types.ObjectId(),
-                delegates: [],
-                name: "Home",
-                description: "Description",
-                image: "Image",
-                numBeds: 5,
-                energyInstructions: "Instructions",
-                energyTariff: 5,
-                energyBuffer: 5,
-                createdAt: new Date(),
-                updatedAt: new Date(),
-            });
+        // Old seed code, archived as homes can now be created
 
-            // Make a ton of random readings
-            const seedUser = await User.findById("63f7ded31180b041ab90d190");
-            if (!seedUser) {     
-                await User.create({
-                    _id: new mongoose.Types.ObjectId("63f7ded31180b041ab90d190"),
-                    name: "Fake user (50% chance)",
-                    email: "fake@-.com",
-                    image: "fakeurl",
-                    isAgency: false,
-                })
-            }
+        // if (!seededHome) {
+        //     // If it doesn't exist then it needs to be seeded, make a home under this ID
+        //     await Home.create({
+        //         _id: new mongoose.Types.ObjectId(params.id),
+        //         owner: new mongoose.Types.ObjectId(),
+        //         delegates: [],
+        //         name: "Home",
+        //         description: "Description",
+        //         image: "Image",
+        //         numBeds: 5,
+        //         energyInstructions: "Instructions",
+        //         energyTariff: 5,
+        //         energyBuffer: 5,
+        //         createdAt: new Date(),
+        //         updatedAt: new Date(),
+        //     });
 
-            const readings = []
+        //     // Make a ton of random readings
+        //     const seedUser = await User.findById("63f7ded31180b041ab90d190");
+        //     if (!seedUser) {     
+        //         await User.create({
+        //             _id: new mongoose.Types.ObjectId("63f7ded31180b041ab90d190"),
+        //             name: "Fake user (50% chance)",
+        //             email: "fake@-.com",
+        //             image: "fakeurl",
+        //             isAgency: false,
+        //         })
+        //     }
+
+        //     const readings = []
             
-            const min = 30
-            const max = 300
-            for (let i=0; i<Math.floor(Math.random() * (max - min + 1) + min); i++) {
-                readings.push({
-                    user: Math.random() < 0.5 ? "63f7ded31180b041ab90d190" : null,
-                    home: params.id,
-                    value: Math.floor(Math.random() * (max - min + 1) + min),
-                    image: "Image",
-                    createdAt: randomDate(new Date(2010, 0, 1), new Date())
-                })
-            };
+        //     const min = 30
+        //     const max = 300
+        //     for (let i=0; i<Math.floor(Math.random() * (max - min + 1) + min); i++) {
+        //         readings.push({
+        //             user: Math.random() < 0.5 ? "63f7ded31180b041ab90d190" : null,
+        //             home: params.id,
+        //             value: Math.floor(Math.random() * (max - min + 1) + min),
+        //             image: "Image",
+        //             createdAt: randomDate(new Date(2010, 0, 1), new Date())
+        //         })
+        //     };
 
-            await Reading.insertMany(readings);
+        //     await Reading.insertMany(readings);
 
-            // Fetch the newly generated home
-            seededHome = await Home.findById(params.id);
-        }
+        //     // Fetch the newly generated home
+        //     seededHome = await Home.findById(params.id).lean();
+        // }
 
         // Seeded readings should exist if the home has been created or already exists
         const seededReadings = await Reading.find({
             home: params.id,
-        }).populate("user").sort("-createdAt");
+        }).populate("user", "", User).sort("-createdAt");
 
         return {
             props: {
