@@ -20,9 +20,9 @@ export default async function handler(req, res) {
         if (req.method === "PUT") {
             await dbConnect();
 
-            const deletedHome = await Home.updateOne({_id: id}, {isDeleted: false})
+            const deletedHome = await Home.findOneAndUpdate({_id: id}, {isDeleted: false})
 
-            return res.json({success: deletedHome.matchedCount > 0})
+            return res.json({home: deletedHome})
           }
     } catch (e) {
         res.status(500).json({ error: e.message });

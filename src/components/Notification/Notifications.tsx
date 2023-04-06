@@ -3,7 +3,7 @@ import toast from "react-hot-toast";
 interface NotificationProp {
 	icon: React.ReactElement;
 	text: string;
-	interactive?: { href: string; text: string };
+	interactive?: { onClick: () => void; text: string };
 	duration?: number;
 }
 
@@ -38,6 +38,7 @@ export default function Notification(props: NotificationProp) {
 	}
 
 	const notify = () => {
+
 		toast.custom(
 			(t) => (
 				<div
@@ -57,14 +58,12 @@ export default function Notification(props: NotificationProp) {
 					)}
 					{interactive && (
 						<div className="grid grid-cols-2 gap-2 ml-auto">
-							<div>
-								<a
-									href={interactive.href}
+							<button
+									onClick={function(event){ interactive.onClick(); toast.dismiss(t.id);}}
 									className="inline-flex justify-center w-full text-base font-bold text-center text-white hover:scale-110 transition ease-in-out"
 								>
 									{interactive.text}
-								</a>
-							</div>
+							</button>
 							<div className="inline-flex justify-center">
 								<IconButton icon={icon} parentToastId={t.id} />
 							</div>
