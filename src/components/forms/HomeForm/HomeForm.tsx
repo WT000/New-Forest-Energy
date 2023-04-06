@@ -89,8 +89,6 @@ export default function HomeForm(props: HomeFormProps) {
         edit?.editHome.image ? edit?.editHome.image : ""
       );
 
-    console.log(image)
-
     return (
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-x-24 gap-y-3 mb-14 md:mb-0">
             <Controller

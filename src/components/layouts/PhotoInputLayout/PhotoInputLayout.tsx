@@ -40,13 +40,14 @@ export default function PhotoInputLayout(props: PhotoInputLayoutProps) {
         },
         (error, result) => {
             if (!error && result && result.event === "success") {
-            setImage(Cloudinary.image(image).toURL());
-            props.onChange(Cloudinary.image(image).toURL());
+                setImage(Cloudinary.image(result.info.public_id).toURL());
+                props.onChange(Cloudinary.image(result.info.public_id).toURL());
             }
         }
         );
         imageWidget.open();
     };
+
     
     return (
         <>

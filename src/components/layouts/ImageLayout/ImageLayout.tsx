@@ -8,10 +8,10 @@ interface ImageLayoutProps {
 export default function ImageLayout(props: ImageLayoutProps) {
     const { image, alt } = props;
     return (
-        <div className="flex items-center justify-center w-full h-[268px] md:h-[320px]">
+        <div className="flex items-center justify-center w-full max-h-[268px] md:max-h-[320px]">
             <div className="relative w-[94%] h-[90%]">
                 <Image
-                    className="rounded-[5px]"
+                    className="rounded-[5px] object-contain"
                     src={image}
                     alt={alt}
                     fill
