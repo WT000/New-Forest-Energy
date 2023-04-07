@@ -192,7 +192,6 @@ export default function Index(props) {
                         <div className="mt-10">
                         <Subtitle text1="Bookings" showbar={false}/>
                             <div className="mt-3">
-                                {/* TODO: Horizontal Infinite Scroll */}
                                 <HorizontalContainer componentIterable={bookingCards} hideScrollbar={true}/>
                             </div>
                         </div>
@@ -239,7 +238,7 @@ export async function getServerSideProps({ req, res, params }) {
          * Average per day (overall) = (last - first) / days(dateN - date1)
          * Average per day (broken down by day) for chart
          * Readings for this home
-         * TODO: Bookings for this home
+         * Bookings for this home
          * Delegates
          * TODO: Role specific info?
          * TODO: QR code & Edit Home tiles 
