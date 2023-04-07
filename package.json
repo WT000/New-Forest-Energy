@@ -36,6 +36,7 @@
     "react-query": "^3.39.3",
     "react-use-draggable-scroll": "^0.4.7",
     "storybook": "^6.5.16",
+    "tailwind-scrollbar-hide": "^1.1.7",
     "webpack": "^5.75.0"
   },
   "devDependencies": {
