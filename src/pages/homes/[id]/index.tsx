@@ -66,7 +66,6 @@ export default function Index(props) {
         } else {
             bookingCards.push((<Card key={index} cardType={CardType.booking} bookingType={BookingType.inProgress} children={bookingLayout}></Card>))
         }
-
     })
 
     let delegateItems = []
@@ -185,7 +184,7 @@ export default function Index(props) {
                     </div>
                     <div className="mt-14 md:mt-0 md:w-[42%]">
                         <Subtitle text1="Delegates" showbar={true}/>
-                        <div className="mt-3">
+                        <div className="mt-3">                            
                             <DelegatesList children={delegateItems} onClick={null}></DelegatesList>
                             <Toaster></Toaster>
                             {/* TODO: Horizontal Infinite Scroll */}
