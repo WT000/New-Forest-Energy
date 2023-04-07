@@ -19,6 +19,7 @@ import CompactLayout from "../../../components/layouts/CompactLayout/CompactLayo
 import Card, { CardType, BookingType } from "../../../components/Card/Card";
 import BarChart, { ChartDateType } from "../../../components/BarChart/BarChart";
 import ReadingContainer from "../../../components/ReadingContainer/ReadingContainer";
+import HorizontalContainer from "../../../components/GridContainer/HorizontalContainer";
 import Subtitle from "../../../components/Subtitle/Subtitle";
 import {IoHome, IoPieChart, IoFlash, IoList, IoLogOut, IoTrendingDown, IoTrendingUp, IoQrCode, IoCreateSharp, IoClose} from "react-icons/io5";
 import BookingLayout from "../../../components/layouts/BookingLayout/BookingLayout";
@@ -54,15 +55,16 @@ export default function Index(props) {
         let endDate: Date = new Date(item.endDateTime);
         let startDate: Date = new Date(item.startDateTime);
         let now = new Date().getTime();
-
-        const bookingLayout = (<BookingLayout cost={5} duration={4} dateRange="15th - 19th Feb" ></BookingLayout>)
+        let dateRange = getDayMonth(startDate) + " - " + getDayMonth(endDate)
+        let duration = ((endDate.getTime() - startDate.getTime()) / (1000 * 60 * 60 * 24));
+        const bookingLayout = (<BookingLayout cost={-1} duration={duration} dateRange={dateRange} ></BookingLayout>)
 
         if (endDate.getTime() < now) {
             bookingCards.push((<Card key={index} cardType={CardType.booking} bookingType={BookingType.complete} children={bookingLayout}></Card>))
         } else if (startDate.getTime() > now ) {
-            bookingCards.push(<p key={index}>Planned {startDate.toString()} {endDate.toString()}</p>)
+            bookingCards.push((<Card key={index} cardType={CardType.booking} bookingType={BookingType.planned} children={bookingLayout}></Card>))
         } else {
-            bookingCards.push(<p key={index}>In Progress {startDate.toString()} {endDate.toString()}</p>)
+            bookingCards.push((<Card key={index} cardType={CardType.booking} bookingType={BookingType.inProgress} children={bookingLayout}></Card>))
         }
 
     })
@@ -192,10 +194,10 @@ export default function Index(props) {
                         <Subtitle text1="Bookings" showbar={false}/>
                             <div className="mt-3">
                                 {/* TODO: Horizontal Infinite Scroll */}
-                                {bookingCards}
+                                <HorizontalContainer readings={bookingCards}/>
                             </div>
                         </div>
-                        <div className="md:flex mt-16">
+                        <div className="md:flex mt-2">
                             <Card cardType={CardType.colourThumbnail} bookingType={BookingType.planned}></Card> 
                             <div className="-mt-1 ml-1.5 mr-3 text-[#77767A]">Planned</div>
                             <Card cardType={CardType.colourThumbnail} bookingType={BookingType.inProgress}></Card>
