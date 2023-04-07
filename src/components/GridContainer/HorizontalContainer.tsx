@@ -6,8 +6,6 @@ import useInfiniteScroll, {
 import { useDraggable } from "react-use-draggable-scroll";
 import { useRef } from "react";
 import useMergedRef from "@react-hook/merged-ref";
-import Tile from "../Tile/Tile";
-import { TileType } from "../Tile/Tile";
 
 function loadMore(
 	setCurrentOffset: (number) => void,
@@ -51,18 +49,30 @@ const createNext =
 	};
 
 export interface HorizontalContainertInterface {
-	readings: any[];
+	componentIterable: any[];
+	hideScrollbar: boolean;
 }
 
 export default function HorizontalContainer(
 	props: HorizontalContainertInterface
 ) {
-	// Setdata SHOULD BE SETTING READING VALUES
-	const { readings } = props;
+	const {
+		componentIterable: componentIterable,
+		hideScrollbar: hideScrollbar,
+	} = props;
+
+	let scrollClass = "";
+	if (hideScrollbar) {
+		scrollClass = "flex overflow-x-scroll pb-10 scrollbar-hide";
+	} else {
+		scrollClass = "flex overflow-x-scroll pb-10";
+	}
 
 	const [offset, setCurrentOffset] = useState(6);
 
-	const [data, setData] = useState(readings ? readings.slice(0, 12) : []);
+	const [data, setData] = useState(
+		componentIterable ? componentIterable.slice(0, 12) : []
+	);
 
 	const [hasMore, setHasMore] = useState<ScrollDirectionBooleanState>({
 		right: true,
@@ -75,9 +85,9 @@ export default function HorizontalContainer(
 			setCurrentOffset,
 			offset: 6,
 			currentOffset: offset,
-			data: readings,
+			data: componentIterable,
 		}),
-		columnCount: readings.length,
+		columnCount: componentIterable.length,
 		hasMore,
 	});
 
@@ -90,24 +100,11 @@ export default function HorizontalContainer(
 	return (
 		<div>
 			<div className="flex flex-col bg-white m-auto p-auto">
-				{/* <h1 className="flex py-5 lg:px-20 md:px-10 px-5 lg:mx-40 md:mx-20 mx-5 font-bold text-4xl text-gray-800">
-					Horizontal
-				</h1> */}
-				<div
-					className="flex overflow-x-scroll pb-10 scrollbar-hide"
-					ref={multiRef}
-					{...events}
-				>
+				<div className={scrollClass} ref={multiRef} {...events}>
 					<div className="flex flex-nowrap select-none">
-						{data.map((reading, index) => (
+						{data.map((component, index) => (
 							<div className="inline-block px-3" key={index}>
-								{/* <Tile
-									tileType={TileType.home}
-									children={reading.image}
-									clickable={true}
-								></Tile> */}
-								{reading}
-								{/* <p>{index}</p> */}
+								{component}
 							</div>
 						))}
 					</div>

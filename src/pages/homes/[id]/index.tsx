@@ -194,7 +194,7 @@ export default function Index(props) {
                         <Subtitle text1="Bookings" showbar={false}/>
                             <div className="mt-3">
                                 {/* TODO: Horizontal Infinite Scroll */}
-                                <HorizontalContainer readings={bookingCards}/>
+                                <HorizontalContainer componentIterable={bookingCards} hideScrollbar={true}/>
                             </div>
                         </div>
                         <div className="md:flex mt-2">
