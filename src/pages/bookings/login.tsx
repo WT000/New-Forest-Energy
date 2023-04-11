@@ -1,23 +1,34 @@
-import { useRouter } from "next/router"
-import { useState } from "react"
+import axios from "axios";
+import { useRouter } from "next/router";
+import GuestLoginForm from "../../components/forms/GuestLoginForm/GuestLoginForm";
 
-export default function BookingLogin(props){
-
-    const router = useRouter()
-
-    const [bookingId, setBookingId] = useState("")
-
-    function goToBooking(){
-        //If ID is valid
-        router.push(`/bookings/${bookingId}`)
-    }
+export default function BookingLogin(props) {
+    const router = useRouter();
 
     return (
         <div>
-            <input type="text" maxLength={7} name="simple_booking_id" placeholder="7 Character Booking ID" value={bookingId} onChange={e => setBookingId(e.target.value)}/>
-            <button onClick={e => goToBooking()}>
-                Go to my booking
-            </button>
+            <GuestLoginForm
+                onSubmit={async (friendlyId) => {
+                    router.push(`/bookings/${friendlyId.friendlyId}`);
+                }}
+                onCancel={() => {
+                    router.push("/");
+                }}
+                bookingFinder={async (friendlyId) => {
+                    try {
+                        const res = await axios.get(`/api/checklogin?friendlyId=${friendlyId}`);
+
+                        if (res.status == 200) {
+                            return true;
+                        }
+                    } catch (e) {
+                        console.log(e);
+                        return false;
+                    }
+
+                    return false;
+                }}
+            />
         </div>
-    )
+    );
 }

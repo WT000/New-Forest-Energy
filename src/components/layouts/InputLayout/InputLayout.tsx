@@ -1,4 +1,5 @@
 import { UseFormRegister } from "react-hook-form";
+import { GuestLoginFormData } from "../../forms/GuestLoginForm/GuestLoginForm";
 import { HomeFormData } from "../../forms/HomeForm/HomeForm";
 
 interface InputLayoutProps {
@@ -9,7 +10,7 @@ interface InputLayoutProps {
     placeholder: string;
     currency?: boolean;
     // Add HomeFormData | xFormData | yFormData in the future
-    register?: UseFormRegister<HomeFormData>;
+    register?: UseFormRegister<HomeFormData> | UseFormRegister<GuestLoginFormData>;
     registerSettings?: object;
     errors?: object;
     errorMessage?: string;
