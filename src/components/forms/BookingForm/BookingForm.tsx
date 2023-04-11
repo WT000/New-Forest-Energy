@@ -1,4 +1,4 @@
-import { IoSave, IoTrashBin, IoHome, IoCalendar } from "react-icons/io5";
+import { IoSave, IoTrashBin, IoHome, IoCalendar, IoPerson } from "react-icons/io5";
 import { SubmitHandler, useForm } from "react-hook-form";
 import Button from "../../Button/Button";
 import InputLayout from "../../layouts/InputLayout/InputLayout";
@@ -116,7 +116,7 @@ export default function BookingForm(props: BookingFormProps) {
             {/* Surname */}
             <Tile tileType={TileType.input} clickable={false}>
                 <InputLayout
-                    icon={<IoCalendar size="32px" />}
+                    icon={<IoPerson size="32px" />}
                     text={"Guest Surname"}
                     type={"text"}
                     name={"surname"}
