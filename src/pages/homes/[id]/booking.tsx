@@ -1,19 +1,19 @@
 import { getServerSession } from "next-auth/next";
-import { authOptions } from "../../../api/auth/[...nextauth]";
+import { authOptions } from "../../api/auth/[...nextauth]";
 import { IoHome, IoLogOut } from "react-icons/io5";
-import Body from "../../../../components/Body/Body";
-import getRole from "../../../../lib/utils/getRole";
-import Role from "../../../../lib/utils/roles";
-import BookingForm, { BookingFormData } from "../../../../components/forms/BookingForm/BookingForm";
+import Body from "../../../components/Body/Body";
+import getRole from "../../../lib/utils/getRole";
+import Role from "../../../lib/utils/roles";
+import BookingForm, { BookingFormData } from "../../../components/forms/BookingForm/BookingForm";
 import mongoose from "mongoose";
-import Home from "../../../../db/models/Home";
-import Booking from "../../../../db/models/Booking";
-import { ToSeriable } from "../../../../lib/utils/homes";
-import dbConnect from "../../../../db/dbcon/dbcon";
+import Home from "../../../db/models/Home";
+import Booking from "../../../db/models/Booking";
+import { ToSeriable } from "../../../lib/utils/homes";
+import dbConnect from "../../../db/dbcon/dbcon";
 import { useRouter } from "next/router";
 import { useMutation } from "react-query";
 import axios from "axios";
-import { ToSeriableHome } from "../../../../lib/utils/json";
+import { ToSeriableHome } from "../../../lib/utils/json";
 
 export default function NewBooking(props) {
     const { userSession, home } = props;
@@ -79,12 +79,12 @@ export default function NewBooking(props) {
                     }}
                     isLoading={isLoading}
                     home={home}
-                    bookingFinder={async (dateTime) => {
+                    bookingFinder={async (dateTimeStart, dateTimeEnd) => {
                         try {
-                            if (!dateTime) return false;
+                            if (!dateTimeStart || !dateTimeEnd) return false;
 
                             // Attempt to find a booking with this start or end date for the home
-                            const res = await axios.get(`/api/checkbooking?dateTime=${dateTime}&homeId=${home._id}`);
+                            const res = await axios.get(`/api/checkbooking?dateTimeStart=${dateTimeStart}&dateTimeEnd=${dateTimeEnd}&homeId=${home._id}`);
 
                             if (res.status == 200) {
                                 return true;

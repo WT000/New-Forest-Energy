@@ -24,7 +24,7 @@ interface BookingFormProps {
     onSubmit: SubmitHandler<BookingFormData>;
     onCancel: () => void;
     home: HomeInterface;
-    bookingFinder: (dateTime: string) => Promise<boolean>;
+    bookingFinder: (startDateTime: string, endDateTime: string) => Promise<boolean>;
     isLoading?: boolean;
     triggerReset?: boolean;
     edit?: {
@@ -45,10 +45,11 @@ export function countDecimal(num: number) {
     return false;
 }
 
-async function findBookingConflict(dateTime: Date, bookingFinder: (dateTime: string) => Promise<boolean>) {
+async function findBookingConflict(dateTimeStart: Date, dateTimeEnd: Date, bookingFinder: (dateTimeStart: string, dateTimeEnd: string) => Promise<boolean>) {
     try {
-        if (typeof dateTime.toISOString !== "function") return false;
-        if (await bookingFinder(dateTime.toISOString())) return true;
+        if (typeof dateTimeStart.toISOString !== "function") return false;
+        if (typeof dateTimeEnd.toISOString !== "function") return false;
+        if (await bookingFinder(dateTimeStart.toISOString(), dateTimeEnd.toISOString())) return true;
     } catch (e) {
         console.log(e);
     }
@@ -122,7 +123,8 @@ export default function BookingForm(props: BookingFormProps) {
                         valueAsDate: true,
                         validate: {
                             future: (date) => date > new Date(),
-                            noConflict: (date) => findBookingConflict(date, bookingFinder),
+                            // @ts-ignore
+                            noConflict: (date) => findBookingConflict(date, getValues("endDateTime"), bookingFinder),
                         },
                     }}
                     errors={errors.startDateTime}
@@ -144,7 +146,8 @@ export default function BookingForm(props: BookingFormProps) {
                         valueAsDate: true,
                         validate: {
                             beyondStart: (date) => date > getValues("startDateTime"),
-                            noConflict: (date) => findBookingConflict(date, bookingFinder),
+                            // @ts-ignore
+                            noConflict: (date) => findBookingConflict(getValues("startDateTime"), date, bookingFinder),
                         },
                     }}
                     errors={errors.endDateTime}
