@@ -1,4 +1,3 @@
-import { useEffect } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { IoLockClosed } from "react-icons/io5";
 import InputLayout from "../../layouts/InputLayout/InputLayout";
@@ -32,7 +31,6 @@ export default function HomeForm(props: GuestLoginFormProps) {
         register,
         handleSubmit,
         formState: { errors },
-        reset,
     } = useForm<GuestLoginFormData>();
 
     return (
