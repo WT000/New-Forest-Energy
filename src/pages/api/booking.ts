@@ -30,7 +30,6 @@ function checkFormErrors(booking, method): boolean {
     }
 
     return true;
-    
 }
 
 export default async function handler(req, res) {
@@ -41,11 +40,12 @@ export default async function handler(req, res) {
         const session = await getServerSession(req, res, authOptions);
 
         let booking;
+        let bookingdb;
         let home;
         let valid;
         let role;
         let friendlyId;
-        
+
         switch (method) {
             case "POST":
                 booking = req.body;
@@ -72,20 +72,60 @@ export default async function handler(req, res) {
                     friendlyId: friendlyId,
                     home: home._id,
                     startDateTime: Date.parse(booking.startDateTime),
-                    endDateTime: Date.parse(booking.endDateTime)
-                })
+                    endDateTime: Date.parse(booking.endDateTime),
+                });
 
-                return res.json({success: true, friendlyId: newBooking.friendlyId});
+                return res.json({ success: true, friendlyId: newBooking.friendlyId });
 
             case "PUT":
+                console.log("here")
+
+                booking = req.body;
+                valid = checkFormErrors(booking, method);
+
+                if (!valid) {
+                    return res.status(400).json({ success: false });
+                }
+
+                bookingdb = await Booking.findOne({ _id: booking._id }).populate("home", "", Home);
+                role = getRole(session, bookingdb?.home);
+
+                if (!bookingdb || (role != Role.Agency && role != Role.Homeowner)) {
+                    return res.status(401).json({ success: false });
+                }
+
+                console.log(`Editing booking ${bookingdb.friendlyId}`);
+                
+                const editBooking = await Booking.findByIdAndUpdate(bookingdb._id, {
+                    surname: booking.surname,
+                    startDateTime: Date.parse(booking.startDateTime),
+                    endDateTime: Date.parse(booking.endDateTime),
+                });
+                if (editBooking) return res.json({ success: true, friendlyId: bookingdb.friendlyId });
                 break;
 
             case "DELETE":
+                // if (getRole(session) != Role.Agency) {
+                //     return res.status(400).json({ success: false });
+                // }
+
+                // const homeId = req.query.id;
+                // homedb = await Home.findOne({ _id: homeId });
+
+                // if (!homedb) {
+                //     return res.status(404).json({ success: false });
+                // }
+
+                // console.log(`Deleting home ${homedb.name}`);
+
+                // const homeDelete = await Home.findByIdAndUpdate(homedb._id, {
+                //     isDeleted: true,
+                // });
+                // if (homeDelete) return res.json({ success: true });
                 break;
         }
-        
+
         res.status(401).json({ success: false });
-    
     } catch (e) {
         console.log(e);
         res.status(500).json({ error: e.message });

@@ -51,7 +51,7 @@ export default function NewBooking(props) {
 
     const { isLoading, mutate } = useMutation(
         (editBooking: EditBookingFormData) => {
-            return axios.put("/api/home", editBooking);
+            return axios.put("/api/booking", editBooking);
         },
         {
             onSuccess: (data) => {
@@ -62,7 +62,7 @@ export default function NewBooking(props) {
 
     const { isLoading: isLoadingDelete, mutate: mutateDelete } = useMutation(
         () => {
-            return axios.delete(`/api/home?id=${home._id}`);
+            return axios.delete(`/api/booking?id=${home._id}`);
         },
         {
             onSuccess: () => {
@@ -99,7 +99,7 @@ export default function NewBooking(props) {
                             if (!dateTimeStart || !dateTimeEnd) return false;
 
                             // Attempt to find a booking with this start or end date for the home
-                            const res = await axios.get(`/api/checkbooking?dateTimeStart=${dateTimeStart}&dateTimeEnd=${dateTimeEnd}&homeId=${home._id}`);
+                            const res = await axios.get(`/api/checkbooking?dateTimeStart=${dateTimeStart}&dateTimeEnd=${dateTimeEnd}&homeId=${home._id}&bookingId=${JSON.parse(booking)._id}`);
 
                             if (res.status == 200) {
                                 return true;

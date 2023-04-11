@@ -7,6 +7,7 @@ export default async function handler(req, res) {
         const startDateTime = req.query.dateTimeStart;
         const endDateTime = req.query.dateTimeEnd;
         const homeId = req.query.homeId;
+        const bookingId = req.query.bookingId;
 
         if (!startDateTime || !endDateTime || !homeId) return res.status(400).json({success: false});
 
@@ -20,11 +21,17 @@ export default async function handler(req, res) {
         if (!home) return res.status(400).json({success: false});
 
         // Try to find a booking where dateTimeObj is within its times
-        const foundOverlapping = await Booking.findOne({
+        let query = {
             home: home._id,
             startDateTime: { $lt: endDateTimeObj },
             endDateTime: { $gt: startDateTimeObj }
-        })
+        }
+
+        if (bookingId) {
+            query["_id"] = { $ne: bookingId };
+        }
+
+        const foundOverlapping = await Booking.findOne(query);
 
         if (!foundOverlapping) return res.json({success: true});
         return res.status(400).json({success: false});
