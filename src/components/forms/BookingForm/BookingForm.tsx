@@ -1,13 +1,10 @@
-import { IoSave, IoText, IoTrashBin, IoHome, IoCalendar } from "react-icons/io5";
-import { Controller, SubmitHandler, useForm } from "react-hook-form";
+import { IoSave, IoTrashBin, IoHome, IoCalendar } from "react-icons/io5";
+import { SubmitHandler, useForm } from "react-hook-form";
 import Button from "../../Button/Button";
 import InputLayout from "../../layouts/InputLayout/InputLayout";
-import InstructionsLayout from "../../layouts/InstructionsLayout/InstructionsLayout";
 import Tile, { TileType } from "../../Tile/Tile";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import Role from "../../../lib/utils/roles";
-import PhotoInputLayout from "../../layouts/PhotoInputLayout/PhotoInputLayout";
-import ImageLayout from "../../layouts/ImageLayout/ImageLayout";
 import { HomeInterface } from "../../../db/models/Home";
 
 export interface BookingFormData {
@@ -31,7 +28,6 @@ interface BookingFormProps {
         onDelete: () => void;
         onDeleteLoading: boolean;
         editBooking: EditBookingFormData;
-        role?: Role
     };
 }
 
@@ -45,7 +41,11 @@ export function countDecimal(num: number) {
     return false;
 }
 
-async function findBookingConflict(dateTimeStart: Date, dateTimeEnd: Date, bookingFinder: (dateTimeStart: string, dateTimeEnd: string) => Promise<boolean>) {
+async function findBookingConflict(
+    dateTimeStart: Date,
+    dateTimeEnd: Date,
+    bookingFinder: (dateTimeStart: string, dateTimeEnd: string) => Promise<boolean>
+) {
     try {
         if (typeof dateTimeStart.toISOString !== "function") return false;
         if (typeof dateTimeEnd.toISOString !== "function") return false;
@@ -59,6 +59,22 @@ async function findBookingConflict(dateTimeStart: Date, dateTimeEnd: Date, booki
 export default function BookingForm(props: BookingFormProps) {
     const { onSubmit, onCancel, bookingFinder, isLoading, triggerReset, edit, home } = props;
 
+    let startStr;
+    let endStr;
+
+    if (edit) {
+        const start = new Date(edit.editBooking.startDateTime);
+        const startDate = start.toLocaleDateString().split("/");
+        const startTime = start.toLocaleTimeString();
+    
+        const end = new Date(edit.editBooking.endDateTime);
+        const endDate = end.toLocaleDateString().split("/");
+        const endTime = end.toLocaleTimeString();
+    
+        startStr = `${startDate[2]}-${startDate[1]}-${startDate[0]}T${startTime}`;
+        endStr = `${endDate[2]}-${endDate[1]}-${endDate[0]}T${endTime}`;
+    }
+
     const {
         register,
         handleSubmit,
@@ -67,7 +83,13 @@ export default function BookingForm(props: BookingFormProps) {
         control,
         getValues,
     } = useForm<BookingFormData>({
-        defaultValues: { ...edit?.editBooking },
+        defaultValues: {
+            ...edit?.editBooking,
+            ...{
+                startDateTime: edit && startStr,
+            },
+            ...{ endDateTime: edit && endStr },
+        },
     });
 
     // Handle Reset (useEffect so this only applies after load)
@@ -76,7 +98,6 @@ export default function BookingForm(props: BookingFormProps) {
             reset();
         }
     }, [triggerReset, reset]);
-
 
     return (
         <div className="grid grid-cols-1 lg:grid-cols-1 gap-x-24 gap-y-9 mb-14 md:mb-0 mt-10 ">
@@ -87,7 +108,7 @@ export default function BookingForm(props: BookingFormProps) {
                     text={"Home"}
                     type={"text"}
                     name={"name"}
-                    placeholder={home.name ? home.name  : "Not known"}
+                    placeholder={home.name ? home.name : "Not known"}
                     disabled={true}
                 />
             </Tile>
@@ -108,7 +129,7 @@ export default function BookingForm(props: BookingFormProps) {
                     errorMessage={"*Required"}
                 />
             </Tile>
-            
+
             {/* Start */}
             <Tile tileType={TileType.input} clickable={false}>
                 <InputLayout
@@ -131,7 +152,7 @@ export default function BookingForm(props: BookingFormProps) {
                     errorMessage={"*Must be beyond now and not conflict."}
                 />
             </Tile>
-            
+
             {/* End */}
             <Tile tileType={TileType.input} clickable={false}>
                 <InputLayout
@@ -162,13 +183,13 @@ export default function BookingForm(props: BookingFormProps) {
                     onClick={handleSubmit((data) => {
                         onSubmit({
                             ...data,
-                            ...{homeId: home._id}
+                            ...{ homeId: home._id },
                         });
                     })}
                     disabled={isLoading}
                 />
 
-                {edit && edit.role == Role.Agency && (
+                {edit && (
                     <Button
                         text="Delete"
                         icon={<IoTrashBin className="text-white" />}
