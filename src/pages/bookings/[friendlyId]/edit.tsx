@@ -62,11 +62,11 @@ export default function NewBooking(props) {
 
     const { isLoading: isLoadingDelete, mutate: mutateDelete } = useMutation(
         () => {
-            return axios.delete(`/api/booking?id=${home._id}`);
+            return axios.delete(`/api/booking?id=${JSON.parse(booking)._id}`);
         },
         {
             onSuccess: () => {
-                router.push(`/`);
+                router.push(`/homes/${JSON.parse(booking).home._id}`);
             },
         }
     );

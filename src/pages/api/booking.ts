@@ -78,8 +78,6 @@ export default async function handler(req, res) {
                 return res.json({ success: true, friendlyId: newBooking.friendlyId });
 
             case "PUT":
-                console.log("here")
-
                 booking = req.body;
                 valid = checkFormErrors(booking, method);
 
@@ -105,23 +103,19 @@ export default async function handler(req, res) {
                 break;
 
             case "DELETE":
-                // if (getRole(session) != Role.Agency) {
-                //     return res.status(400).json({ success: false });
-                // }
+                const bookingId = req.query.id;
+                
+                bookingdb = await Booking.findOne({ _id: bookingId }).populate("home", "", Home);
+                role = getRole(session, bookingdb?.home);
 
-                // const homeId = req.query.id;
-                // homedb = await Home.findOne({ _id: homeId });
+                if (!bookingdb || (role != Role.Agency && role != Role.Homeowner)) {
+                    return res.status(401).json({ success: false });
+                }
 
-                // if (!homedb) {
-                //     return res.status(404).json({ success: false });
-                // }
+                console.log(`Deleting booking ${bookingdb.friendlyId}`);
 
-                // console.log(`Deleting home ${homedb.name}`);
-
-                // const homeDelete = await Home.findByIdAndUpdate(homedb._id, {
-                //     isDeleted: true,
-                // });
-                // if (homeDelete) return res.json({ success: true });
+                const bookingDelete = await Booking.findByIdAndDelete(bookingdb._id);
+                if (bookingDelete) return res.json({ success: true });
                 break;
         }
 
