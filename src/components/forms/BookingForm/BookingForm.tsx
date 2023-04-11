@@ -11,6 +11,7 @@ import ImageLayout from "../../layouts/ImageLayout/ImageLayout";
 import { HomeInterface } from "../../../db/models/Home";
 
 export interface BookingFormData {
+    surname: string;
     startDateTime: string;
     endDateTime: string;
 }
@@ -90,6 +91,24 @@ export default function BookingForm(props: BookingFormProps) {
                 />
             </Tile>
 
+            {/* Surname */}
+            <Tile tileType={TileType.input} clickable={false}>
+                <InputLayout
+                    icon={<IoCalendar size="32px" />}
+                    text={"Guest Surname"}
+                    type={"text"}
+                    name={"surname"}
+                    placeholder={"Doe..."}
+                    register={register}
+                    registerSettings={{
+                        required: true,
+                    }}
+                    errors={errors.surname}
+                    errorMessage={"*Required"}
+                />
+            </Tile>
+            
+            {/* Start */}
             <Tile tileType={TileType.input} clickable={false}>
                 <InputLayout
                     icon={<IoCalendar size="32px" />}
@@ -110,7 +129,8 @@ export default function BookingForm(props: BookingFormProps) {
                     errorMessage={"*Must be beyond now and not conflict."}
                 />
             </Tile>
-
+            
+            {/* End */}
             <Tile tileType={TileType.input} clickable={false}>
                 <InputLayout
                     icon={<IoCalendar size="32px" />}
@@ -132,51 +152,6 @@ export default function BookingForm(props: BookingFormProps) {
                 />
             </Tile>
 
-            {/* Beds */}
-            {/* <Tile tileType={TileType.input} clickable={false}>
-                <InputLayout
-                    icon={<IoBed size="32px" />}
-                    text={"Total Beds"}
-                    type={"number"}
-                    name={"numBeds"}
-                    placeholder={"4"}
-                    register={register}
-                    registerSettings={{
-                        required: true,
-                        valueAsNumber: true,
-                        validate: {
-                            pos: (val) => val > 0,
-                            int: (val) => Number.isInteger(val),
-                        },
-                    }}
-                    errors={errors.numBeds}
-                    errorMessage={"*Must be at least 1 and whole."}
-                />
-            </Tile> */}
-
-            {/* Cost Buffer */}
-            {/* <Tile tileType={TileType.input} clickable={false}>
-                <InputLayout
-                    icon={<IoWallet size="32px" />}
-                    text={"Cost Buffer"}
-                    type={"number"}
-                    name={"energyBuffer"}
-                    placeholder={"0.50"}
-                    currency={true}
-                    register={register}
-                    registerSettings={{
-                        required: true,
-                        valueAsNumber: true,
-                        validate: {
-                            pos: (val) => val >= 0,
-                            decimals: (val) => countDecimal(val),
-                        },
-                    }}
-                    errors={errors.energyBuffer}
-                    errorMessage={"*Must be at least £0."}
-                />
-            </Tile> */}
-
             <div className="flex flex-row justify-around w-100 md:w-[368px]">
                 <Button
                     text="Submit"
@@ -184,6 +159,7 @@ export default function BookingForm(props: BookingFormProps) {
                     onClick={handleSubmit((data) => {
                         onSubmit({
                             ...data,
+                            ...{homeId: home._id}
                         });
                     })}
                     disabled={isLoading}

@@ -188,7 +188,7 @@ export async function getServerSideProps({ req, res, params }) {
                 totalUsage =  readings[0].value
             }
             
-
+                
             totalDays = dateDiffInDays(readings[readings.length -1].createdAt, readings[0].createdAt) || 1
             //@ts-ignore
             totalCost = totalUsage * b.home.energyTariff
@@ -207,19 +207,23 @@ export async function getServerSideProps({ req, res, params }) {
 
         //@ts-ignore
         const newestReading = await Reading.findOne({home: b.home._id}, {}, { sort: { 'createdAt' : 1 } });
-
-        const daysDiff = dateDiffInDays(oldestReading.createdAt, newestReading.createdAt) || 1;
-        const readingDiff = newestReading.value - oldestReading.value
-        const houseAveragePerDay = (readingDiff > 0 ? readingDiff : 0) / daysDiff
-    
-        const bookingAveragePerDay = (totalUsage > 0 ? totalUsage : 0) / totalDays
         
-        const otherGuestsPercentageDiff = percentageDiff(bookingAveragePerDay, houseAveragePerDay, true);        
+        let otherGuestsPercentageDiff = 0;
+        let similarHomesPercentageDiff = 0;
+        if (oldestReading && newestReading) {
+            const daysDiff = dateDiffInDays(oldestReading.createdAt, newestReading.createdAt) || 1;
+            const readingDiff = newestReading.value - oldestReading.value
+            const houseAveragePerDay = (readingDiff > 0 ? readingDiff : 0) / daysDiff
+        
+            const bookingAveragePerDay = (totalUsage > 0 ? totalUsage : 0) / totalDays
+            
+            otherGuestsPercentageDiff = percentageDiff(bookingAveragePerDay, houseAveragePerDay, true);        
 
-        //https://www.ofgem.gov.uk/information-consumers/energy-advice-households/average-gas-and-electricity-use-explained
-        //@ts-ignore
-        const similarHomeUsageDaily = b.home.numBeds < 2 ? 4.93 : b.home.numBeds < 4 ? 7.94 : 11.78
-        const similarHomesPercentageDiff = percentageDiff(bookingAveragePerDay, similarHomeUsageDaily, true);    
+            //https://www.ofgem.gov.uk/information-consumers/energy-advice-households/average-gas-and-electricity-use-explained
+            //@ts-ignore
+            const similarHomeUsageDaily = b.home.numBeds < 2 ? 4.93 : b.home.numBeds < 4 ? 7.94 : 11.78
+            similarHomesPercentageDiff = percentageDiff(bookingAveragePerDay, similarHomeUsageDaily, true);
+        }    
 
         return {
             props: {

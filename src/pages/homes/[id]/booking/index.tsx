@@ -51,11 +51,12 @@ export default function NewBooking(props) {
 
     const { isLoading, mutate } = useMutation(
         (newBooking: BookingFormData) => {
+            console.log(newBooking)
             return axios.post("/api/booking", newBooking);
         },
         {
             onSuccess: (data) => {
-                router.push(`/bookings/${data?.data?.friendlyid}`);
+                router.push(`/bookings/${data?.data?.friendlyId}`);
             },
         }
     );
@@ -80,12 +81,10 @@ export default function NewBooking(props) {
                     home={home}
                     bookingFinder={async (dateTime) => {
                         try {
-                            console.log(home);
-
                             if (!dateTime) return false;
 
                             // Attempt to find a booking with this start or end date for the home
-                            const res = await axios.get(`/api/checkbooking?dateTime=${dateTime}&home=${home._id}`);
+                            const res = await axios.get(`/api/checkbooking?dateTime=${dateTime}&homeId=${home._id}`);
 
                             if (res.status == 200) {
                                 return true;
