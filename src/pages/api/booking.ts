@@ -46,6 +46,10 @@ export default async function handler(req, res) {
         let role;
         let friendlyId;
 
+        let startDateTime;
+        let endDateTime;
+        let foundOverlapping;
+
         switch (method) {
             case "POST":
                 booking = req.body;
@@ -59,8 +63,19 @@ export default async function handler(req, res) {
                 role = getRole(session, home);
 
                 if (role !== Role.Agency && role !== Role.Homeowner) {
-                    return res.status(400).json({ success: false });
+                    return res.status(401).json({ success: false });
                 }
+
+                // Ensure dates are valid, in case of direct connection to route
+                startDateTime = new Date(Date.parse(booking.startDateTime));
+                endDateTime = new Date(Date.parse(booking.endDateTime));
+
+                foundOverlapping = await Booking.findOne({
+                    home: home._id,
+                    startDateTime: { $lt: endDateTime },
+                    endDateTime: { $gt: startDateTime },
+                });
+                if (foundOverlapping) return res.status(400).json({ success: false });
 
                 console.log(`Creating booking for ${home.name}`);
 
@@ -92,8 +107,20 @@ export default async function handler(req, res) {
                     return res.status(401).json({ success: false });
                 }
 
+                // Ensure dates are valid, in case of direct connection to route
+                startDateTime = new Date(Date.parse(booking.startDateTime));
+                endDateTime = new Date(Date.parse(booking.endDateTime));
+
+                foundOverlapping = await Booking.findOne({
+                    home: bookingdb.home._id,
+                    _id: { $ne: bookingdb._id },
+                    startDateTime: { $lt: endDateTime },
+                    endDateTime: { $gt: startDateTime },
+                });
+                if (foundOverlapping) return res.status(400).json({ success: false });
+
                 console.log(`Editing booking ${bookingdb.friendlyId}`);
-                
+
                 const editBooking = await Booking.findByIdAndUpdate(bookingdb._id, {
                     surname: booking.surname,
                     startDateTime: Date.parse(booking.startDateTime),
@@ -104,7 +131,7 @@ export default async function handler(req, res) {
 
             case "DELETE":
                 const bookingId = req.query.id;
-                
+
                 bookingdb = await Booking.findOne({ _id: bookingId }).populate("home", "", Home);
                 role = getRole(session, bookingdb?.home);
 
