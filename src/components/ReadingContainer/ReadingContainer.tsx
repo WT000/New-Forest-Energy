@@ -1,6 +1,7 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Reading from "../Reading/Reading";
 import useInfiniteScroll, { ScrollDirectionBooleanState, ScrollDirection } from "react-easy-infinite-scroll-hook";
+import Popup from "../Popup/Popup";
 
 function loadMore(setCurrentOffset: (number) => void, currentOffset: number, offset: number, data: []) {
     const startingIndex = currentOffset;
@@ -57,9 +58,23 @@ export default function ReadingContainer(props: ReadingContainertInterface) {
         rowCount: readings.length,
         hasMore,
     });
-    
+
+    const [popupVisible, setPopupVisible] = useState(false);
+    const [popupData, setPopupData] = useState({
+        creator: "",
+        value: 0,
+        image: "",
+        createdAt: "",
+    });
+
     return (
         <div>
+            {popupVisible && (
+                <Popup onClick={() => setPopupVisible(!popupVisible)}>
+                    <p>{popupData.creator}</p>
+                    <p>{popupData.createdAt}</p>
+                </Popup>
+            )}
             <div
                 ref={ref}
                 className="List h-[35vh] overflow-y-auto flex flex-col"
@@ -76,7 +91,13 @@ export default function ReadingContainer(props: ReadingContainertInterface) {
                         //@ts-ignore
                         createdAt={new Date(reading.createdAt)}
                         onClick={() => {
-                            console.log("click");
+                            setPopupVisible(!popupVisible);
+                            setPopupData({
+                                creator: reading.user?.name ? reading.user.name : "Guest",
+                                value: reading.value,
+                                image: reading.image,
+                                createdAt: new Date(reading.createdAt).toLocaleString("en-GB", {hour12: true}),
+                            })
                         }}
                     />
                 ))}
