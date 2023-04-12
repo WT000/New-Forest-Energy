@@ -18,6 +18,7 @@ export function ToSeriableBooking(booking){
         {
             ...booking._doc,
             _id: booking._id.toString(),
+            friendlyId: booking.friendlyId.toString(),
             home: booking?.home && ToSeriableHome(booking.home),
             startDateTime: booking.startDateTime?.toString(),
             endDateTime: booking.endDateTime?.toString(),

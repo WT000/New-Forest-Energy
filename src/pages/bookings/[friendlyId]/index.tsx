@@ -1,5 +1,6 @@
 import dbConnect from "../../../db/dbcon/dbcon";
 import { useSession } from "next-auth/react";
+import { useRouter } from "next/router";
 import { authOptions } from "../../api/auth/[...nextauth]";
 import { getServerSession } from "next-auth/next";
 
@@ -10,6 +11,7 @@ import User from "../../../db/models/User";
 
 import { dateDiffInDays, getDayMonth, sortDatesAscending, sortDatesDescending } from "../../../lib/utils/dates";
 import { ToSeriableBooking } from "../../../lib/utils/json";
+import { percentageDiff } from "../../../lib/utils/nums";
 import getRole from "../../../lib/utils/getRole";
 import Role from "../../../lib/utils/roles";
 
@@ -22,7 +24,7 @@ import BarChart, { ChartDateType } from "../../../components/BarChart/BarChart";
 import ReadingContainer from "../../../components/ReadingContainer/ReadingContainer";
 import Subtitle from "../../../components/Subtitle/Subtitle";
 import {IoHome, IoPieChart, IoFlash, IoList, IoLogOut, IoTrendingDown, IoTrendingUp, IoCreate, IoShareSocial} from "react-icons/io5";
-import { percentageDiff } from "../../../lib/utils/nums";
+
 
 function displayCost(cost) {
     let costString = "0"
@@ -34,6 +36,8 @@ function displayCost(cost) {
 // TO DO - UPDATE LINKS
 
 export default function Index(props) {
+    const router = useRouter();
+
     const readings = props.readings ? JSON.parse(props.readings) : null
     const startDate = getDayMonth(new Date(props?.booking?.startDateTime));
     const endDate = getDayMonth(new Date(props?.booking?.endDateTime), true);
@@ -60,7 +64,7 @@ export default function Index(props) {
         {
             icon: <IoPieChart />,
             text: "Dashboard",
-            path: "/",
+            path: `/bookings/${props?.booking?.friendlyId}`,
             activePage: true
         },
         {
@@ -94,6 +98,7 @@ export default function Index(props) {
     const otherHomesComparisonTextWording = Math.abs((props.similarHomesComparison * 100)).toFixed(0) + '%' + " " + (props.similarHomesComparison > 0 ? "more" : "less")
     const otherHomesIcon = props.similarHomesComparison > 0 ? <IoTrendingUp size="34px" className="text-orange"/> : <IoTrendingDown size="34px" className="text-green-500"/>
 
+    console.log(props.location)
 
     return (
         <Body menuItems={navItems} statItems={stats} 
@@ -109,13 +114,13 @@ export default function Index(props) {
                                 icon={<IoCreate size="34px"/>}
                                 textLine1="Edit Booking"
                                 textLine2="Details"></CompactLayout>} 
-                                clickable={true} onClick={() => console.log("clicked")}></Tile>
+                                clickable={true} onClick={() => router.push(`/bookings/${props?.booking?.friendlyId}/edit`)}></Tile>
                             <Tile tileType={TileType.link} 
                                 children={<CompactLayout 
                                 icon={<IoShareSocial size="34px"/>}
                                 textLine1="Share Link"
                                 textLine2="Booking"></CompactLayout>} 
-                                clickable={true} onClick={() => console.log("clicked")}></Tile>
+                                clickable={true} onClick={() => {navigator.clipboard.writeText("test")}}></Tile>
                             </div>
                         )}
                         <div className="">
