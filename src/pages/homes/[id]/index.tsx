@@ -8,7 +8,7 @@ import Home from "../../../db/models/Home";
 import Reading from "../../../db/models/Reading";
 import User from "../../../db/models/User";
 
-import { getDayMonth, sortDatesAscending, sortDatesDescending } from "../../../lib/utils/dates";
+import { dateDiffInDays, getDayMonth, sortDatesAscending, sortDatesDescending } from "../../../lib/utils/dates";
 import { ToSeriableHome } from "../../../lib/utils/json";
 import getRole from "../../../lib/utils/getRole";
 import Role from "../../../lib/utils/roles";
@@ -56,7 +56,7 @@ export default function Index(props) {
         let startDate: Date = new Date(item.startDateTime);
         let now = new Date().getTime();
         let dateRange = getDayMonth(startDate) + " - " + getDayMonth(endDate)
-        let duration = Math.round((endDate.getTime() - startDate.getTime()) / (1000 * 60 * 60 * 24));
+        let duration = dateDiffInDays(startDate, endDate) || 1;
         const bookingLayout = (<BookingLayout cost={-1} duration={duration} dateRange={dateRange} ></BookingLayout>)
 
         if (endDate.getTime() < now) {
@@ -226,7 +226,7 @@ export async function getServerSideProps({ req, res, params }) {
         if (readings.length > 0) {
             const firstReading = readings[0];
             const lastReading = readings[readings.length -1];
-            const daysElapsed = ((new Date(lastReading.createdAt).getTime() - new Date(firstReading.createdAt).getTime()) / (1000 * 60 * 60 * 24));
+            let daysElapsed = dateDiffInDays(lastReading.createdAt, firstReading.createdAt) || 1;
             averagePerDay = (Number(lastReading.value) - Number(firstReading.value)) / daysElapsed;
         }
 
