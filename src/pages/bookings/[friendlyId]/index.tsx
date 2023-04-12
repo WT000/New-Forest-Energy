@@ -1,8 +1,10 @@
 import dbConnect from "../../../db/dbcon/dbcon";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/router";
+import { useEffect, useState } from "react";
 import { authOptions } from "../../api/auth/[...nextauth]";
 import { getServerSession } from "next-auth/next";
+import { Toaster } from "react-hot-toast";
 
 import Booking from "../../../db/models/Booking";
 import Home from "../../../db/models/Home";
@@ -23,7 +25,8 @@ import Tile, { TileType } from "../../../components/Tile/Tile";
 import BarChart, { ChartDateType } from "../../../components/BarChart/BarChart";
 import ReadingContainer from "../../../components/ReadingContainer/ReadingContainer";
 import Subtitle from "../../../components/Subtitle/Subtitle";
-import {IoHome, IoPieChart, IoFlash, IoList, IoLogOut, IoTrendingDown, IoTrendingUp, IoCreate, IoShareSocial} from "react-icons/io5";
+import Notification from "../../../components/Notification/Notifications"
+import {IoHome, IoPieChart, IoFlash, IoList, IoLogOut, IoTrendingDown, IoTrendingUp, IoCreate, IoShareSocial, IoClose} from "react-icons/io5";
 
 
 function displayCost(cost) {
@@ -33,10 +36,13 @@ function displayCost(cost) {
     return costString
 }
 
+
 // TO DO - UPDATE LINKS
 
 export default function Index(props) {
     const router = useRouter();
+    const [currentPath, setCurrentPath] = useState("");
+    useEffect(() => {if (window) {setCurrentPath(window.location.href)}});
 
     const readings = props.readings ? JSON.parse(props.readings) : null
     const startDate = getDayMonth(new Date(props?.booking?.startDateTime));
@@ -64,7 +70,7 @@ export default function Index(props) {
         {
             icon: <IoPieChart />,
             text: "Dashboard",
-            path: `/bookings/${props?.booking?.friendlyId}`,
+            path: currentPath,
             activePage: true
         },
         {
@@ -118,7 +124,11 @@ export default function Index(props) {
                                 icon={<IoShareSocial size="34px"/>}
                                 textLine1="Share Link"
                                 textLine2="Booking"></CompactLayout>} 
-                                clickable={true} onClick={() => {navigator.clipboard.writeText("test")}}></Tile>
+                                clickable={true} onClick={
+                                    Notification({text: "Link copied to clipboard.", icon: <IoClose />})
+                                }></Tile>
+                                <Toaster></Toaster>
+                                
                             </div>
                         )}
                         <div className="">
