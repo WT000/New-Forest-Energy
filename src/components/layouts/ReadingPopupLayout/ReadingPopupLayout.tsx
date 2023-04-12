@@ -12,13 +12,13 @@ interface ReadingPopupProps {
   name: string;
   role: Role;
   date: Date;
-  distance: number;
+  kwh: number;
   image: string;
   imgname: string;
 }
 
 export default function ReadingPopup(props: ReadingPopupProps) {
-  const { name, role, date, distance, image, imgname} = props;
+  const { name, role, date, kwh, image, imgname} = props;
 
 
 
@@ -72,7 +72,7 @@ export default function ReadingPopup(props: ReadingPopupProps) {
                 </p>
 
                 <p className="text-s font-semibold text-white pt-1 pr-6">
-                {distance} kWh
+                {kwh} kWh
                 </p>
             </div>
 

@@ -74,7 +74,7 @@ export default function ReadingContainer(props: ReadingContainertInterface) {
         <div>
             {popupVisible && (
                 <Popup onClick={() => setPopupVisible(!popupVisible)}>
-                    <ReadingPopup name={popupData.creator} role={Role.Guest} date={popupData.createdAt} distance={popupData.value} image={popupData.image} imgname={"Reading"}/>
+                    <ReadingPopup name={popupData.creator} role={Role.Guest} date={popupData.createdAt} kwh={popupData.value} image={popupData.image} imgname={"Reading"}/>
                 </Popup>
             )}
             <div
