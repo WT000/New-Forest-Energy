@@ -2,6 +2,8 @@ import React, { useEffect, useState } from "react";
 import Reading from "../Reading/Reading";
 import useInfiniteScroll, { ScrollDirectionBooleanState, ScrollDirection } from "react-easy-infinite-scroll-hook";
 import Popup from "../Popup/Popup";
+import ReadingPopup from "../layouts/ReadingPopupLayout/ReadingPopupLayout";
+import Role from "../../lib/utils/roles";
 
 function loadMore(setCurrentOffset: (number) => void, currentOffset: number, offset: number, data: []) {
     const startingIndex = currentOffset;
@@ -64,15 +66,15 @@ export default function ReadingContainer(props: ReadingContainertInterface) {
         creator: "",
         value: 0,
         image: "",
-        createdAt: "",
+        createdAt: new Date(),
+        createdAtStr: "",
     });
 
     return (
         <div>
             {popupVisible && (
                 <Popup onClick={() => setPopupVisible(!popupVisible)}>
-                    <p>{popupData.creator}</p>
-                    <p>{popupData.createdAt}</p>
+                    <ReadingPopup name={popupData.creator} role={Role.Guest} date={popupData.createdAt} distance={popupData.value} image={popupData.image} imgname={"Reading"}/>
                 </Popup>
             )}
             <div
@@ -96,7 +98,8 @@ export default function ReadingContainer(props: ReadingContainertInterface) {
                                 creator: reading.user?.name ? reading.user.name : "Guest",
                                 value: reading.value,
                                 image: reading.image,
-                                createdAt: new Date(reading.createdAt).toLocaleString("en-GB", {hour12: true}),
+                                createdAt: new Date(reading.createdAt),
+                                createdAtStr: new Date(reading.createdAt).toLocaleString("en-GB", {hour12: true}),
                             })
                         }}
                     />
