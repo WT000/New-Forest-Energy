@@ -59,7 +59,7 @@ export default function Index(props) {
         {
             icon: <IoPieChart />,
             text: "Dashboard",
-            path: "/1",
+            path: window.location.href,
             activePage: true
         },
         {
@@ -70,7 +70,7 @@ export default function Index(props) {
         {
             icon: <IoList />,
             text: "Instructions",
-            path: "/3"
+            path: `/homes/${props?.booking?.home?._id}/instructions`
         },
         {
             icon: <IoLogOut />,
