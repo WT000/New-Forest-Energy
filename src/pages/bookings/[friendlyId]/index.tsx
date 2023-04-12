@@ -106,7 +106,7 @@ export default function Index(props) {
                 <div className="md:flex md:justify-between ">
                     <div className="md:w-[42%] my-10 ">
                         {props?.userRole != Role.Guest && (
-                            <div className="md:flex md:justify-between mb-11">
+                            <div className="flex justify-between mb-8 md:mb-11">
                             <Tile tileType={TileType.link} 
                                 children={<CompactLayout 
                                 icon={<IoCreate size="34px"/>}
