@@ -10,6 +10,8 @@ function loadMore(setCurrentOffset: (number) => void, currentOffset: number, off
     return data.slice(startingIndex, newOffset);
 }
 
+
+
 const createNext =
     ({
         setData,
