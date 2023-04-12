@@ -70,7 +70,7 @@ export default function Index(props) {
         {
             icon: <IoPieChart />,
             text: "Dashboard",
-            path: currentPath,
+            path: `/bookings/${props?.booking?.friendlyId}`,
             activePage: true
         },
         {
@@ -124,11 +124,11 @@ export default function Index(props) {
                                 icon={<IoShareSocial size="34px"/>}
                                 textLine1="Share Link"
                                 textLine2="Booking"></CompactLayout>} 
-                                clickable={true} onClick={
+                                clickable={true} onClick={() => {
+                                    navigator.clipboard.writeText(currentPath);
                                     Notification({text: "Link copied to clipboard.", icon: <IoClose />})
-                                }></Tile>
+                                }}></Tile>
                                 <Toaster></Toaster>
-                                
                             </div>
                         )}
                         <div className="">
