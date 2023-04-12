@@ -1,5 +1,6 @@
 import dbConnect from "../../../db/dbcon/dbcon";
 import { useSession } from "next-auth/react";
+import { useRouter } from "next/router";
 import { authOptions } from "../../api/auth/[...nextauth]";
 import { getServerSession } from "next-auth/next";
 
@@ -10,6 +11,7 @@ import User from "../../../db/models/User";
 
 import { dateDiffInDays, getDayMonth, sortDatesAscending, sortDatesDescending } from "../../../lib/utils/dates";
 import { ToSeriableBooking } from "../../../lib/utils/json";
+import { percentageDiff } from "../../../lib/utils/nums";
 import getRole from "../../../lib/utils/getRole";
 import Role from "../../../lib/utils/roles";
 
@@ -17,11 +19,12 @@ import Body from "../../../components/Body/Body";
 import ProgressBar from "../../../components/ProgressBar/ProgressBar";
 import CompactLayout from "../../../components/layouts/CompactLayout/CompactLayout";
 import Card, { CardType } from "../../../components/Card/Card";
+import Tile, { TileType } from "../../../components/Tile/Tile";
 import BarChart, { ChartDateType } from "../../../components/BarChart/BarChart";
 import ReadingContainer from "../../../components/ReadingContainer/ReadingContainer";
 import Subtitle from "../../../components/Subtitle/Subtitle";
-import {IoHome, IoPieChart, IoFlash, IoList, IoLogOut, IoTrendingDown, IoTrendingUp} from "react-icons/io5";
-import { percentageDiff } from "../../../lib/utils/nums";
+import {IoHome, IoPieChart, IoFlash, IoList, IoLogOut, IoTrendingDown, IoTrendingUp, IoCreate, IoShareSocial} from "react-icons/io5";
+
 
 function displayCost(cost) {
     let costString = "0"
@@ -33,6 +36,8 @@ function displayCost(cost) {
 // TO DO - UPDATE LINKS
 
 export default function Index(props) {
+    const router = useRouter();
+
     const readings = props.readings ? JSON.parse(props.readings) : null
     const startDate = getDayMonth(new Date(props?.booking?.startDateTime));
     const endDate = getDayMonth(new Date(props?.booking?.endDateTime), true);
@@ -59,7 +64,7 @@ export default function Index(props) {
         {
             icon: <IoPieChart />,
             text: "Dashboard",
-            path: "/1",
+            path: `/bookings/${props?.booking?.friendlyId}`,
             activePage: true
         },
         {
@@ -70,7 +75,7 @@ export default function Index(props) {
         {
             icon: <IoList />,
             text: "Instructions",
-            path: "/3"
+            path: `/homes/${props?.booking?.home?._id}/instructions`
         },
         {
             icon: <IoLogOut />,
@@ -93,7 +98,6 @@ export default function Index(props) {
     const otherHomesComparisonTextWording = Math.abs((props.similarHomesComparison * 100)).toFixed(0) + '%' + " " + (props.similarHomesComparison > 0 ? "more" : "less")
     const otherHomesIcon = props.similarHomesComparison > 0 ? <IoTrendingUp size="34px" className="text-orange"/> : <IoTrendingDown size="34px" className="text-green-500"/>
 
-
     return (
         <Body menuItems={navItems} statItems={stats} 
             welcomeText={`Welcome to, ${props?.booking?.home.name}`}
@@ -101,6 +105,22 @@ export default function Index(props) {
             currentPage={`Booking (${startDate} - ${endDate})`}>
                 <div className="md:flex md:justify-between ">
                     <div className="md:w-[42%] my-10 ">
+                        {props?.userRole != Role.Guest && (
+                            <div className="flex justify-between mb-8 md:mb-11">
+                            <Tile tileType={TileType.link} 
+                                children={<CompactLayout 
+                                icon={<IoCreate size="34px"/>}
+                                textLine1="Edit Booking"
+                                textLine2="Details"></CompactLayout>} 
+                                clickable={true} onClick={() => router.push(`/bookings/${props?.booking?.friendlyId}/edit`)}></Tile>
+                            <Tile tileType={TileType.link} 
+                                children={<CompactLayout 
+                                icon={<IoShareSocial size="34px"/>}
+                                textLine1="Share Link"
+                                textLine2="Booking"></CompactLayout>} 
+                                clickable={true} onClick={() => {navigator.clipboard.writeText("test")}}></Tile>
+                            </div>
+                        )}
                         <div className="">
                             <ProgressBar num1={props?.booking?.home.energyBuffer} num2={props?.totalCost}
                                 text1="Total Cost" text2="Buffer" />
