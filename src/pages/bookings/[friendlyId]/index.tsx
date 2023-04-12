@@ -104,6 +104,12 @@ export default function Index(props) {
     const otherHomesComparisonTextWording = Math.abs((props.similarHomesComparison * 100)).toFixed(0) + '%' + " " + (props.similarHomesComparison > 0 ? "more" : "less")
     const otherHomesIcon = props.similarHomesComparison > 0 ? <IoTrendingUp size="34px" className="text-orange"/> : <IoTrendingDown size="34px" className="text-green-500"/>
 
+    function clipboardNotification(){
+        navigator.clipboard.writeText(currentPath);
+        let n = Notification({text: "Link copied to clipboard.", icon: <IoClose />})
+        n();
+    }
+
     return (
         <Body menuItems={navItems} statItems={stats} 
             welcomeText={`Welcome to, ${props?.booking?.home.name}`}
@@ -124,10 +130,7 @@ export default function Index(props) {
                                 icon={<IoShareSocial size="34px"/>}
                                 textLine1="Share Link"
                                 textLine2="Booking"></CompactLayout>} 
-                                clickable={true} onClick={() => {
-                                    navigator.clipboard.writeText(currentPath);
-                                    Notification({text: "Link copied to clipboard.", icon: <IoClose />})
-                                }}></Tile>
+                                clickable={true} onClick={clipboardNotification}></Tile>
                                 <Toaster></Toaster>
                             </div>
                         )}
