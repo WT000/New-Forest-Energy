@@ -17,10 +17,11 @@ import Body from "../../../components/Body/Body";
 import ProgressBar from "../../../components/ProgressBar/ProgressBar";
 import CompactLayout from "../../../components/layouts/CompactLayout/CompactLayout";
 import Card, { CardType } from "../../../components/Card/Card";
+import Tile, { TileType } from "../../../components/Tile/Tile";
 import BarChart, { ChartDateType } from "../../../components/BarChart/BarChart";
 import ReadingContainer from "../../../components/ReadingContainer/ReadingContainer";
 import Subtitle from "../../../components/Subtitle/Subtitle";
-import {IoHome, IoPieChart, IoFlash, IoList, IoLogOut, IoTrendingDown, IoTrendingUp} from "react-icons/io5";
+import {IoHome, IoPieChart, IoFlash, IoList, IoLogOut, IoTrendingDown, IoTrendingUp, IoCreate, IoShareSocial} from "react-icons/io5";
 import { percentageDiff } from "../../../lib/utils/nums";
 
 function displayCost(cost) {
@@ -59,7 +60,7 @@ export default function Index(props) {
         {
             icon: <IoPieChart />,
             text: "Dashboard",
-            path: window.location.href,
+            path: "/",
             activePage: true
         },
         {
@@ -101,6 +102,22 @@ export default function Index(props) {
             currentPage={`Booking (${startDate} - ${endDate})`}>
                 <div className="md:flex md:justify-between ">
                     <div className="md:w-[42%] my-10 ">
+                        {props?.userRole != Role.Guest && (
+                            <div className="md:flex md:justify-between mb-11">
+                            <Tile tileType={TileType.link} 
+                                children={<CompactLayout 
+                                icon={<IoCreate size="34px"/>}
+                                textLine1="Edit Booking"
+                                textLine2="Details"></CompactLayout>} 
+                                clickable={true} onClick={() => console.log("clicked")}></Tile>
+                            <Tile tileType={TileType.link} 
+                                children={<CompactLayout 
+                                icon={<IoShareSocial size="34px"/>}
+                                textLine1="Share Link"
+                                textLine2="Booking"></CompactLayout>} 
+                                clickable={true} onClick={() => console.log("clicked")}></Tile>
+                            </div>
+                        )}
                         <div className="">
                             <ProgressBar num1={props?.booking?.home.energyBuffer} num2={props?.totalCost}
                                 text1="Total Cost" text2="Buffer" />
