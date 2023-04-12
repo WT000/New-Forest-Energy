@@ -56,7 +56,7 @@ export default function Index(props) {
         let startDate: Date = new Date(item.startDateTime);
         let now = new Date().getTime();
         let dateRange = getDayMonth(startDate) + " - " + getDayMonth(endDate)
-        let duration = ((endDate.getTime() - startDate.getTime()) / (1000 * 60 * 60 * 24));
+        let duration = Math.round((endDate.getTime() - startDate.getTime()) / (1000 * 60 * 60 * 24));
         const bookingLayout = (<BookingLayout cost={-1} duration={duration} dateRange={dateRange} ></BookingLayout>)
 
         if (endDate.getTime() < now) {
@@ -77,11 +77,11 @@ export default function Index(props) {
     const stats = [
         {
             stat: displayCost(props?.home.energyBuffer),
-            text: "Total Cost (minus Buffer)"
+            text: "Cost Buffer (Daily)"
         },
         {
-            stat: `${props?.home.energyTariff} kWh`,
-            text: "Total Usage"
+            stat: displayCost(props?.home.energyTariff),
+            text: "Current Tariff (per kWh)"
         }
     ]
 
@@ -165,8 +165,8 @@ export default function Index(props) {
                             </div>
                         </div>
                     </div>
-                    <div className="md:w-[42%] md:flex md:justify-center" >
-                        <div>
+                    <div className="md:w-[42%] md:flex" >
+                        <div className="w-full">
                             <Subtitle text1="Usage Per Day (kWh)" showbar={false}/>
                             <div className="ml-2 mt-3">
                                 <BarChart rawData={ascendingDates} beginAtZero={true} 
@@ -235,11 +235,6 @@ export async function getServerSideProps({ req, res, params }) {
         const userRole = getRole(session);
 
         /**
-         * Average per day (overall) = (last - first) / days(dateN - date1)
-         * Average per day (broken down by day) for chart
-         * Readings for this home
-         * Bookings for this home
-         * Delegates
          * TODO: Role specific info?
          * TODO: QR code & Edit Home tiles 
          * TODO: Comparisons
