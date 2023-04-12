@@ -106,8 +106,8 @@ export default function Index(props) {
 
     function clipboardNotification(){
         navigator.clipboard.writeText(currentPath);
-        let n = Notification({text: "Link copied to clipboard.", icon: <IoClose />})
-        n();
+        let notification = Notification({text: "Link copied to clipboard.", icon: <IoClose />})
+        notification();
     }
 
     return (
