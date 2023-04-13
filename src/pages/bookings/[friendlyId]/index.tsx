@@ -104,7 +104,7 @@ export default function Index(props) {
     const otherHomesComparisonTextWording = Math.abs((props.similarHomesComparison * 100)).toFixed(0) + '%' + " " + (props.similarHomesComparison > 0 ? "more" : "less")
     const otherHomesIcon = props.similarHomesComparison > 0 ? <IoTrendingUp size="34px" className="text-orange"/> : <IoTrendingDown size="34px" className="text-green-500"/>
 
-    function clipboardNotification(){
+    function clipboardNotification() {
         navigator.clipboard.writeText(currentPath);
         let notification = Notification({text: "Link copied to clipboard.", icon: <IoClose />})
         notification();
