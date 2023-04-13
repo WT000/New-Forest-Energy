@@ -31,7 +31,6 @@ export default function BarChart(props: ChartProps) {
   rawDataByDays.forEach((value, key) => {
     groupedValues.push(value.at(-1))
   });
-
   let dates = groupedValues.map(reading => {
     let date = new Date(reading.createdAt);
    
@@ -44,8 +43,9 @@ export default function BarChart(props: ChartProps) {
     }
   })
 
-  let tmpValues = rawData.map(reading => reading.value)
+  let tmpValues = groupedValues.map(reading => reading.value)
   let values = []
+
 
   if(showDifference) {
     const firstReading = tmpValues[0]
