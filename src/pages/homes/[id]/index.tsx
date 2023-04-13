@@ -2,6 +2,8 @@ import dbConnect from "../../../db/dbcon/dbcon";
 import { useSession } from "next-auth/react";
 import { authOptions } from "../../api/auth/[...nextauth]";
 import { getServerSession } from "next-auth/next";
+import { useRouter } from "next/router";
+import { useEffect, useState } from "react";
 
 import Booking from "../../../db/models/Booking";
 import Home, { HomeInterface } from "../../../db/models/Home";
@@ -43,6 +45,8 @@ export default function Index(props) {
     const bookings = props.bookings ? JSON.parse(props.bookings) : null;
     const delegates = props.delegates ? JSON.parse(props.delegates) : null;
     const home = props.home;
+
+    const router = useRouter();
 
     // const startDate = getDayMonth(new Date(props?.booking?.startDateTime));
     // const endDate = getDayMonth(new Date(props?.booking?.endDateTime), true);
@@ -135,7 +139,7 @@ export default function Index(props) {
                                 icon={<IoCreateSharp size="34px"/>}
                                 textLine1="Edit Home"
                                 textLine2="Details"></CompactLayout>} 
-                                clickable={true} onClick={() => console.log("clicked")}></Tile>
+                                clickable={true} onClick={() => router.push(`/homes/${props?.home._id}/edit`)}></Tile>
                             <Tile tileType={TileType.link} 
                                 children={<CompactLayout 
                                 icon={<IoQrCode size="34px"/>}
