@@ -61,7 +61,7 @@ export default function ReadingPopup(props: ReadingPopupProps) {
 
         
 
-        <div className="relative  rounded-lg dark:bg-gray-700 ">
+        <div className="relative  rounded-lg ">
             <h3 className="text-xl font-semibold text-white pl-6">
                 {name} ({role})
             </h3>
