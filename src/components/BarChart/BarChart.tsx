@@ -1,6 +1,9 @@
 import { Chart as ChartJS, BarElement, CategoryScale, LinearScale, Tooltip, Legend, scales } from "chart.js";
 import { Bar, Chart } from "react-chartjs-2";
 import { ReadingComponentInterface } from "../Reading/Reading";
+import { raw } from "@storybook/react";
+import { groupBy } from "../../lib/utils/arrays";
+import { dateToEpoch } from "../../lib/utils/dates";
 
 ChartJS.register(BarElement, CategoryScale, LinearScale, Tooltip, Legend);
 
@@ -14,12 +17,21 @@ interface ChartProps {
   beginAtZero: boolean;
   dateType: ChartDateType;
   unitOfMeasure: string;
+  showDifference: boolean;
 }
 
 export default function BarChart(props: ChartProps) {
-  const { rawData } = props;
+  const { rawData, showDifference } = props;
 
-  let dates = rawData.map(reading => {
+
+  const rawDataByDays = groupBy(rawData, d => dateToEpoch(d.createdAt))
+
+  const groupedValues = []
+
+  rawDataByDays.forEach((value, key) => {
+    groupedValues.push(value.at(-1))
+  });
+  let dates = groupedValues.map(reading => {
     let date = new Date(reading.createdAt);
    
 
@@ -31,7 +43,21 @@ export default function BarChart(props: ChartProps) {
     }
   })
 
-  let values = rawData.map(reading => reading.value)
+  let tmpValues = groupedValues.map(reading => reading.value)
+  let values = []
+
+
+  if(showDifference) {
+    const firstReading = tmpValues[0]
+    for (let i = 1; i < tmpValues.length ; i++) {
+      let item = tmpValues[i];
+      let difference = item - firstReading
+      values.push(difference)
+    }
+    dates.shift()
+  } else {
+    values = tmpValues
+  }
 
   const data = {
     labels: dates,

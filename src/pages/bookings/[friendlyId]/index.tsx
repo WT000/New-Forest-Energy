@@ -162,7 +162,7 @@ export default function Index(props) {
                         <div>
                             <Subtitle text1="Usage Per Day (kWh)" showbar={false}/>
                             <div className="ml-2 mt-3">
-                                <BarChart rawData={readings} beginAtZero={true} 
+                                <BarChart rawData={readings} beginAtZero={true} showDifference={true}
                                     dateType={ChartDateType.DayMonth} unitOfMeasure={"kWh"} />
                             </div>
                         </div>
@@ -216,15 +216,8 @@ export async function getServerSideProps({ req, res, params }) {
         let totalCostMinusBuffer = 0
         let totalDays = 0
         
-        if (readings.length > 0) {
-            if(readings.length > 1){
-                totalUsage =  readings[readings.length -1].value - readings[0].value
-            }
-            else{
-                totalUsage =  readings[0].value
-            }
-            
-                
+        if (readings.length > 1) {
+            totalUsage =  readings[readings.length -1].value - readings[0].value
             totalDays = dateDiffInDays(readings[readings.length -1].createdAt, readings[0].createdAt) || 1
             //@ts-ignore
             totalCost = totalUsage * b.home.energyTariff

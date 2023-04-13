@@ -36,3 +36,8 @@ export function dateDiffInDays(a, b) {
 
     return Math.abs(x)
   }
+
+
+export function dateToEpoch(thedate) {
+    return new Date(thedate).setHours(0,0,0,0);
+}
