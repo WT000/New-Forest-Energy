@@ -2,6 +2,7 @@ import { UseFormRegister } from "react-hook-form";
 import { GuestLoginFormData } from "../../forms/GuestLoginForm/GuestLoginForm";
 import { BookingFormData } from "../../forms/BookingForm/BookingForm";
 import { HomeFormData } from "../../forms/HomeForm/HomeForm";
+import { ReadingFormData } from "../../forms/ReadingForm/ReadingForm";
 
 interface InputLayoutProps {
     icon: React.ReactElement;
@@ -11,7 +12,7 @@ interface InputLayoutProps {
     placeholder: string;
     currency?: boolean;
     // Add HomeFormData | xFormData | yFormData in the future
-    register?: UseFormRegister<HomeFormData> | UseFormRegister<BookingFormData> | UseFormRegister<GuestLoginFormData>;
+    register?: UseFormRegister<HomeFormData> | UseFormRegister<ReadingFormData> | UseFormRegister<BookingFormData> | UseFormRegister<GuestLoginFormData>;
     registerSettings?: object;
     errors?: object;
     errorMessage?: string;

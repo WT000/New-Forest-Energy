@@ -4,7 +4,7 @@ import { authOptions } from "../../api/auth/[...nextauth]";
 import { getServerSession } from "next-auth/next";
 
 import Booking from "../../../db/models/Booking";
-import Home from "../../../db/models/Home";
+import Home, { HomeInterface } from "../../../db/models/Home";
 import Reading from "../../../db/models/Reading";
 import User from "../../../db/models/User";
 
@@ -93,18 +93,18 @@ export default function Index(props) {
         {
             icon: <IoPieChart />,
             text: "Dashboard",
-            path: "/1",
+            path: "#",
             activePage: true
         },
         {
             icon: <IoFlash />,
             text: "New Reading",
-            path: "/2"
+            path: "/homes/" + home._id + "/readings/new"
         },
         {
             icon: <IoList />,
             text: "Instructions",
-            path: "/3"
+            path: "/homes/" + home._id + "/instructions"
         },
         {
             icon: <IoLogOut />,
@@ -218,6 +218,11 @@ export async function getServerSideProps({ req, res, params }) {
     try {
         const h = await Home.findById(params.id).populate({path: "delegates", populate: {path: 'name'}}).lean();
 
+        const hNoDelegates = {
+            ...h,
+            delegates: (h.delegates as any).map(x => x._id)
+        } as HomeInterface
+
         //@ts-ignore
         const readings = await Reading.find({ home: h._id, })
             .populate("user", "name", User)
@@ -232,8 +237,16 @@ export async function getServerSideProps({ req, res, params }) {
 
         const bookings = await Booking.find({home: h._id}).sort({"createdAt": -1}).lean()
         const delegates = h.delegates;       
-        const userRole = getRole(session);
-
+        const userRole = getRole(session, hNoDelegates);
+    
+        if (userRole === Role.Guest) {
+            return {
+                redirect: {
+                    destination: "/auth/guest",
+                    permanent: false,
+                },
+            };
+        }
         /**
          * Average per day (overall) = (last - first) / days(dateN - date1)
          * Average per day (broken down by day) for chart
@@ -252,7 +265,7 @@ export async function getServerSideProps({ req, res, params }) {
                 bookings: JSON.stringify(bookings),
                 delegates: JSON.stringify(delegates),
                 userRole: userRole,
-                averagePerDay: averagePerDay,
+                averagePerDay: averagePerDay ?? 0.00,
             },
         };
     }

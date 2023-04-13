@@ -76,19 +76,22 @@ export default function Index(props) {
         {
             icon: <IoFlash />,
             text: "New Reading",
-            path: "/2"
+            path: `/homes/${props?.booking?.home?._id}/readings/new`
         },
         {
             icon: <IoList />,
             text: "Instructions",
             path: `/homes/${props?.booking?.home?._id}/instructions`
-        },
-        {
-            icon: <IoLogOut />,
-            text: "Sign Out",
-            path: "/api/auth/signout"
+        }]
+    
+        if(props.userRole != "Guest"){
+            navItems.push({
+                icon: <IoLogOut />,
+                text: "Sign Out",
+                path: "/api/auth/signout"
+            });
         }
-    ]
+
 
     if(props?.userRole == Role.Guest) {
         stats.push({
