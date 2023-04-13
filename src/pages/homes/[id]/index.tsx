@@ -25,10 +25,10 @@ import {IoHome, IoPieChart, IoFlash, IoList, IoLogOut, IoTrendingDown, IoTrendin
 import BookingLayout from "../../../components/layouts/BookingLayout/BookingLayout";
 import DelegatesList from "../../../components/DelegatesList/DelegatesList";
 import DelegatesListItem from "../../../components/DelegatesListItem/DelegatesListItem";
-import { ColourThumbnailComplete } from "../../../components/Card/Card.stories";
 import Tile, { TileType } from "../../../components/Tile/Tile";
 import { Toaster } from "react-hot-toast";
 import Notification from "../../../components/Notification/Notifications";
+import { useRouter } from "next/router";
 
 function displayCost(cost) {
     let costString = "0"
@@ -40,6 +40,8 @@ function displayCost(cost) {
 // TO DO - UPDATE LINKS
 
 export default function Index(props) {
+    const router = useRouter();
+    
     const readings = props.readings ? JSON.parse(props.readings) : null;
     const bookings = props.bookings ? JSON.parse(props.bookings) : null;
     const delegates = props.delegates ? JSON.parse(props.delegates) : null;
@@ -57,14 +59,17 @@ export default function Index(props) {
         let now = new Date().getTime();
         let dateRange = getDayMonth(startDate) + " - " + getDayMonth(endDate)
         let duration = dateDiffInDays(startDate, endDate) || 1;
-        const bookingLayout = (<BookingLayout cost={-1} duration={duration} dateRange={dateRange} ></BookingLayout>)
+        const bookingLink = "../bookings/" + item.friendlyId
+        const surroundingStlye = "hover:cursor-pointer"
+
+        const bookingLayout = (<BookingLayout cost={-1} duration={duration} dateRange={dateRange}></BookingLayout>)
 
         if (endDate.getTime() < now) {
-            bookingCards.push((<Card key={index} cardType={CardType.booking} bookingType={BookingType.complete} children={bookingLayout}></Card>))
+            bookingCards.push((<div onClick={() => router.push(bookingLink)} className={surroundingStlye}><Card key={index} cardType={CardType.booking} bookingType={BookingType.complete} children={bookingLayout}></Card></div>))
         } else if (startDate.getTime() > now ) {
-            bookingCards.push((<Card key={index} cardType={CardType.booking} bookingType={BookingType.planned} children={bookingLayout}></Card>))
+            bookingCards.push((<div onClick={() => router.push(bookingLink)} className={surroundingStlye}><Card key={index} cardType={CardType.booking} bookingType={BookingType.planned} children={bookingLayout}></Card></div>))
         } else {
-            bookingCards.push((<Card key={index} cardType={CardType.booking} bookingType={BookingType.inProgress} children={bookingLayout}></Card>))
+            bookingCards.push((<div onClick={() => router.push(bookingLink)} className={surroundingStlye}><Card key={index} cardType={CardType.booking} bookingType={BookingType.inProgress} children={bookingLayout}></Card></div>))
         }
     })
 
