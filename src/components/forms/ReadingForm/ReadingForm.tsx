@@ -4,12 +4,13 @@ import Button from "../../Button/Button";
 import Tile, { TileType } from "../../Tile/Tile";
 import InputLayout from "../../layouts/InputLayout/InputLayout";
 import { countDecimalPlaces } from "../../../lib/utils/nums";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import PhotoInputLayout from "../../layouts/PhotoInputLayout/PhotoInputLayout";
 
 export interface ReadingFormData {
     image: string;
     readingValue: number;
+    homeId: string;
 }
 
 interface ReadingFormProps{
@@ -29,6 +30,7 @@ export default function ReadingForm(props: ReadingFormProps){
         register,
         handleSubmit,
         formState: { errors },
+        setValue,
         control
     } = useForm<ReadingFormData>();
 
@@ -44,6 +46,9 @@ export default function ReadingForm(props: ReadingFormProps){
         return false;
     }
 
+    useEffect(() => {
+        setValue('homeId', props.homeId)
+    })
 
     return (
         <div className="space-y-6">
