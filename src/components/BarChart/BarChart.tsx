@@ -14,10 +14,11 @@ interface ChartProps {
   beginAtZero: boolean;
   dateType: ChartDateType;
   unitOfMeasure: string;
+  showDifference: boolean;
 }
 
 export default function BarChart(props: ChartProps) {
-  const { rawData } = props;
+  const { rawData, showDifference } = props;
 
   let dates = rawData.map(reading => {
     let date = new Date(reading.createdAt);
@@ -31,7 +32,20 @@ export default function BarChart(props: ChartProps) {
     }
   })
 
-  let values = rawData.map(reading => reading.value)
+  let tmpValues = rawData.map(reading => reading.value)
+  let values = []
+
+  if(showDifference) {
+    const firstReading = tmpValues[0]
+    for (let i = 1; i < tmpValues.length ; i++) {
+      let item = tmpValues[i];
+      let difference = item - firstReading
+      values.push(difference)
+    }
+    dates.shift()
+  } else {
+    values = tmpValues
+  }
 
   const data = {
     labels: dates,
