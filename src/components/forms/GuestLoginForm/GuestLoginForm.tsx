@@ -1,7 +1,8 @@
 import { SubmitHandler, useForm } from "react-hook-form";
-import { IoLockClosed } from "react-icons/io5";
+import { IoLockClosed, IoSave } from "react-icons/io5";
 import InputLayout from "../../layouts/InputLayout/InputLayout";
 import Tile, { TileType } from "../../Tile/Tile";
+import Button from "../../Button/Button";
 
 export interface GuestLoginFormData {
     friendlyId: string;
@@ -24,7 +25,7 @@ async function findBooking(friendlyId: string, bookingFinder: (friendlyId: strin
     return false;
 }
 
-export default function HomeForm(props: GuestLoginFormProps) {
+export default function GuestLoginForm(props: GuestLoginFormProps) {
     const { onSubmit, bookingFinder } = props;
 
     const {
@@ -34,7 +35,7 @@ export default function HomeForm(props: GuestLoginFormProps) {
     } = useForm<GuestLoginFormData>();
 
     return (
-        <div>
+        <div className="space-y-6">
             <Tile tileType={TileType.input} clickable={false}>
                 <InputLayout
                     icon={<IoLockClosed size="32px" />}
@@ -46,25 +47,25 @@ export default function HomeForm(props: GuestLoginFormProps) {
                     registerSettings={{
                         required: true,
                         validate: {
-                            length: (friendlyId) => friendlyId.length == 7,
                             real: (friendlyId) => findBooking(friendlyId, bookingFinder),
                         },
-                        minLength: 7,
+                        minLength: 3,
                         maxLength: 7,
                     }}
                     errors={errors.friendlyId}
-                    errorMessage={"*Must exist (case-sensitive)"}
+                    errorMessage={"*Must be a valid booking ID (7 characters - case-sensitive)"}
                 />
             </Tile>
-            <button
-                onClick={handleSubmit((data) => {
-                    onSubmit({
-                        ...data,
-                    });
-                })}
-            >
-                Go to my booking
-            </button>
+
+            <Button
+                    text="Confirm"
+                    icon={<IoSave className="text-white" />}
+                    onClick={handleSubmit((data) => {
+                        onSubmit({
+                            ...data,
+                        });
+                    })}
+                />
         </div>
     );
 }
