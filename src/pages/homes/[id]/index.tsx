@@ -93,18 +93,18 @@ export default function Index(props) {
         {
             icon: <IoPieChart />,
             text: "Dashboard",
-            path: "/1",
+            path: "#",
             activePage: true
         },
         {
             icon: <IoFlash />,
             text: "New Reading",
-            path: "/2"
+            path: "/homes/" + home._id + "/readings/new"
         },
         {
             icon: <IoList />,
             text: "Instructions",
-            path: "/3"
+            path: "/homes/" + home._id + "/instructions"
         },
         {
             icon: <IoLogOut />,

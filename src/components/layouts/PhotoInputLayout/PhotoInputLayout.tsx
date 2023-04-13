@@ -10,6 +10,7 @@ import ImageLayout from "../ImageLayout/ImageLayout";
 // Example of sources = ["local", "camera"]
 
 interface PhotoInputLayoutProps {
+    text: string;
     image: string;
     sources?: string[];
     setImage: (value: string) => void;
@@ -58,7 +59,7 @@ export default function PhotoInputLayout(props: PhotoInputLayoutProps) {
                     </div>
                     <div className="col-span-4 pl-1">
                         <p className="text-black-500 text-xs">
-                            Home Image {errors && <span className="text-xs text-red-400">{errorMessage}</span>}
+                            {props.text} {errors && <span className="text-xs text-red-400">{errorMessage}</span>}
                         </p>
                         <p className="text-lg font-bold bg-transparent w-[95%] disabled:bg-white
                                     cursor-pointer focus:outline-none"
