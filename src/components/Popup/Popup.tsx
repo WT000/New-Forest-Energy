@@ -38,8 +38,9 @@ export default function Popup(props: PopupProps) {
                         <span className="sr-only">Close modal</span>
                     </button>
                 </div>
-
-                {children}
+                <div className="mt-10">
+                    {children}
+                </div>
             </div>
         </div>
     );
