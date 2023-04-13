@@ -140,18 +140,17 @@ export default function AllHomes(props){
 export async function getServerSideProps({ req, res, params }) {
     await dbConnect();
 
-
     const session =  await getServerSession(req, res, authOptions)
-
-    
-
 
     const isAgency = session?.user?.isAgency == true;
     const userId = session?.user?.id ?? "";
 
     try{
+        // This will error with a "arguments passed in must be..." message, this is because userId doesn't exist!
+        // It still works as intended (as this error will only occur for signed out users, giving them a 404 page), but we may want to redirect
+        // instead if session is null
         const filter = isAgency ? {isDeleted: { $ne: true }} : {$and: [ {isDeleted: { $ne: true }} , { $or: [{ delegates: new mongoose.Types.ObjectId(userId) }, {owner: new mongoose.Types.ObjectId(userId)}]}] } 
-
+        
         const homesTask = Home.find(filter);
 
         const homeCountTask = Home.count(filter);
