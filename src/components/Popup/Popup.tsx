@@ -1,7 +1,6 @@
 import Image from "next/image";
 import { ReactNode } from "react";
 import ReadingPopupLayout from "../layouts/ReadingPopupLayout/ReadingPopupLayout";
-import "flowbite";
 
 interface PopupProps {
     onClick: () => void;
