@@ -1,19 +1,18 @@
 import axios from "axios";
 import { useRouter } from "next/router";
 import GuestLoginForm from "../../components/forms/GuestLoginForm/GuestLoginForm";
-import NextNProgress from 'nextjs-progressbar';
 import Body, { BodyWithoutNavbar } from "../../components/Body/Body";
+import Link from "next/link";
 
 export default function BookingLogin(props) {
     const router = useRouter();
 
     return (
-        <>
-            <NextNProgress />
-            
-            <BodyWithoutNavbar
+         <BodyWithoutNavbar
                 currentPage="Guest Login"
                 welcomeText="Please Sign In">
+                <Link href="/auth/signin" className=" text-sm font-light text-black-500 hover:text-black cursor-pointer">Sign in as Owner/Delegate here.</Link>
+
 
                 <GuestLoginForm
                     onSubmit={async (friendlyId) => {
@@ -37,8 +36,6 @@ export default function BookingLogin(props) {
                         return false;
                     }}
                 />
-
-            </BodyWithoutNavbar>
-        </>
+        </BodyWithoutNavbar>
     );
 }
