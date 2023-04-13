@@ -1,6 +1,9 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Reading from "../Reading/Reading";
 import useInfiniteScroll, { ScrollDirectionBooleanState, ScrollDirection } from "react-easy-infinite-scroll-hook";
+import Popup from "../Popup/Popup";
+import ReadingPopup from "../layouts/ReadingPopupLayout/ReadingPopupLayout";
+import Role from "../../lib/utils/roles";
 
 function loadMore(setCurrentOffset: (number) => void, currentOffset: number, offset: number, data: []) {
     const startingIndex = currentOffset;
@@ -9,6 +12,8 @@ function loadMore(setCurrentOffset: (number) => void, currentOffset: number, off
     setCurrentOffset(newOffset);
     return data.slice(startingIndex, newOffset);
 }
+
+
 
 const createNext =
     ({
@@ -55,9 +60,23 @@ export default function ReadingContainer(props: ReadingContainertInterface) {
         rowCount: readings.length,
         hasMore,
     });
-    
+
+    const [popupVisible, setPopupVisible] = useState(false);
+    const [popupData, setPopupData] = useState({
+        creator: "",
+        value: 0,
+        image: "",
+        createdAt: new Date(),
+        createdAtStr: "",
+    });
+
     return (
         <div>
+            {popupVisible && (
+                <Popup onClick={() => setPopupVisible(!popupVisible)}>
+                    <ReadingPopup name={popupData.creator} date={popupData.createdAt} kwh={popupData.value} image={popupData.image} imgname={"Reading"}/>
+                </Popup>
+            )}
             <div
                 ref={ref}
                 className="List h-[35vh] overflow-y-auto flex flex-col"
@@ -74,7 +93,14 @@ export default function ReadingContainer(props: ReadingContainertInterface) {
                         //@ts-ignore
                         createdAt={new Date(reading.createdAt)}
                         onClick={() => {
-                            console.log("click");
+                            setPopupVisible(!popupVisible);
+                            setPopupData({
+                                creator: reading.user?.name ? reading.user.name : "Guest",
+                                value: reading.value,
+                                image: reading.image,
+                                createdAt: new Date(reading.createdAt),
+                                createdAtStr: new Date(reading.createdAt).toLocaleString("en-GB", {hour12: true}),
+                            })
                         }}
                     />
                 ))}
