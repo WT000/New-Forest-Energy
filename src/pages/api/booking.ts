@@ -141,7 +141,7 @@ export default async function handler(req, res) {
 
                 console.log(`Deleting booking ${bookingdb.friendlyId}`);
 
-                const bookingDelete = await Booking.findByIdAndDelete(bookingdb._id);
+                const bookingDelete = await Booking.findByIdAndUpdate(bookingdb._id, {isDeleted: true});
                 if (bookingDelete) return res.json({ success: true });
                 break;
         }
