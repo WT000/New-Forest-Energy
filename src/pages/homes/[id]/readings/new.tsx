@@ -2,6 +2,7 @@ import ReadingForm, { ReadingFormData } from "../../../../components/forms/Readi
 import axios from "axios";
 import { useRouter } from 'next/router'
 import { useMutation } from "react-query";
+import { BodyWithoutNavbar } from "../../../../components/Body/Body";
 
 
 export default function NewReading(props) {
@@ -20,30 +21,34 @@ export default function NewReading(props) {
     );
 
     return (
-        <ReadingForm 
-            homeId={router?.query?.id?.toString()}
-            onSubmit={async (reading) => {
-                mutate(reading);
-            }}
-            onCancel={() => {
-                router.push("/");
-            }}
-            readingValueValidator={async (homeId, readingVal) => {
-                try {
-                    // Attempt to find email
-                    const res = await axios.get(`/api/checkreading?homeId=${homeId}&readingVal=${readingVal}`);
+        <BodyWithoutNavbar
+        currentPage="New Reading"
+        welcomeText="">
+            <ReadingForm 
+                homeId={router?.query?.id?.toString()}
+                onSubmit={async (reading) => {
+                    mutate(reading);
+                }}
+                onCancel={() => {
+                    router.push("/");
+                }}
+                readingValueValidator={async (homeId, readingVal) => {
+                    try {
+                        // Attempt to find email
+                        const res = await axios.get(`/api/checkreading?homeId=${homeId}&readingVal=${readingVal}`);
 
-                    if (res.status == 200) {
-                        return true;
+                        if (res.status == 200) {
+                            return true;
+                        }
+                    } catch (e) {
+                        console.log(e);
+                        return false;
                     }
-                } catch (e) {
-                    console.log(e);
-                    return false;
-                }
 
-                return false;
-            }}
-            isLoading={isLoading}
-        />
+                    return false;
+                }}
+                isLoading={isLoading}
+            />
+        </BodyWithoutNavbar>
     )
 }
