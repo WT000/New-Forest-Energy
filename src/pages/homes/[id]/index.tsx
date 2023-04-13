@@ -169,7 +169,7 @@ export default function Index(props) {
                         <div className="w-full">
                             <Subtitle text1="Usage Per Day (kWh)" showbar={false}/>
                             <div className="ml-2 mt-3">
-                                <BarChart rawData={ascendingDates} beginAtZero={true} 
+                                <BarChart rawData={ascendingDates} beginAtZero={true} showDifference={true}
                                     dateType={ChartDateType.DayMonth} unitOfMeasure={"kWh"} />
                             </div>
                         </div>
