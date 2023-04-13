@@ -1,4 +1,5 @@
 import { UseFormRegister } from "react-hook-form";
+import { BookingFormData } from "../../forms/BookingForm/BookingForm";
 import { HomeFormData } from "../../forms/HomeForm/HomeForm";
 import { ReadingFormData } from "../../forms/ReadingForm/ReadingForm";
 
@@ -10,7 +11,7 @@ interface InputLayoutProps {
     placeholder: string;
     currency?: boolean;
     // Add HomeFormData | xFormData | yFormData in the future
-    register?: UseFormRegister<HomeFormData> | UseFormRegister<ReadingFormData>;
+    register?: UseFormRegister<HomeFormData> | UseFormRegister<ReadingFormData> | UseFormRegister<BookingFormData>;
     registerSettings?: object;
     errors?: object;
     errorMessage?: string;
