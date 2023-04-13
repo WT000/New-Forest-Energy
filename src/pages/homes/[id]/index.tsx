@@ -52,8 +52,7 @@ export default function Index(props) {
 
     const router = useRouter();
     const [currentPath, setCurrentPath] = useState("");
-    useEffect(() => {if (window) {setCurrentPath(window.location.hostname)}});
-    console.log(currentPath)
+    useEffect(() => {if (window) {setCurrentPath(window.location.protocol + "//" + window.location.hostname)}});
     const [popupVisible, setPopupVisible] = useState(false);
     const [popupData, setPopupData] = useState({
         text: "",
@@ -153,7 +152,7 @@ export default function Index(props) {
                                 icon={<IoCreateSharp size="34px"/>}
                                 textLine1="Edit Home"
                                 textLine2="Details"></CompactLayout>} 
-                                clickable={true} onClick={() => router.push(`/homes/${props?.home._id}/edit`)}></Tile>
+                                clickable={true} onClick={() => router.push(`/homes/${home._id}/edit`)}></Tile>
                             <Tile tileType={TileType.link} 
                                 children={<CompactLayout 
                                 icon={<IoQrCode size="34px"/>}
@@ -162,7 +161,7 @@ export default function Index(props) {
                                 clickable={true} onClick={() => {
                                     setPopupVisible(!popupVisible);
                                     setPopupData({
-                                        text: "TO DO"
+                                        text: `${currentPath}/auth/guest?name=${home.name}`
                                     })
                                 }}></Tile>
                         </div>
