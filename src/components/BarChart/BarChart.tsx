@@ -1,6 +1,9 @@
 import { Chart as ChartJS, BarElement, CategoryScale, LinearScale, Tooltip, Legend, scales } from "chart.js";
 import { Bar, Chart } from "react-chartjs-2";
 import { ReadingComponentInterface } from "../Reading/Reading";
+import { raw } from "@storybook/react";
+import { groupBy } from "../../lib/utils/arrays";
+import { dateToEpoch } from "../../lib/utils/dates";
 
 ChartJS.register(BarElement, CategoryScale, LinearScale, Tooltip, Legend);
 
@@ -20,7 +23,16 @@ interface ChartProps {
 export default function BarChart(props: ChartProps) {
   const { rawData, showDifference } = props;
 
-  let dates = rawData.map(reading => {
+
+  const rawDataByDays = groupBy(rawData, d => dateToEpoch(d.createdAt))
+
+  const groupedValues = []
+
+  rawDataByDays.forEach((value, key) => {
+    groupedValues.push(value.at(-1))
+  });
+
+  let dates = groupedValues.map(reading => {
     let date = new Date(reading.createdAt);
    
 
