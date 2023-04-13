@@ -1,7 +1,10 @@
 import dbConnect from "../../../db/dbcon/dbcon";
 import { useSession } from "next-auth/react";
+import { useRouter } from "next/router";
+import { useEffect, useState } from "react";
 import { authOptions } from "../../api/auth/[...nextauth]";
 import { getServerSession } from "next-auth/next";
+import { Toaster } from "react-hot-toast";
 
 import Booking from "../../../db/models/Booking";
 import Home from "../../../db/models/Home";
@@ -10,6 +13,7 @@ import User from "../../../db/models/User";
 
 import { dateDiffInDays, getDayMonth, sortDatesAscending, sortDatesDescending } from "../../../lib/utils/dates";
 import { ToSeriableBooking } from "../../../lib/utils/json";
+import { percentageDiff } from "../../../lib/utils/nums";
 import getRole from "../../../lib/utils/getRole";
 import Role from "../../../lib/utils/roles";
 
@@ -17,11 +21,13 @@ import Body from "../../../components/Body/Body";
 import ProgressBar from "../../../components/ProgressBar/ProgressBar";
 import CompactLayout from "../../../components/layouts/CompactLayout/CompactLayout";
 import Card, { CardType } from "../../../components/Card/Card";
+import Tile, { TileType } from "../../../components/Tile/Tile";
 import BarChart, { ChartDateType } from "../../../components/BarChart/BarChart";
 import ReadingContainer from "../../../components/ReadingContainer/ReadingContainer";
 import Subtitle from "../../../components/Subtitle/Subtitle";
-import {IoHome, IoPieChart, IoFlash, IoList, IoLogOut, IoTrendingDown, IoTrendingUp} from "react-icons/io5";
-import { percentageDiff } from "../../../lib/utils/nums";
+import Notification from "../../../components/Notification/Notifications"
+import {IoHome, IoPieChart, IoFlash, IoList, IoLogOut, IoTrendingDown, IoTrendingUp, IoCreate, IoShareSocial, IoClose} from "react-icons/io5";
+
 
 function displayCost(cost) {
     let costString = "0"
@@ -30,9 +36,14 @@ function displayCost(cost) {
     return costString
 }
 
+
 // TO DO - UPDATE LINKS
 
 export default function Index(props) {
+    const router = useRouter();
+    const [currentPath, setCurrentPath] = useState("");
+    useEffect(() => {if (window) {setCurrentPath(window.location.href)}});
+
     const readings = props.readings ? JSON.parse(props.readings) : null
     const startDate = getDayMonth(new Date(props?.booking?.startDateTime));
     const endDate = getDayMonth(new Date(props?.booking?.endDateTime), true);
@@ -59,7 +70,7 @@ export default function Index(props) {
         {
             icon: <IoPieChart />,
             text: "Dashboard",
-            path: "/1",
+            path: `/bookings/${props?.booking?.friendlyId}`,
             activePage: true
         },
         {
@@ -70,7 +81,7 @@ export default function Index(props) {
         {
             icon: <IoList />,
             text: "Instructions",
-            path: "/3"
+            path: `/homes/${props?.booking?.home?._id}/instructions`
         },
         {
             icon: <IoLogOut />,
@@ -93,6 +104,11 @@ export default function Index(props) {
     const otherHomesComparisonTextWording = Math.abs((props.similarHomesComparison * 100)).toFixed(0) + '%' + " " + (props.similarHomesComparison > 0 ? "more" : "less")
     const otherHomesIcon = props.similarHomesComparison > 0 ? <IoTrendingUp size="34px" className="text-orange"/> : <IoTrendingDown size="34px" className="text-green-500"/>
 
+    function clipboardNotification() {
+        navigator.clipboard.writeText(currentPath);
+        let notification = Notification({text: "Link copied to clipboard.", icon: <IoClose />})
+        notification();
+    }
 
     return (
         <Body menuItems={navItems} statItems={stats} 
@@ -101,6 +117,23 @@ export default function Index(props) {
             currentPage={`Booking (${startDate} - ${endDate})`}>
                 <div className="md:flex md:justify-between ">
                     <div className="md:w-[42%] my-10 ">
+                        {props?.userRole != Role.Guest && (
+                            <div className="flex justify-between mb-8 md:mb-11">
+                            <Tile tileType={TileType.link} 
+                                children={<CompactLayout 
+                                icon={<IoCreate size="34px"/>}
+                                textLine1="Edit Booking"
+                                textLine2="Details"></CompactLayout>} 
+                                clickable={true} onClick={() => router.push(`/bookings/${props?.booking?.friendlyId}/edit`)}></Tile>
+                            <Tile tileType={TileType.link} 
+                                children={<CompactLayout 
+                                icon={<IoShareSocial size="34px"/>}
+                                textLine1="Share Link"
+                                textLine2="Booking"></CompactLayout>} 
+                                clickable={true} onClick={clipboardNotification}></Tile>
+                                <Toaster></Toaster>
+                            </div>
+                        )}
                         <div className="">
                             <ProgressBar num1={props?.booking?.home.energyBuffer} num2={props?.totalCost}
                                 text1="Total Cost" text2="Buffer" />
@@ -188,7 +221,7 @@ export async function getServerSideProps({ req, res, params }) {
                 totalUsage =  readings[0].value
             }
             
-
+                
             totalDays = dateDiffInDays(readings[readings.length -1].createdAt, readings[0].createdAt) || 1
             //@ts-ignore
             totalCost = totalUsage * b.home.energyTariff
@@ -207,19 +240,23 @@ export async function getServerSideProps({ req, res, params }) {
 
         //@ts-ignore
         const newestReading = await Reading.findOne({home: b.home._id}, {}, { sort: { 'createdAt' : 1 } });
-
-        const daysDiff = dateDiffInDays(oldestReading.createdAt, newestReading.createdAt) || 1;
-        const readingDiff = newestReading.value - oldestReading.value
-        const houseAveragePerDay = (readingDiff > 0 ? readingDiff : 0) / daysDiff
-    
-        const bookingAveragePerDay = (totalUsage > 0 ? totalUsage : 0) / totalDays
         
-        const otherGuestsPercentageDiff = percentageDiff(bookingAveragePerDay, houseAveragePerDay, true);        
+        let otherGuestsPercentageDiff = 0;
+        let similarHomesPercentageDiff = 0;
+        if (oldestReading && newestReading) {
+            const daysDiff = dateDiffInDays(oldestReading.createdAt, newestReading.createdAt) || 1;
+            const readingDiff = newestReading.value - oldestReading.value
+            const houseAveragePerDay = (readingDiff > 0 ? readingDiff : 0) / daysDiff
+        
+            const bookingAveragePerDay = (totalUsage > 0 ? totalUsage : 0) / totalDays
+            
+            otherGuestsPercentageDiff = percentageDiff(bookingAveragePerDay, houseAveragePerDay, true);        
 
-        //https://www.ofgem.gov.uk/information-consumers/energy-advice-households/average-gas-and-electricity-use-explained
-        //@ts-ignore
-        const similarHomeUsageDaily = b.home.numBeds < 2 ? 4.93 : b.home.numBeds < 4 ? 7.94 : 11.78
-        const similarHomesPercentageDiff = percentageDiff(bookingAveragePerDay, similarHomeUsageDaily, true);    
+            //https://www.ofgem.gov.uk/information-consumers/energy-advice-households/average-gas-and-electricity-use-explained
+            //@ts-ignore
+            const similarHomeUsageDaily = b.home.numBeds < 2 ? 4.93 : b.home.numBeds < 4 ? 7.94 : 11.78
+            similarHomesPercentageDiff = percentageDiff(bookingAveragePerDay, similarHomeUsageDaily, true);
+        }    
 
         return {
             props: {
