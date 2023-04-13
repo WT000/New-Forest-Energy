@@ -17,8 +17,6 @@ export default function ProgressBar(props: ProgressBarProps) {
   const _num1 = isNaN(num1) ? 0.00 : num1 ?? 0.00
   const _num2 = isNaN(num2) ? 0.00 : num2 ?? 0.00
 
-  console.log("props", props, _num1, _num2)
-
   if (_num1 > _num2) {
     let onepercent = _num1 / 100;
     var prnct = _num2 / onepercent;
