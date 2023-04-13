@@ -108,3 +108,37 @@ export default function Body(props: BodyProps){
         </div>
     )
 }
+
+
+export function BodyWithoutNavbar(props : {currentPage: string, children: ReactNode, welcomeText: string}){
+    return(
+        <div> 
+
+            <MobileHeader 
+                currentPage={props.currentPage}
+                text={props.welcomeText}
+            />
+
+            <div className="hidden md:block h-32 overflow-clip">
+                <div className="h-56 w-full relative -z-10 bottom-8">
+                    <Image
+                        priority
+                        src="/img/leafBackground.svg"
+                        fill
+                        alt="Leaf Image"
+                        />
+                </div>                    
+            </div>
+
+            <main className="mt-[70px] md:mt-0 flex items-center flex-col">
+                <div className="pt-6 space-y-6">
+                    <h1 className="hidden md:block text-3xl">{props.currentPage}</h1>
+
+                    {props.children}
+                </div>
+
+            </main>
+
+        </div>
+    )
+}

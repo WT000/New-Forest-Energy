@@ -1,3 +1,5 @@
+import { MutableRefObject } from "react";
+
 interface ButtonProp {
 	icon?: React.ReactElement;
 	text?: string;
