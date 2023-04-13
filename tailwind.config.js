@@ -2,11 +2,11 @@ const defaultTheme = require("tailwindcss/defaultTheme");
 
 /** @type {import('tailwindcss').Config} */
 module.exports = {
-	content: [
-		"./app/**/*.{js,ts,jsx,tsx}",
-		"./pages/**/*.{js,ts,jsx,tsx}",
-		"./components/**/*.{js,ts,jsx,tsx}",
-         "./src/**/*.{js,ts,jsx,tsx}",
+    content: [
+        "./app/**/*.{js,ts,jsx,tsx}",
+        "./pages/**/*.{js,ts,jsx,tsx}",
+        "./components/**/*.{js,ts,jsx,tsx}",
+        "./src/**/*.{js,ts,jsx,tsx}",
     ],
     theme: {
         // screens: {
@@ -23,19 +23,19 @@ module.exports = {
             black: {
                 DEFAULT: "#051821",
                 500: "#77767A",
-                700: "#DCDCDD"
+                700: "#DCDCDD",
             },
             white: {
                 DEFAULT: "#FFFFFF",
                 100: "#FAFAFA",
-                300: "#EDEEF0"
+                300: "#EDEEF0",
             },
             red: {
                 400: "#C82D2D",
-                500: "#DB2727"
+                500: "#DB2727",
             },
             darkblue: {
-                900: "#051821F2"
+                900: "#051821F2",
             },
         },
         extend: {
