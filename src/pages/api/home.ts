@@ -53,7 +53,6 @@ export default async function handler(req, res) {
         let valid;
         let role;
         let owner;
-        let image;
         
         switch (method) {
             case "POST":

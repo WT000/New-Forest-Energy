@@ -4,7 +4,6 @@ export interface BookingInterface {
   _id?: string;
   surname: string;
   friendlyId: string;
-  urlId: string;
   home: mongoose.Schema.Types.ObjectId;
   startDateTime: Date;
   endDateTime: Date;
@@ -22,14 +21,9 @@ const bookingSchema = new Schema<BookingInterface, Model<BookingInterface>>(
     friendlyId: {
       type: String,
       required: true,
-      minlength: [5, "Friendly booking id must be 5 characters."],
-      maxlength: [5, "Friendly booking id must be 5 characters."],
-      // unique: true
-    },
-    urlId: {
-      type: String,
-      required: true,
-      // unique: true
+      minlength: [7, "Friendly booking id must be 7 characters."],
+      maxlength: [7, "Friendly booking id must be 7 characters."],
+      unique: true
     },
     home: {
       type: mongoose.Schema.Types.ObjectId,

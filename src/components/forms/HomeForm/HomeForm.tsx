@@ -97,6 +97,7 @@ export default function HomeForm(props: HomeFormProps) {
               render={({field: {onChange}}) => (
 
                     <PhotoInputLayout
+                        text="Home Image"
                         image={image}
                         setImage={setImage}
                         onChange={onChange}
