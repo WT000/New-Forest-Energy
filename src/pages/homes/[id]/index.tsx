@@ -234,6 +234,15 @@ export async function getServerSideProps({ req, res, params }) {
         const delegates = h.delegates;       
         const userRole = getRole(session);
 
+    
+        if (userRole === Role.Guest) {
+            return {
+                redirect: {
+                    destination: "/auth/guest",
+                    permanent: false,
+                },
+            };
+        }
         /**
          * Average per day (overall) = (last - first) / days(dateN - date1)
          * Average per day (broken down by day) for chart
@@ -252,7 +261,7 @@ export async function getServerSideProps({ req, res, params }) {
                 bookings: JSON.stringify(bookings),
                 delegates: JSON.stringify(delegates),
                 userRole: userRole,
-                averagePerDay: averagePerDay,
+                averagePerDay: averagePerDay ?? 0.00,
             },
         };
     }
