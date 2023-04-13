@@ -6,6 +6,7 @@ import Link from "next/link";
 
 export default function BookingLogin(props) {
     const router = useRouter();
+    const {booking} = router.query;
 
     return (
          <BodyWithoutNavbar
@@ -21,6 +22,7 @@ export default function BookingLogin(props) {
                     onCancel={() => {
                         router.push("/");
                     }}
+                    autoBooking={booking}
                     bookingFinder={async (friendlyId) => {
                         try {
                             const res = await axios.get(`/api/checklogin?friendlyId=${friendlyId}`);

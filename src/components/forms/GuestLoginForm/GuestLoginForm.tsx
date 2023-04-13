@@ -3,6 +3,7 @@ import { IoLockClosed, IoSave } from "react-icons/io5";
 import InputLayout from "../../layouts/InputLayout/InputLayout";
 import Tile, { TileType } from "../../Tile/Tile";
 import Button from "../../Button/Button";
+import { useEffect, useRef } from "react";
 
 export interface GuestLoginFormData {
     friendlyId: string;
@@ -12,6 +13,7 @@ interface GuestLoginFormProps {
     onSubmit: SubmitHandler<GuestLoginFormData>;
     onCancel: () => void;
     bookingFinder: (friendlyId: string) => Promise<boolean>;
+    autoBooking: string | string[];
     isLoading?: boolean;
     triggerReset?: boolean;
 }
@@ -26,13 +28,21 @@ async function findBooking(friendlyId: string, bookingFinder: (friendlyId: strin
 }
 
 export default function GuestLoginForm(props: GuestLoginFormProps) {
-    const { onSubmit, bookingFinder } = props;
+    const { onSubmit, bookingFinder, autoBooking } = props;
 
     const {
         register,
         handleSubmit,
+        setValue,
         formState: { errors },
     } = useForm<GuestLoginFormData>();
+
+    useEffect(() => {
+        if (autoBooking && typeof autoBooking == "string" && autoBooking.length == 7) {
+            setValue("friendlyId", autoBooking);
+            handleSubmit(onSubmit)();
+        }
+    });
 
     return (
         <div className="space-y-6">
@@ -58,14 +68,14 @@ export default function GuestLoginForm(props: GuestLoginFormProps) {
             </Tile>
 
             <Button
-                    text="Confirm"
-                    icon={<IoSave className="text-white" />}
-                    onClick={handleSubmit((data) => {
-                        onSubmit({
-                            ...data,
-                        });
-                    })}
-                />
+                text="Confirm"
+                icon={<IoSave className="text-white" />}
+                onClick={handleSubmit((data) => {
+                    onSubmit({
+                        ...data,
+                    });
+                })}
+            />
         </div>
     );
 }
