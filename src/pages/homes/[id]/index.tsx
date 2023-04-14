@@ -184,7 +184,7 @@ export default function Index(props) {
                     <div className="mt-14 md:mt-0 md:w-[42%]">
                         <Subtitle text1="Latest Readings" showbar={true}/>
                         <div className="mt-3">
-                            <ReadingContainer readings={readings}/>
+                            <ReadingContainer readings={readings} readingsPerLoad={8}/>
                         </div>
                     </div>
                     <div className="mt-14 md:mt-0 md:w-[42%]">
