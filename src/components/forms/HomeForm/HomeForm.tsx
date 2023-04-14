@@ -246,14 +246,14 @@ export default function HomeForm(props: HomeFormProps) {
                 />
             </Tile>
             
-            {/* To be delegates list... */}
+            {/* Delegates */}
             <Tile tileType={TileType.input} clickable={false}>
                 <InputLayout
                     icon={<IoMail size="32px" />}
                     text={"Delegate Emails"}
                     type={"text"}
                     name={"delegates"}
-                    placeholder={"abc@gmail.com, de@g..."}
+                    placeholder={"abc@gmail.com, def@g..."}
                     register={register}
                     registerSettings={{
                         validate: {
@@ -262,6 +262,7 @@ export default function HomeForm(props: HomeFormProps) {
                     }}
                     errors={errors.delegates}
                     errorMessage={"*Must be real and comma seperated."}
+                    fontSize="md"
                 />
             </Tile>
 
