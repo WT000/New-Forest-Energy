@@ -1,4 +1,4 @@
-import { IoBed, IoFlash, IoFootsteps, IoImages, IoPerson, IoSave, IoText, IoWallet, IoTrashBin } from "react-icons/io5";
+import { IoBed, IoFlash, IoPerson, IoSave, IoText, IoWallet, IoTrashBin, IoMail } from "react-icons/io5";
 import { Controller, SubmitHandler, useForm } from "react-hook-form";
 import Button from "../../Button/Button";
 import InputLayout from "../../layouts/InputLayout/InputLayout";
@@ -13,6 +13,7 @@ export interface HomeFormData {
     owner: string;
     description?: string;
     image?: string;
+    delegates?: string;
     numBeds: number;
     energyInstructions: string;
     energyTariff: number;
@@ -61,6 +62,24 @@ async function findUser(email: string, userFinder: (email: string) => Promise<bo
         console.log(e);
     }
     return false;
+}
+
+async function checkEmails(emails: string, userFinder: (email: string) => Promise<boolean>) {
+    if (emails !== "" && typeof emails == "string") {
+        // Detect if inputted as email1,email2 or email1, email2
+        let delegateEmails;
+        if (emails.match(", ")) {
+            delegateEmails = Array.from(new Set(emails.split(", ")));
+        } else {
+            delegateEmails = Array.from(new Set(emails.split(",")));
+        }
+
+        // Map, forEach, etc seem to be very buggy with react-hook-form
+        for (let i=0; i<delegateEmails.length; i++) {
+            if (!await findUser(delegateEmails[i], userFinder)) return false;
+        }
+    }
+    return true;
 }
 
 export default function HomeForm(props: HomeFormProps) {
@@ -230,18 +249,19 @@ export default function HomeForm(props: HomeFormProps) {
             {/* To be delegates list... */}
             <Tile tileType={TileType.input} clickable={false}>
                 <InputLayout
-                    icon={<IoText size="32px" />}
-                    text={"Home Name"}
+                    icon={<IoMail size="32px" />}
+                    text={"Delegate Emails"}
                     type={"text"}
-                    name={"name"}
-                    placeholder={"My New Home..."}
+                    name={"delegates"}
+                    placeholder={"abc@gmail.com, de@g..."}
                     register={register}
                     registerSettings={{
-                        required: true,
-                        minLength: 4,
+                        validate: {
+                            real: (emails) => checkEmails(emails, userFinder),
+                        },
                     }}
-                    errors={errors.name}
-                    errorMessage={"*Must be at least 4 characters."}
+                    errors={errors.delegates}
+                    errorMessage={"*Must be real and comma seperated."}
                 />
             </Tile>
 
