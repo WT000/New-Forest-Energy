@@ -101,7 +101,7 @@ export default function HorizontalContainer(
 		<div>
 			<div className="flex flex-col bg-white m-auto p-auto">
 				<div className={scrollClass} ref={multiRef} {...events}>
-					<div className="flex flex-nowrap select-none">
+					<div className="flex flex-nowrap select-none p-1">
 						{data.map((component, index) => (
 							<div className="inline-block pr-6" key={index}>
 								{component}
