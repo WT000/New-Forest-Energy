@@ -141,7 +141,7 @@ export default function Index(props) {
                                 icon={<IoCreateSharp size="34px"/>}
                                 textLine1="Edit Home"
                                 textLine2="Details"></CompactLayout>} 
-                                clickable={true} onClick={() => console.log("clicked")}></Tile>
+                                clickable={true} onClick={() => router.push(`/homes/${props?.home?._id}/edit`)}></Tile>
                             <Tile tileType={TileType.link} 
                                 children={<CompactLayout 
                                 icon={<IoQrCode size="34px"/>}
@@ -190,7 +190,7 @@ export default function Index(props) {
                     <div className="mt-14 md:mt-0 md:w-[42%]">
                         <Subtitle text1="Delegates" showbar={true}/>
                         <div className="mt-3">                            
-                            <DelegatesList children={delegateItems} onClick={null}></DelegatesList>
+                            <DelegatesList children={delegateItems} onClick={() => router.push(`/homes/${props?.home?._id}/edit`)}></DelegatesList>
                             <Toaster></Toaster>
                             {/* TODO: Horizontal Infinite Scroll */}
                         </div>

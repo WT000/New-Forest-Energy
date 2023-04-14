@@ -7,7 +7,6 @@ import Tile, { TileType } from "../../Tile/Tile";
 import { useEffect, useState } from "react";
 import Role from "../../../lib/utils/roles";
 import PhotoInputLayout from "../../layouts/PhotoInputLayout/PhotoInputLayout";
-import ImageLayout from "../../layouts/ImageLayout/ImageLayout";
 
 export interface HomeFormData {
     name: string;
@@ -169,7 +168,7 @@ export default function HomeForm(props: HomeFormProps) {
 
             {/* Instructions */}
             {/* May need a custom size set on md: breakpoint */}
-            <Tile tileType={TileType.fill} customClass="row-span-3" clickable={false}>
+            <Tile tileType={TileType.fill} customClass="row-span-2" clickable={false}>
                 <InstructionsLayout
                     text=""
                     editable={true}
@@ -225,6 +224,24 @@ export default function HomeForm(props: HomeFormProps) {
                     }}
                     errors={errors.energyTariff}
                     errorMessage={"*Must be at least £0.01."}
+                />
+            </Tile>
+            
+            {/* To be delegates list... */}
+            <Tile tileType={TileType.input} clickable={false}>
+                <InputLayout
+                    icon={<IoText size="32px" />}
+                    text={"Home Name"}
+                    type={"text"}
+                    name={"name"}
+                    placeholder={"My New Home..."}
+                    register={register}
+                    registerSettings={{
+                        required: true,
+                        minLength: 4,
+                    }}
+                    errors={errors.name}
+                    errorMessage={"*Must be at least 4 characters."}
                 />
             </Tile>
 
