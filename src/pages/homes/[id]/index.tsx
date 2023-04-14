@@ -231,11 +231,13 @@ export async function getServerSideProps({ req, res, params }) {
      */
     async function homeEnergyAverage(homeId) {
         //@ts-ignore
-        const oldestReading = await Reading.findOne({home: homeId}, {}, { sort: { 'createdAt' : -1 } });
+        const oldestReading = await Reading.findOne({home: homeId}, {}, { sort: { 'createdAt' : 1 } });
         //@ts-ignore
-        const newestReading = await Reading.findOne({home: homeId}, {}, { sort: { 'createdAt' : 1 } });  
+        const newestReading = await Reading.findOne({home: homeId}, {}, { sort: { 'createdAt' : -1 } });  
         let houseAveragePerDay = 0;   
         if (oldestReading && newestReading)  {
+            // console.log("Reading oldestReading = ", oldestReading.createdAt)
+            // console.log("Reading newestReading = ", newestReading.createdAt)
             const daysDiff = dateDiffInDays(oldestReading.createdAt, newestReading.createdAt) || 1;
             // console.log("daysDiff = ", daysDiff)
             const readingDiff = newestReading.value - oldestReading.value;
@@ -287,12 +289,14 @@ export async function getServerSideProps({ req, res, params }) {
             })).then((y) => {return y;})
             console.log("all = \n", results)
 
-            // Get just the home average for the valid homes
+            // Get just the home average figure from each valid home
             const validHomes = results.filter((r) => r.validHome).map(a => a.homeAvg)
+            // Calculate the average of the valid home averages
             const otherHomesAverage = validHomes.reduce((a, b) => a + b, 0) / validHomes.length
             console.log("otherHomesAverage", otherHomesAverage)
             // Get Data for this specific home       
-            let thisHomeAverage = await homeEnergyAverage(params.id).then((x) => {
+            let thisHomeAverage = await homeEnergyAverage(params.id)
+            .then((x) => {
                 console.log("thisHomeAverage", x);
                 return x;
             })
