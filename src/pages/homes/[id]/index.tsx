@@ -161,9 +161,9 @@ export default function Index(props) {
                             <div className="flex justify-between">
                                 <Card cardType={CardType.comparison}>
                                     <CompactLayout 
-                                        icon={<IoTrendingUp size="34px" className="text-green-500"/>}
+                                        icon={otherHomesIcon}
                                         textLine1={"vs Other Homes"}
-                                        textLine2={"10% less"} />
+                                        textLine2={otherHomesComparisonTextWording} />
                                 </Card>
                                 <Card cardType={CardType.comparison}>
                                     <CompactLayout 
@@ -300,7 +300,6 @@ export async function getServerSideProps({ req, res, params }) {
                 console.log("thisHomeAverage", x);
                 return x;
             })
-
             otherHomesPercentageDiff = percentageDiff(thisHomeAverage, otherHomesAverage);      
             console.log("otherHomesPercentageDiff", otherHomesPercentageDiff);
         }    
