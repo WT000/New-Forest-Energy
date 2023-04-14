@@ -29,6 +29,7 @@ import Tile, { TileType } from "../../../components/Tile/Tile";
 import { Toaster } from "react-hot-toast";
 import Notification from "../../../components/Notification/Notifications";
 import { useRouter } from "next/router";
+import { percentageDiff } from "../../../lib/utils/nums";
 
 function displayCost(cost) {
     let costString = "0"
@@ -118,6 +119,9 @@ export default function Index(props) {
             path: "/api/auth/signout"
         }
     ]
+
+    const otherHomesComparisonTextWording = Math.abs((props.otherHomesComparison * 100)).toFixed(0) + '%' + " " + (props.otherHomesComparison > 0 ? "more" : "less")
+    const otherHomesIcon = props.otherHomesComparison > 0 ? <IoTrendingUp size="34px" className="text-orange"/> : <IoTrendingDown size="34px" className="text-green-500"/>
 
     // TODO: Necessary?
     if(props?.userRole == Role.Guest) {
@@ -220,6 +224,28 @@ export async function getServerSideProps({ req, res, params }) {
 
     const session =  await getServerSession(req, res, authOptions)
 
+    /**
+     * Calculate the average energy per day for a home
+     * @param homeId 
+     * @returns 
+     */
+    async function homeEnergyAverage(homeId) {
+        //@ts-ignore
+        const oldestReading = await Reading.findOne({home: homeId}, {}, { sort: { 'createdAt' : -1 } });
+        //@ts-ignore
+        const newestReading = await Reading.findOne({home: homeId}, {}, { sort: { 'createdAt' : 1 } });  
+        let houseAveragePerDay = 0;   
+        if (oldestReading && newestReading)  {
+            const daysDiff = dateDiffInDays(oldestReading.createdAt, newestReading.createdAt) || 1;
+            // console.log("daysDiff = ", daysDiff)
+            const readingDiff = newestReading.value - oldestReading.value;
+            // console.log("Reading Diff = ", readingDiff)
+            houseAveragePerDay = (readingDiff > 0 ? readingDiff : 0) / daysDiff;
+            // console.log("houseAveragePerDay = ", houseAveragePerDay)
+        }
+        return houseAveragePerDay
+    }
+
     try {
         const h = await Home.findById(params.id).populate({path: "delegates", populate: {path: 'name'}}).lean();
 
@@ -243,7 +269,38 @@ export async function getServerSideProps({ req, res, params }) {
         const bookings = await Booking.find({home: h._id, isDeleted: false}).sort({"createdAt": -1}).lean()
         const delegates = h.delegates;       
         const userRole = getRole(session, hNoDelegates);
-    
+
+        // Comparison to other homes
+        //@ts-ignore
+        const otherHomes = await Home.find({_id: {$ne: params.id}}).lean();
+        let otherHomesPercentageDiff = 0;
+        if (otherHomes) {
+            const results = await Promise.all(otherHomes.map(async otherHome => {      
+                let homeResult = await homeEnergyAverage(otherHome._id.toString()).then((homeAvg) => {
+                    let validHome = false
+                    if (homeAvg != 0) {
+                        validHome = true // Have to manually count the homes as some will have 0 readings, which would invalidate the average.
+                    }
+                    return {homeId: otherHome._id.toString(), homeAvg, validHome}
+                }).then((x) => {return x;})
+                return homeResult
+            })).then((y) => {return y;})
+            console.log("all = \n", results)
+
+            // Get just the home average for the valid homes
+            const validHomes = results.filter((r) => r.validHome).map(a => a.homeAvg)
+            const otherHomesAverage = validHomes.reduce((a, b) => a + b, 0) / validHomes.length
+            console.log("otherHomesAverage", otherHomesAverage)
+            // Get Data for this specific home       
+            let thisHomeAverage = await homeEnergyAverage(params.id).then((x) => {
+                console.log("thisHomeAverage", x);
+                return x;
+            })
+
+            otherHomesPercentageDiff = percentageDiff(thisHomeAverage, otherHomesAverage);      
+            console.log("otherHomesPercentageDiff", otherHomesPercentageDiff);
+        }    
+        
         if (userRole === Role.Guest) {
             return {
                 redirect: {
@@ -255,7 +312,6 @@ export async function getServerSideProps({ req, res, params }) {
         /**
          * TODO: Role specific info?
          * TODO: QR code & Edit Home tiles 
-         * TODO: Comparisons
          */
         
         return {
@@ -266,6 +322,7 @@ export async function getServerSideProps({ req, res, params }) {
                 delegates: JSON.stringify(delegates),
                 userRole: userRole,
                 averagePerDay: averagePerDay ?? 0.00,
+                otherHomesComparison : otherHomesPercentageDiff,
             },
         };
     }
