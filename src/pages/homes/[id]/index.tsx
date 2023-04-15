@@ -122,9 +122,12 @@ export default function Index(props) {
     const otherHomesComparisonTextWording = Math.abs((props.otherHomesComparison * 100)).toFixed(0) + '%' + " " + (props.otherHomesComparison > 0 ? "more" : "less")
     const otherHomesIcon = props.otherHomesComparison > 0 ? <IoTrendingUp size="34px" className="text-orange"/> : <IoTrendingDown size="34px" className="text-green-500"/>
 
-    const lastMonthComparisonTextWording = Math.abs((props.lastMonthComparison * 100)).toFixed(0) + '%' + " " + (props.lastMonthComparison > 0 ? "more" : "less")
-    const lastMonthComparisonIcon = props.lastMonthComparison > 0 ? <IoTrendingUp size="34px" className="text-orange"/> : <IoTrendingDown size="34px" className="text-green-500"/>
-
+    let lastMonthComparisonTextWording = null
+    let lastMonthComparisonIcon = null
+    if (props.lastMonthComparison !== null) {
+        lastMonthComparisonTextWording = Math.abs((props.lastMonthComparison * 100)).toFixed(0) + '%' + " " + (props.lastMonthComparison > 0 ? "more" : "less")
+        lastMonthComparisonIcon = props.lastMonthComparison > 0 ? <IoTrendingUp size="34px" className="text-orange"/> : <IoTrendingDown size="34px" className="text-green-500"/>
+    }
     // TODO: Necessary?
     if(props?.userRole == Role.Guest) {
         stats.push({
@@ -167,12 +170,14 @@ export default function Index(props) {
                                         textLine1={"vs Other Homes"}
                                         textLine2={otherHomesComparisonTextWording} />
                                 </Card>
-                                <Card cardType={CardType.comparison}>
-                                    <CompactLayout 
-                                        icon={lastMonthComparisonIcon}
-                                        textLine1={"vs Last Month"}
-                                        textLine2={lastMonthComparisonTextWording} />
-                                </Card>
+                                {props.lastMonthComparison !== null && (
+                                    <Card cardType={CardType.comparison}>
+                                        <CompactLayout 
+                                            icon={lastMonthComparisonIcon}
+                                            textLine1={"vs Last Month"}
+                                            textLine2={lastMonthComparisonTextWording} />
+                                    </Card>
+                                )}
                             </div>
                         </div>
                     </div>
@@ -292,7 +297,7 @@ export async function getServerSideProps({ req, res, params }) {
         // Calculate differences
         let lastMonthComparison: number;
         if (lastMonthReadings.length <= 1 || thisMonthReadings.length <= 1) { // If there are 1 or no readings for either month
-            lastMonthComparison = 0
+            lastMonthComparison = null
         } else {
             // Last Month
             let lastMonthValues = lastMonthReadings.map(a => ({value: a.value, createdAt: a.createdAt}))
