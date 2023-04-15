@@ -48,6 +48,8 @@ export default function Index(props) {
     const delegateReadingCount = props.delegateCounts ? Object.assign({}, ...(JSON.parse(props.delegateCounts).map(item => ({ [item._id]: item }) ))) : null;
     const home = props.home;
 
+    // Would be better to build a big aggregate query in the future that'll have this information with the delegate
+    // However, as we're limited on time, this works as a proof of concept
     delegates?.forEach(delegate => {
         if (delegateReadingCount.hasOwnProperty(delegate._id)) {
             delegate["readingCount"] = delegateReadingCount[delegate._id].count;
