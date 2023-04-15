@@ -1,5 +1,4 @@
 import dbConnect from "../../../db/dbcon/dbcon";
-import { useSession } from "next-auth/react";
 import { authOptions } from "../../api/auth/[...nextauth]";
 import { getServerSession } from "next-auth/next";
 
@@ -8,7 +7,7 @@ import Home, { HomeInterface } from "../../../db/models/Home";
 import Reading from "../../../db/models/Reading";
 import User from "../../../db/models/User";
 
-import { dateDiffInDays, dateToEpoch, getDayMonth, sortDatesAscending, sortDatesDescending, subtractMonths } from "../../../lib/utils/dates";
+import { dateDiffInDays, getDayMonth, sortDatesAscending, subtractMonths } from "../../../lib/utils/dates";
 import { ToSeriableHome } from "../../../lib/utils/json";
 import getRole from "../../../lib/utils/getRole";
 import Role from "../../../lib/utils/roles";
@@ -239,14 +238,6 @@ export async function getServerSideProps({ req, res, params }) {
         const newestReading = await Reading.findOne({home: homeId}, {}, { sort: { 'createdAt' : -1 } });  
         let houseAveragePerDay = 0;   
         if (oldestReading && newestReading)  {
-            // // console.log("Reading oldestReading = ", oldestReading.createdAt)
-            // // console.log("Reading newestReading = ", newestReading.createdAt)
-            // const daysDiff = dateDiffInDays(oldestReading.createdAt, newestReading.createdAt) || 1;
-            // // console.log("daysDiff = ", daysDiff)
-            // const readingDiff = newestReading.value - oldestReading.value;
-            // // console.log("Reading Diff = ", readingDiff)
-            // houseAveragePerDay = (readingDiff > 0 ? readingDiff : 0) / daysDiff;
-            // // console.log("houseAveragePerDay = ", houseAveragePerDay)
             houseAveragePerDay = averageOfTwoReadings(oldestReading, newestReading)
         }
         return houseAveragePerDay
@@ -294,11 +285,9 @@ export async function getServerSideProps({ req, res, params }) {
 
         // Comparison to last month
         const TODAY = new Date()
-        console.log("TODAY: ", TODAY, " - ", TODAY.getUTCMonth(), " - ", TODAY.getUTCFullYear())
         const thisMonthReadings = readings.filter(reading => reading.createdAt.getUTCMonth() == TODAY.getUTCMonth() && reading.createdAt.getUTCFullYear() == TODAY.getUTCFullYear())
         // Perform subtraction to get last month 
         let lastMonthDate = subtractMonths(TODAY, 1)
-        console.log("subtractedDate: ", lastMonthDate.monthUTC, " - ", lastMonthDate.yearUTC)  
         const lastMonthReadings = readings.filter(reading => reading.createdAt.getUTCMonth() == lastMonthDate.monthUTC && reading.createdAt.getUTCFullYear() == lastMonthDate.yearUTC)
         // Calculate differences
         let lastMonthComparison: number;
@@ -306,18 +295,13 @@ export async function getServerSideProps({ req, res, params }) {
             lastMonthComparison = 0
         } else {
             // Last Month
-            console.log(lastMonthReadings.map(a => ({value: a.value, createdAt: a.createdAt})))
             let lastMonthValues = lastMonthReadings.map(a => ({value: a.value, createdAt: a.createdAt}))
             let lastMonthAverage = averageOfTwoReadings(lastMonthValues[lastMonthValues.length -1], lastMonthValues[0]);
-            console.log(lastMonthValues[lastMonthValues.length -1], lastMonthValues[0], lastMonthAverage)
             // This Month
-            console.log(thisMonthReadings.map(a => ({value: a.value, createdAt: a.createdAt})))
             let thisMonthValues = thisMonthReadings.map(a => ({value: a.value, createdAt: a.createdAt}))
             let thisMonthAverage = averageOfTwoReadings(thisMonthValues[thisMonthValues.length -1], thisMonthValues[0]);
-            console.log(thisMonthValues[thisMonthValues.length -1], thisMonthValues[0], thisMonthAverage)
             // Compare
             lastMonthComparison = percentageDiff(thisMonthAverage, lastMonthAverage);      
-            console.log("lastMonthComparison = ", lastMonthComparison);
         }
 
         // Comparison to other homes
@@ -335,21 +319,17 @@ export async function getServerSideProps({ req, res, params }) {
                 }).then((x) => {return x;})
                 return homeResult
             })).then((y) => {return y;})
-            console.log("all = \n", results)
 
             // Get just the home average figure from each valid home
             const validHomes = results.filter((r) => r.validHome).map(a => a.homeAvg)
             // Calculate the average of the valid home averages
             const otherHomesAverage = validHomes.reduce((a, b) => a + b, 0) / validHomes.length
-            console.log("otherHomesAverage", otherHomesAverage)
             // Get Data for this specific home       
             let thisHomeAverage = await homeEnergyAverage(params.id)
             .then((x) => {
-                console.log("thisHomeAverage", x);
                 return x;
             })
             otherHomesPercentageDiff = percentageDiff(thisHomeAverage, otherHomesAverage);      
-            console.log("otherHomesPercentageDiff", otherHomesPercentageDiff);
         }       
         
         if (userRole === Role.Guest) {
