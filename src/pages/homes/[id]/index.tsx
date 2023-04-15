@@ -45,7 +45,16 @@ export default function Index(props) {
     const readings = props.readings ? JSON.parse(props.readings) : null;
     const bookings = props.bookings ? JSON.parse(props.bookings) : null;
     const delegates = props.delegates ? JSON.parse(props.delegates) : null;
+    const delegateReadingCount = props.delegateCounts ? Object.assign({}, ...(JSON.parse(props.delegateCounts).map(item => ({ [item._id]: item }) ))) : null;
     const home = props.home;
+
+    delegates?.forEach(delegate => {
+        if (delegateReadingCount.hasOwnProperty(delegate._id)) {
+            delegate["readingCount"] = delegateReadingCount[delegate._id].count;
+        } else {
+            delegate["readingCount"] = 0;
+        }
+    });
 
     // const startDate = getDayMonth(new Date(props?.booking?.startDateTime));
     // const endDate = getDayMonth(new Date(props?.booking?.endDateTime), true);
@@ -75,8 +84,8 @@ export default function Index(props) {
 
     let delegateItems = []
     delegates.map((item, index) => {
-        let interactive = { onClick: () => {console.log("Clicked!");}, text: "Undo" }
-        delegateItems.push(<DelegatesListItem key={index} image={item.image} username={item.name} onClick={Notification({text: "Delegate removed.", icon: <IoClose />, interactive: interactive })}></DelegatesListItem>)
+        let interactive = { onClick: () => {console.log("Clicked!");}}
+        delegateItems.push(<DelegatesListItem key={index} image={item.image} username={item.name} onClick={Notification({text: `${item.name} (${item.email}) has left ${item.readingCount} reading${item.readingCount !== 1 ? "s" : ""}.`, icon: <IoClose />, interactive: interactive })}></DelegatesListItem>)
     })
 
     const stats = [
@@ -243,6 +252,20 @@ export async function getServerSideProps({ req, res, params }) {
         const bookings = await Booking.find({home: h._id, isDeleted: false}).sort({"createdAt": -1}).lean()
         const delegates = h.delegates;       
         const userRole = getRole(session, hNoDelegates);
+
+        const delegateReadingCount = await Reading.aggregate([
+            {
+                $match: {
+                    home: h._id
+                }
+            },
+            {
+                $group: {
+                    _id: "$user",
+                    count: { $sum: 1 }
+                }
+            },
+        ])
     
         if (userRole === Role.Guest) {
             return {
@@ -264,6 +287,7 @@ export async function getServerSideProps({ req, res, params }) {
                 readings: JSON.stringify(readings),
                 bookings: JSON.stringify(bookings),
                 delegates: JSON.stringify(delegates),
+                delegateCounts: JSON.stringify(delegateReadingCount),
                 userRole: userRole,
                 averagePerDay: averagePerDay ?? 0.00,
             },
