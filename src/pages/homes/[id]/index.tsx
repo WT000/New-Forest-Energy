@@ -243,7 +243,24 @@ export async function getServerSideProps({ req, res, params }) {
         const bookings = await Booking.find({home: h._id, isDeleted: false}).sort({"createdAt": -1}).lean()
         const delegates = h.delegates;       
         const userRole = getRole(session, hNoDelegates);
-    
+
+        // Booking Costs
+        const bookingCosts = await Promise.all(bookings.map(async booking => { 
+            const b = new Booking(booking);
+            const cost = await b.calculateCost(0);
+            return {id: booking._id, cost};
+        })).then((y) => {return y;})
+
+        // const results = await Promise.all(bookings.map(async booking => {      
+        //     const b = new Booking(booking);
+        //     let bookingResult = await b.calculateCost(0).then((cost) => {
+        //         return cost
+        //     }).then((x) => {return x;})
+        //     return {bookingResult}
+        // })).then((y) => {return y;})
+        
+        console.log(bookingCosts)
+
         if (userRole === Role.Guest) {
             return {
                 redirect: {
