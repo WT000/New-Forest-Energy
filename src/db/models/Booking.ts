@@ -11,7 +11,7 @@ export interface BookingInterface {
 	isDeleted: Boolean;
 	createdAt: Date;
 	updatedAt: Date;
-	calculateCost: (cb: any) => object;
+	calculateCost?: (cb: any) => object;
 }
 
 export interface BookingMethods {
