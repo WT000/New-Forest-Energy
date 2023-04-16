@@ -44,6 +44,7 @@ export default function Index(props) {
     
     const readings = props.readings ? JSON.parse(props.readings) : null;
     const bookings = props.bookings ? JSON.parse(props.bookings) : null;
+    const bookingCosts = props.bookingCosts ? JSON.parse(props.bookingCosts) : null;
     const delegates = props.delegates ? JSON.parse(props.delegates) : null;
     const home = props.home;
 
@@ -61,8 +62,11 @@ export default function Index(props) {
         let duration = dateDiffInDays(startDate, endDate) || 1;
         const bookingLink = "../bookings/" + item.friendlyId
         const surroundingStlye = "hover:cursor-pointer"
-
-        const bookingLayout = (<BookingLayout cost={-1} duration={duration} dateRange={dateRange}></BookingLayout>)
+        let bookingCost = bookingCosts.filter((obj: { id: string; }) => {
+            return obj.id == item._id
+        })
+        const totalCostMinusBuffer = bookingCost.length ? displayCost(bookingCost[0].cost.totalCostMinusBuffer) : "N/A" 
+        const bookingLayout = (<BookingLayout cost={totalCostMinusBuffer} duration={duration} dateRange={dateRange}></BookingLayout>)
 
         if (endDate.getTime() < now) {
             bookingCards.push((<div onClick={() => router.push(bookingLink)} className={surroundingStlye}><Card key={index} cardType={CardType.booking} bookingType={BookingType.complete} children={bookingLayout}></Card></div>))
@@ -248,7 +252,7 @@ export async function getServerSideProps({ req, res, params }) {
         const bookingCosts = await Promise.all(bookings.map(async booking => { 
             const b = new Booking(booking);
             const cost = await b.calculateCost(0);
-            return {id: booking._id, cost};
+            return {id: booking._id.toString(), cost};
         })).then((y) => {return y;})
 
         // const results = await Promise.all(bookings.map(async booking => {      
@@ -259,8 +263,6 @@ export async function getServerSideProps({ req, res, params }) {
         //     return {bookingResult}
         // })).then((y) => {return y;})
         
-        console.log(bookingCosts)
-
         if (userRole === Role.Guest) {
             return {
                 redirect: {
@@ -283,6 +285,7 @@ export async function getServerSideProps({ req, res, params }) {
                 delegates: JSON.stringify(delegates),
                 userRole: userRole,
                 averagePerDay: averagePerDay ?? 0.00,
+                bookingCosts: JSON.stringify(bookingCosts),
             },
         };
     }

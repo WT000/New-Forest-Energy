@@ -98,6 +98,7 @@ bookingSchema.method("calculateCost", async function calculateCost(cb) {
 		.find({
 			home: this.home._id,
 			createdAt: { $gte: this.startDateTime, $lt: this.endDateTime },
+			cb,
 		})
 		.sort("createdAt");
 
