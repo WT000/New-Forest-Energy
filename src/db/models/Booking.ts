@@ -11,18 +11,19 @@ export interface BookingInterface {
 	isDeleted: Boolean;
 	createdAt: Date;
 	updatedAt: Date;
+	calculateCost: (cb: any) => object;
 }
 
-export interface IBookingMethods {
-	calculateCost(cb: any);
+export interface BookingMethods {
+	calculateCost(cb: any): object;
 }
 
-type BookingModel = Model<BookingInterface, {}, IBookingMethods>;
+type BookingModel = Model<BookingInterface, {}, BookingMethods>;
 
 const bookingSchema = new Schema<
 	BookingInterface,
 	BookingModel,
-	IBookingMethods
+	BookingMethods
 >(
 	{
 		surname: {
