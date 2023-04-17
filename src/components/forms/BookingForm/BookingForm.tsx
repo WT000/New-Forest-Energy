@@ -75,6 +75,7 @@ export default function BookingForm(props: BookingFormProps) {
     }
 
     const {
+        setFocus,
         register,
         handleSubmit,
         formState: { errors },
@@ -113,7 +114,7 @@ export default function BookingForm(props: BookingFormProps) {
             </Tile>
 
             {/* Surname */}
-            <Tile tileType={TileType.input} clickable={false}>
+            <Tile tileType={TileType.input} clickable={false} focus={() => setFocus("surname")}>
                 <InputLayout
                     icon={<IoPerson size="32px" />}
                     text={"Guest Surname"}
@@ -130,7 +131,7 @@ export default function BookingForm(props: BookingFormProps) {
             </Tile>
 
             {/* Start */}
-            <Tile tileType={TileType.input} clickable={false}>
+            <Tile tileType={TileType.input} clickable={false} focus={() => setFocus("startDateTime")}>
                 <InputLayout
                     icon={<IoCalendar size="32px" />}
                     text={"Start Date"}
@@ -153,7 +154,7 @@ export default function BookingForm(props: BookingFormProps) {
             </Tile>
 
             {/* End */}
-            <Tile tileType={TileType.input} clickable={false}>
+            <Tile tileType={TileType.input} clickable={false} focus={() => setFocus("endDateTime")}>
                 <InputLayout
                     icon={<IoCalendar size="32px" />}
                     text={"End Date"}
