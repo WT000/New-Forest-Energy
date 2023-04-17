@@ -119,8 +119,12 @@ export default function Index(props) {
         }
     ]
 
-    const otherHomesComparisonTextWording = Math.abs((props.otherHomesComparison * 100)).toFixed(0) + '%' + " " + (props.otherHomesComparison > 0 ? "more" : "less")
-    const otherHomesIcon = props.otherHomesComparison > 0 ? <IoTrendingUp size="34px" className="text-orange"/> : <IoTrendingDown size="34px" className="text-green-500"/>
+    let otherHomesComparisonTextWording = null
+    let otherHomesIcon = null
+    if (props.otherHomesComparison !== null) {
+        otherHomesComparisonTextWording = Math.abs((props.otherHomesComparison * 100)).toFixed(0) + '%' + " " + (props.otherHomesComparison > 0 ? "more" : "less")
+        otherHomesIcon = props.otherHomesComparison > 0 ? <IoTrendingUp size="34px" className="text-orange"/> : <IoTrendingDown size="34px" className="text-green-500"/>
+    }
 
     let lastMonthComparisonTextWording = null
     let lastMonthComparisonIcon = null
@@ -164,12 +168,14 @@ export default function Index(props) {
                         </div>
                         <div className="mt-10 md:mt-16 mb-8">
                             <div className="flex justify-between">
-                                <Card cardType={CardType.comparison}>
-                                    <CompactLayout 
-                                        icon={otherHomesIcon}
-                                        textLine1={"vs Other Homes"}
-                                        textLine2={otherHomesComparisonTextWording} />
-                                </Card>
+                                {props.otherHomesComparison !== null && (
+                                    <Card cardType={CardType.comparison}>
+                                        <CompactLayout 
+                                            icon={otherHomesIcon}
+                                            textLine1={"vs Other Homes"}
+                                            textLine2={otherHomesComparisonTextWording} />
+                                    </Card>
+                                )}
                                 {props.lastMonthComparison !== null && (
                                     <Card cardType={CardType.comparison}>
                                         <CompactLayout 
@@ -289,10 +295,10 @@ export async function getServerSideProps({ req, res, params }) {
         }
 
         // Comparison to last month
-        const TODAY = new Date()
-        const thisMonthReadings = readings.filter(reading => reading.createdAt.getUTCMonth() == TODAY.getUTCMonth() && reading.createdAt.getUTCFullYear() == TODAY.getUTCFullYear())
+        const today = new Date()
+        const thisMonthReadings = readings.filter(reading => reading.createdAt.getUTCMonth() == today.getUTCMonth() && reading.createdAt.getUTCFullYear() == today.getUTCFullYear())
         // Perform subtraction to get last month 
-        let lastMonthDate = subtractMonths(TODAY, 1)
+        let lastMonthDate = subtractMonths(today, 1)
         const lastMonthReadings = readings.filter(reading => reading.createdAt.getUTCMonth() == lastMonthDate.monthUTC && reading.createdAt.getUTCFullYear() == lastMonthDate.yearUTC)
         // Calculate differences
         let lastMonthComparison: number;
@@ -310,32 +316,34 @@ export async function getServerSideProps({ req, res, params }) {
         }
 
         // Comparison to other homes
-        //@ts-ignore
-        const otherHomes = await Home.find({_id: {$ne: params.id}}).lean();
-        let otherHomesPercentageDiff = 0;
-        if (otherHomes) {
-            const results = await Promise.all(otherHomes.map(async otherHome => {      
-                let homeResult = await homeEnergyAverage(otherHome._id.toString()).then((homeAvg) => {
-                    let validHome = false
-                    if (homeAvg != 0) {
-                        validHome = true // Have to manually count the homes as some will have 0 readings, which would invalidate the average.
-                    }
-                    return {homeId: otherHome._id.toString(), homeAvg, validHome}
-                }).then((x) => {return x;})
-                return homeResult
-            })).then((y) => {return y;})
+        let otherHomesPercentageDiff = null;
+        // Get Data for this specific home     
+        let thisHomeAverage = await homeEnergyAverage(params.id)
+        .then((x) => {
+            return x;
+        })
+        if (thisHomeAverage > 0) { // Only allow homes with readings
+            //@ts-ignore
+            const otherHomes = await Home.find({_id: {$ne: params.id}}).lean();
+            if (otherHomes) {
+                const results = await Promise.all(otherHomes.map(async otherHome => {      
+                    let homeResult = await homeEnergyAverage(otherHome._id.toString()).then((homeAvg) => {
+                        let validHome = false
+                        if (homeAvg != 0) {
+                            validHome = true // Have to manually count the homes as some will have 0 readings, which would invalidate the average.
+                        }
+                        return {homeId: otherHome._id.toString(), homeAvg, validHome}
+                    }).then((x) => {return x;})
+                    return homeResult
+                })).then((y) => {return y;})
 
-            // Get just the home average figure from each valid home
-            const validHomes = results.filter((r) => r.validHome).map(a => a.homeAvg)
-            // Calculate the average of the valid home averages
-            const otherHomesAverage = validHomes.reduce((a, b) => a + b, 0) / validHomes.length
-            // Get Data for this specific home       
-            let thisHomeAverage = await homeEnergyAverage(params.id)
-            .then((x) => {
-                return x;
-            })
-            otherHomesPercentageDiff = percentageDiff(thisHomeAverage, otherHomesAverage);      
-        }       
+                // Get just the home average figure from each valid home
+                const validHomes = results.filter((r) => r.validHome).map(a => a.homeAvg)
+                // Calculate the average of the valid home averages
+                const otherHomesAverage = validHomes.reduce((a, b) => a + b, 0) / validHomes.length
+                otherHomesPercentageDiff = percentageDiff(thisHomeAverage, otherHomesAverage);      
+            }      
+        } 
         
         if (userRole === Role.Guest) {
             return {
