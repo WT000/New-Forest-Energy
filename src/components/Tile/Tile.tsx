@@ -1,5 +1,3 @@
-import { RefObject, useRef } from "react";
-
 export enum TileType {
     input,
     box,
@@ -8,7 +6,7 @@ export enum TileType {
     fill
 }
 
-export interface TileProps {
+interface TileProps {
     tileType: TileType;
     children: React.ReactNode;
     clickable: boolean;
