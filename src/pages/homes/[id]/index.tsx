@@ -33,7 +33,6 @@ import Notification from "../../../components/Notification/Notifications";
 import Popup from "../../../components/Popup/Popup";
 import QRCode from "../../../components/QRCode/QRCode";
 import ReadingPopup from "../../../components/layouts/ReadingPopupLayout/ReadingPopupLayout";
-import { useRouter } from "next/router";
 
 function displayCost(cost) {
     let costString = "0"
@@ -65,7 +64,6 @@ export default function Index(props) {
 
     // const startDate = getDayMonth(new Date(props?.booking?.startDateTime));
     // const endDate = getDayMonth(new Date(props?.booking?.endDateTime), true);
-    const router = useRouter();
     const [currentPath, setCurrentPath] = useState("");
     useEffect(() => {if (window) {setCurrentPath(window.location.protocol + "//" + window.location.hostname)}});
     const [popupVisible, setPopupVisible] = useState(false);
@@ -170,8 +168,7 @@ export default function Index(props) {
                                 icon={<IoCreateSharp size="34px"/>}
                                 textLine1="Edit Home"
                                 textLine2="Details"></CompactLayout>} 
-                                clickable={true} onClick={() => router.push(`/homes/${home._id}/edit`)}>
-                            </Tile>
+                                clickable={true} onClick={() => router.push(`/homes/${home._id}/edit`)}></Tile>
                             <Tile tileType={TileType.link} 
                                 children={<CompactLayout 
                                 icon={<IoQrCode size="34px"/>}
@@ -182,8 +179,7 @@ export default function Index(props) {
                                     setPopupData({
                                         text: `${currentPath}/auth/guest?name=${home.name}`
                                     })
-                                }}>
-                            </Tile>
+                                }}></Tile>
                         </div>
                         <div className="">
                             <ProgressBar num1={props?.home.energyBuffer} num2={props?.averagePerDay}
