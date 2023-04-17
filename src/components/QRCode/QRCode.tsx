@@ -16,20 +16,22 @@ export default function QRCode(props: QRCodeProp) {
 	const { SVG } = useQRCode();
 
 	return (
-		<a href={text}>
-			<SVG
-				text={text}
-				options={{
-					margin: margin ? margin : 0,
-					width: width ? width : 200,
-					color: color
-						? color
-						: {
-								dark: "#000000",
-								light: "#FFFFFF",
-						  },
-				}}
-			/>
-		</a>
+		<div className="w-full h-[400px] md:w-[500px] md:h-[500px] bg-white-100 flex items-center justify-center m-auto rounded-[20px]">
+			<a href={text}>
+				<SVG
+					text={text}
+					options={{
+						margin: margin ? margin : 0,
+						width: width ? width : 300,
+						color: color
+							? color
+							: {
+									dark: "#000000",
+									light: "#FFFFFF",
+							},
+					}}
+				/>
+			</a>
+		</div>
 	);
 }

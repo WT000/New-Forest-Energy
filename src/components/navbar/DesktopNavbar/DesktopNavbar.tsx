@@ -42,7 +42,7 @@ export default function DesktopNavbar(props: DesktopNavbarProps) {
                         />
                     </div>
                 </div>
-                <div className="text-center">
+                <div className="text-center overflow-clip overflow-ellipsis">
                     <span className="text-sm text-black-500">{welcome},</span><br/>
                     <span className="font-bold text-lg text-black">{name}</span>
                 </div>
