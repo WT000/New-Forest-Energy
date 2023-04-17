@@ -2,7 +2,6 @@ import dbConnect from "../../../db/dbcon/dbcon";
 import { useSession } from "next-auth/react";
 import { authOptions } from "../../api/auth/[...nextauth]";
 import { getServerSession } from "next-auth/next";
-import { useRouter } from "next/router";
 import { Toaster } from "react-hot-toast";
 import React, { useEffect, useState } from "react";
 
@@ -52,7 +51,6 @@ export default function Index(props) {
     const delegates = props.delegates ? JSON.parse(props.delegates) : null;
     const home = props.home;
 
-    const router = useRouter();
     const [currentPath, setCurrentPath] = useState("");
     useEffect(() => {if (window) {setCurrentPath(window.location.protocol + "//" + window.location.hostname)}});
     const [popupVisible, setPopupVisible] = useState(false);
