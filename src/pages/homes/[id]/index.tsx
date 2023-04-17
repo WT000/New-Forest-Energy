@@ -383,11 +383,7 @@ export async function getServerSideProps({ req, res, params }) {
                 },
             };
         }
-        /**
-         * TODO: Role specific info?
-         * TODO: QR code & Edit Home tiles 
-         */
-        
+
         return {
             props: {
                 home: ToSeriableHome(h),
