@@ -1,5 +1,5 @@
 interface BookingLayoutProps {
-	cost: number;
+	cost: string;
 	duration: number;
 	dateRange: string;
 }
@@ -14,7 +14,7 @@ export default function BookingLayout(props: BookingLayoutProps) {
 
 	return (
 		<div className="grid grid-rows-3 text-white-100 w-full">
-			<div className="text-lg md:text-[22px]">£{cost}</div>
+			<div className="text-lg md:text-[22px]">{cost}</div>
 			<div></div>
 			<div>
 				<p className="text-[10px] md:text-xs">
