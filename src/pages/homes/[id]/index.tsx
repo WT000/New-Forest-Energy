@@ -254,15 +254,7 @@ export async function getServerSideProps({ req, res, params }) {
             const cost = await b.calculateCost(0);
             return {id: booking._id.toString(), cost};
         })).then((y) => {return y;})
-
-        // const results = await Promise.all(bookings.map(async booking => {      
-        //     const b = new Booking(booking);
-        //     let bookingResult = await b.calculateCost(0).then((cost) => {
-        //         return cost
-        //     }).then((x) => {return x;})
-        //     return {bookingResult}
-        // })).then((y) => {return y;})
-        
+      
         if (userRole === Role.Guest) {
             return {
                 redirect: {
