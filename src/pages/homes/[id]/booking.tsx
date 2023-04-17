@@ -112,7 +112,7 @@ export async function getServerSideProps(context) {
 
     const role = getRole(session, home);
 
-    if (role !== Role.Agency && role !== Role.Homeowner) {
+    if (role !== Role.Agency) {
         return {
             redirect: {
                 destination: "/",

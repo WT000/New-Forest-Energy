@@ -33,7 +33,6 @@ import Notification from "../../../components/Notification/Notifications";
 import Popup from "../../../components/Popup/Popup";
 import QRCode from "../../../components/QRCode/QRCode";
 import ReadingPopup from "../../../components/layouts/ReadingPopupLayout/ReadingPopupLayout";
-import { useRouter } from "next/router";
 
 function displayCost(cost) {
     let costString = "0"
@@ -52,7 +51,6 @@ export default function Index(props) {
     const delegates = props.delegates ? JSON.parse(props.delegates) : null;
     const home = props.home;
 
-    const router = useRouter();
     const [currentPath, setCurrentPath] = useState("");
     useEffect(() => {if (window) {setCurrentPath(window.location.protocol + "//" + window.location.hostname)}});
     const [popupVisible, setPopupVisible] = useState(false);

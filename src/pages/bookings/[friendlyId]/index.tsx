@@ -122,12 +122,14 @@ export default function Index(props) {
                     <div className="md:w-[42%] my-10 ">
                         {props?.userRole != Role.Guest && (
                             <div className="flex justify-between mb-8 md:mb-11">
-                            <Tile tileType={TileType.link} 
+                            {props?.userRole == Role.Agency && (
+                                <Tile tileType={TileType.link} 
                                 children={<CompactLayout 
                                 icon={<IoCreate size="34px"/>}
                                 textLine1="Edit Booking"
                                 textLine2="Details"></CompactLayout>} 
                                 clickable={true} onClick={() => router.push(`/bookings/${props?.booking?.friendlyId}/edit`)}></Tile>
+                            )}
                             <Tile tileType={TileType.link} 
                                 children={<CompactLayout 
                                 icon={<IoShareSocial size="34px"/>}
