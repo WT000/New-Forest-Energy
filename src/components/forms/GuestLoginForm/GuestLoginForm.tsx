@@ -31,6 +31,7 @@ export default function GuestLoginForm(props: GuestLoginFormProps) {
     const { onSubmit, bookingFinder, autoBooking } = props;
 
     const {
+        setFocus,
         register,
         handleSubmit,
         setValue,
@@ -47,7 +48,7 @@ export default function GuestLoginForm(props: GuestLoginFormProps) {
 
     return (
         <div className="space-y-6">
-            <Tile tileType={TileType.input} clickable={false}>
+            <Tile tileType={TileType.input} clickable={false} focus={() =>setFocus("friendlyId")}>
                 <InputLayout
                     icon={<IoLockClosed size="32px" />}
                     text={"Booking ID"}
