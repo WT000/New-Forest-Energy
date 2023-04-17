@@ -11,11 +11,25 @@ export interface BookingInterface {
 	isDeleted: Boolean;
 	createdAt: Date;
 	updatedAt: Date;
-	calculateCost?: (cb: any) => object;
+	calculateCost?: (cb: any) => {
+		totalCost;
+		totalCostMinusBuffer;
+		totalUsage;
+		readings;
+		totalDays;
+		cb;
+	};
 }
 
 export interface BookingMethods {
-	calculateCost(cb: any): object;
+	calculateCost(cb: any): {
+		totalCost;
+		totalCostMinusBuffer;
+		totalUsage;
+		readings;
+		totalDays;
+		cb;
+	};
 }
 
 type BookingModel = Model<BookingInterface, {}, BookingMethods>;
@@ -126,7 +140,14 @@ bookingSchema.method("calculateCost", async function calculateCost(cb) {
 		}
 	}
 
-	return { totalCost, totalCostMinusBuffer, cb };
+	return {
+		totalCost,
+		totalCostMinusBuffer,
+		totalUsage,
+		readings,
+		totalDays,
+		cb,
+	};
 });
 
 export default (models.Booking as Model<BookingInterface>) ||
