@@ -20,7 +20,7 @@ export default async function handler(req, res) {
         if (req.method === "PUT") {
             await dbConnect();
 
-            const deletedHome = await Home.findOneAndUpdate({_id: id}, {isDeleted: false})
+            const deletedHome = await Home.findOneAndUpdate({_id: id}, {isDeleted: { $ne: true }})
 
             return res.json({home: deletedHome})
           }
