@@ -2,6 +2,9 @@ import dbConnect from "../../../db/dbcon/dbcon";
 import { useSession } from "next-auth/react";
 import { authOptions } from "../../api/auth/[...nextauth]";
 import { getServerSession } from "next-auth/next";
+import { useRouter } from "next/router";
+import { Toaster } from "react-hot-toast";
+import React, { useEffect, useState } from "react";
 
 import Booking from "../../../db/models/Booking";
 import Home, { HomeInterface } from "../../../db/models/Home";
@@ -26,8 +29,10 @@ import BookingLayout from "../../../components/layouts/BookingLayout/BookingLayo
 import DelegatesList from "../../../components/DelegatesList/DelegatesList";
 import DelegatesListItem from "../../../components/DelegatesListItem/DelegatesListItem";
 import Tile, { TileType } from "../../../components/Tile/Tile";
-import { Toaster } from "react-hot-toast";
 import Notification from "../../../components/Notification/Notifications";
+import Popup from "../../../components/Popup/Popup";
+import QRCode from "../../../components/QRCode/QRCode";
+import ReadingPopup from "../../../components/layouts/ReadingPopupLayout/ReadingPopupLayout";
 import { useRouter } from "next/router";
 
 function displayCost(cost) {
@@ -60,6 +65,14 @@ export default function Index(props) {
 
     // const startDate = getDayMonth(new Date(props?.booking?.startDateTime));
     // const endDate = getDayMonth(new Date(props?.booking?.endDateTime), true);
+    const router = useRouter();
+    const [currentPath, setCurrentPath] = useState("");
+    useEffect(() => {if (window) {setCurrentPath(window.location.protocol + "//" + window.location.hostname)}});
+    const [popupVisible, setPopupVisible] = useState(false);
+    const [popupData, setPopupData] = useState({
+        text: "",
+    });
+    
     const ascendingDates = [...readings];
     sortDatesAscending(ascendingDates)
 
@@ -144,21 +157,33 @@ export default function Index(props) {
             welcomeText={`Welcome to, ${props?.home?.name}`}
             welcomeImage={props?.home?.image}
             currentPage='Dashboard'>
+                {popupVisible && (
+                <Popup onClick={() => setPopupVisible(!popupVisible)}>
+                    <QRCode text={popupData.text} />
+                </Popup>
+                )}
                 <div className="md:flex md:justify-between ">
                     <div className="md:w-[42%] my-10 ">
-                        <div className="md:flex md:justify-between mb-11">
+                        <div className="flex justify-between mb-8 md:mb-11">
                             <Tile tileType={TileType.link} 
                                 children={<CompactLayout 
                                 icon={<IoCreateSharp size="34px"/>}
                                 textLine1="Edit Home"
                                 textLine2="Details"></CompactLayout>} 
-                                clickable={true} onClick={() => router.push(`/homes/${props?.home?._id}/edit`)}></Tile>
+                                clickable={true} onClick={() => router.push(`/homes/${home._id}/edit`)}>
+                            </Tile>
                             <Tile tileType={TileType.link} 
                                 children={<CompactLayout 
                                 icon={<IoQrCode size="34px"/>}
                                 textLine1="Print"
                                 textLine2="QR Code"></CompactLayout>} 
-                                clickable={true} onClick={() => console.log("clicked")}></Tile>
+                                clickable={true} onClick={() => {
+                                    setPopupVisible(!popupVisible);
+                                    setPopupData({
+                                        text: `${currentPath}/auth/guest?name=${home.name}`
+                                    })
+                                }}>
+                            </Tile>
                         </div>
                         <div className="">
                             <ProgressBar num1={props?.home.energyBuffer} num2={props?.averagePerDay}
