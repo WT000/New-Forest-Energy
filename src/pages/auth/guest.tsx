@@ -6,14 +6,16 @@ import Link from "next/link";
 
 export default function GuestLogin(props) {
     const router = useRouter();
-    const {booking} = router.query;
+    const { booking, name } = router.query;
+
+    let page = "Guest Login"
+    if(name) { page = `Guest Login for ${name}`}
 
     return (
          <BodyWithoutNavbar
-                currentPage="Guest Login"
+                currentPage={page}
                 welcomeText="Please Sign In">
                 <Link href="/auth/signin" className=" text-sm font-light text-black-500 hover:text-black cursor-pointer">Sign in as Owner/Delegate here.</Link>
-
 
                 <GuestLoginForm
                     onSubmit={async (friendlyId) => {
