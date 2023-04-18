@@ -128,7 +128,7 @@ export async function getServerSideProps(context) {
     // @ts-ignore
     const role = getRole(session, booking?.home);
     
-    if ((role !== Role.Agency && role !== Role.Homeowner) || !booking || !booking.home) {
+    if ((role !== Role.Agency) || !booking || !booking.home) {
         return {
             redirect: {
                 destination: "/",
