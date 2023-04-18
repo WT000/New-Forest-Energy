@@ -50,7 +50,18 @@ export default function Index(props) {
     const bookings = props.bookings ? JSON.parse(props.bookings) : null;
     const bookingCosts = props.bookingCosts ? JSON.parse(props.bookingCosts) : null;
     const delegates = props.delegates ? JSON.parse(props.delegates) : null;
+    const delegateReadingCount = props.delegateCounts ? Object.assign({}, ...(JSON.parse(props.delegateCounts).map(item => ({ [item._id]: item }) ))) : null;
     const home = props.home;
+
+    // Would be better to build a big aggregate query in the future that'll have this information with the delegate
+    // However, as we're limited on time, this works as a proof of concept
+    delegates?.forEach(delegate => {
+        if (delegateReadingCount.hasOwnProperty(delegate._id)) {
+            delegate["readingCount"] = delegateReadingCount[delegate._id].count;
+        } else {
+            delegate["readingCount"] = 0;
+        }
+    });
 
     const [currentPath, setCurrentPath] = useState("");
     useEffect(() => {if (window) {setCurrentPath(window.location.protocol + "//" + window.location.hostname)}});
@@ -58,7 +69,7 @@ export default function Index(props) {
     const [popupData, setPopupData] = useState({
         text: "",
     });
-
+    
     const ascendingDates = [...readings];
     sortDatesAscending(ascendingDates)
 
@@ -88,8 +99,8 @@ export default function Index(props) {
 
     let delegateItems = []
     delegates.map((item, index) => {
-        let interactive = { onClick: () => {console.log("Clicked!");}, text: "Undo" }
-        delegateItems.push(<DelegatesListItem key={index} image={item.image} username={item.name} onClick={Notification({text: "Delegate removed.", icon: <IoClose />, interactive: interactive })}></DelegatesListItem>)
+        let interactive = { onClick: () => {console.log("Clicked!");}}
+        delegateItems.push(<DelegatesListItem key={index} image={item.image} username={item.name} onClick={Notification({text: `${item.name} (${item.email}) has left ${item.readingCount} reading${item.readingCount !== 1 ? "s" : ""}.`, icon: <IoClose />, interactive: interactive })}></DelegatesListItem>)
     })
 
     const stats = [
@@ -230,7 +241,7 @@ export default function Index(props) {
                     <div className="mt-14 md:mt-0 md:w-[42%]">
                         <Subtitle text1="Delegates" showbar={true}/>
                         <div className="mt-3">                            
-                            <DelegatesList children={delegateItems} onClick={null}></DelegatesList>
+                            <DelegatesList children={delegateItems} onClick={() => router.push(`/homes/${props?.home?._id}/edit`)}></DelegatesList>
                             <Toaster></Toaster>
                             {/* TODO: Horizontal Infinite Scroll */}
                         </div>
@@ -313,7 +324,6 @@ export async function getServerSideProps({ req, res, params }) {
             const cost = await b.calculateCost(0);
             return {id: booking._id.toString(), cost};
         })).then((y) => {return y;})
-    
 
         // Daily Average    
         let averagePerDay = 0;
@@ -324,6 +334,20 @@ export async function getServerSideProps({ req, res, params }) {
             averagePerDay = (Number(lastReading.value) - Number(firstReading.value)) / daysElapsed;
         }
 
+        const delegateReadingCount = await Reading.aggregate([
+            {
+                $match: {
+                    home: h._id
+                }
+            },
+            {
+                $group: {
+                    _id: "$user",
+                    count: { $sum: 1 }
+                }
+            },
+        ])
+    
         // Comparison to last month
         const today = new Date()
         const thisMonthReadings = readings.filter(reading => reading.createdAt.getUTCMonth() == today.getUTCMonth() && reading.createdAt.getUTCFullYear() == today.getUTCFullYear())
@@ -390,6 +414,7 @@ export async function getServerSideProps({ req, res, params }) {
                 readings: JSON.stringify(readings),
                 bookings: JSON.stringify(bookings),
                 delegates: JSON.stringify(delegates),
+                delegateCounts: JSON.stringify(delegateReadingCount),
                 userRole: userRole,
                 averagePerDay: averagePerDay ?? 0.00,
                 bookingCosts: JSON.stringify(bookingCosts),

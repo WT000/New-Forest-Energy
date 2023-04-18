@@ -20,7 +20,7 @@ function display(text: string, editable: boolean, register?: UseFormRegister<Hom
         }
         return (
             <textarea
-                className="h-32 placeholder:text-black text-xs w-full md:text-base bg-transparent
+                className="h-20 placeholder:text-black text-xs w-full md:text-base bg-transparent
                     file:border-none file:bg-transparent file:cursor-pointer resize-none"
                 name="energyInstructions"
                 placeholder={placeholder}
