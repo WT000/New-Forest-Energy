@@ -10,10 +10,11 @@ interface NavbarMenuItemProps {
   text: string;
   path?: string;
   activePage: boolean;
+  instructionstext?: string;
 }
 
 export default function NavbarMenuItem(props: NavbarMenuItemProps) {
-  const { icon, text, path, activePage } = props;
+  const { icon, text, path, activePage, instructionstext } = props;
 
   let textFormat = "text-black-500";
   if (activePage) {
@@ -40,7 +41,7 @@ export default function NavbarMenuItem(props: NavbarMenuItemProps) {
 
             <Tile tileType={TileType.box} clickable={false}>
 
-                <InstructionsLayout text={"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla hendrerit magna a quam hendrerit, ut accumsan sem tempor. Phasellus mollis feugiat lectus non viverra. Pellentesque aliquet, lacus dignissim imperdiet suscipit, nisi sem egestas erat, vel consequat nisl leo eu tortor. Suspendisse tristique nibh fringilla porttitor tincidunt. Integer efficitur enim ut egestas tincidunt. Duis fermentum diam ut libero maximus dapibus. Phasellus ac nibh et justo lobortis tristique a sit amet massa. Aliquam euismod sapien non est bibendum tristique. Pellentesque vestibulum condimentum mauris, iaculis vestibulum dolor finibus id."} editable={false}></InstructionsLayout>
+                <InstructionsLayout text={instructionstext} editable={false}></InstructionsLayout>
             </Tile>
           </InstructionsPopup>
         )}

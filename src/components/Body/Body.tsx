@@ -11,6 +11,7 @@ import Stats from "../Stats/Stats";
 import Button from "../Button/Button";
 
 export interface BodyNavItem{
+    instructionstext?: string;
     icon: React.ReactElement,
     text: string,
     path?: string,
@@ -34,7 +35,7 @@ interface BodyProps{
 export default function Body(props: BodyProps){
 
     const menuItems = props.menuItems.map(x => {
-        return (<NavbarMenuItem key={x.path} icon={x.icon} text={x.text} activePage={x.activePage == true} path={x.path}/>)
+        return (<NavbarMenuItem key={x.path} icon={x.icon} text={x.text} activePage={x.activePage == true} path={x.path} instructionstext={x.instructionstext}/>)
     })
 
     const navBarStats = props.statItems.map(x => {
