@@ -1,7 +1,9 @@
 import Link from "next/link";
 import ReadingPopup, { InsructionsPopup } from "../../layouts/ReadingPopupLayout/ReadingPopupLayout";
-import Popup from "../../Popup/Popup";
+import Popup, { InstructionsPopup } from "../../Popup/Popup";
 import React, { useEffect, useState } from "react";
+import InstructionsLayout from "../../layouts/InstructionsLayout/InstructionsLayout";
+import Tile, { TileType } from "../../Tile/Tile";
 
 interface NavbarMenuItemProps {
   icon: React.ReactElement;
@@ -34,11 +36,13 @@ export default function NavbarMenuItem(props: NavbarMenuItemProps) {
     return (
       <div>
         {popupVisible && (
-          <Popup onClick={() => setPopupVisible(!popupVisible)}>
-            <InsructionsPopup
-              text={"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla hendrerit magna a quam hendrerit, ut accumsan sem tempor. Phasellus mollis feugiat lectus non viverra. Pellentesque aliquet, lacus dignissim imperdiet suscipit, nisi sem egestas erat, vel consequat nisl leo eu tortor. Suspendisse tristique nibh fringilla porttitor tincidunt. Integer efficitur enim ut egestas tincidunt. Duis fermentum diam ut libero maximus dapibus. Phasellus ac nibh et justo lobortis tristique a sit amet massa. Aliquam euismod sapien non est bibendum tristique. Pellentesque vestibulum condimentum mauris, iaculis vestibulum dolor finibus id."}
-            />
-          </Popup>
+          <InstructionsPopup onClick={() => setPopupVisible(!popupVisible)}>
+
+            <Tile tileType={TileType.box} clickable={false}>
+
+                <InstructionsLayout text={"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla hendrerit magna a quam hendrerit, ut accumsan sem tempor. Phasellus mollis feugiat lectus non viverra. Pellentesque aliquet, lacus dignissim imperdiet suscipit, nisi sem egestas erat, vel consequat nisl leo eu tortor. Suspendisse tristique nibh fringilla porttitor tincidunt. Integer efficitur enim ut egestas tincidunt. Duis fermentum diam ut libero maximus dapibus. Phasellus ac nibh et justo lobortis tristique a sit amet massa. Aliquam euismod sapien non est bibendum tristique. Pellentesque vestibulum condimentum mauris, iaculis vestibulum dolor finibus id."} editable={false}></InstructionsLayout>
+            </Tile>
+          </InstructionsPopup>
         )}
 
         <div
