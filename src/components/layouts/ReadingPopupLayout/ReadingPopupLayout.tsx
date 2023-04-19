@@ -62,34 +62,4 @@ export default function ReadingPopup(props: ReadingPopupProps) {
 }
 
 
-export function InsructionsPopup(props: InsructionsPopupProps) {
-    const { text } = props;
 
-    // var hourValue = date.getHours();
-    // var prefix = "";
-
-    // if(hourValue >= 12){
-    //   prefix = "PM";
-    // } else {
-    //   prefix = "AM";
-    // }
-
-    // time = time + prefix
-
-    // var dayMonthYear = `${date.getDate()} ${date.toLocaleString("default", {
-    //   month: "long",
-    // })} ${date.getFullYear()}`;
-
-    // var dateValue = date.getDay
-    // if(dateValue ){
-
-    // }
-
-    return (
-        <div className="relative  rounded-lg ">
-            <div className="p-6 space-y-6">
-            <p className="text-s font-semibold text-white pt-1 pr-6">{text}</p>
-            </div>
-        </div>
-    );
-}

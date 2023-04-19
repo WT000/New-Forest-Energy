@@ -134,19 +134,9 @@ export default function Index(props) {
         {
             icon: <IoList />,
             text: "Instructions",
-            instructionstext: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
-            onClick: () => {
+            path: "",
+            instructionstext: home.energyInstructions,
 
-                            popupVisible && (
-                                <Popup onClick={() => setPopupVisible(!popupVisible)}>
-                                    <QRCode text={popupData.text} />
-                                </Popup>
-                                )
-                                setPopupVisible(!popupVisible);
-                                setPopupData({
-                                text: `${currentPath}/auth/guest?name=${home.name}`
-                                    })
-                                }
         },
         {
             icon: <IoLogOut />,
