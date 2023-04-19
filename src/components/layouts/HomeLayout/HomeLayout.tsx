@@ -34,7 +34,7 @@ export default function HomeLayout(props: HomeLayoutProps) {
             </div>
             <div className="flex items-center justify-center">
                 <div className="w-[90%]">
-                    <p className="text-lg md:text-base">{name}</p>
+                    <p className="text-lg md:text-base overflow-hidden overflow-ellipsis">{name}</p>
                     <p className="text-sm md:text-xs text-black-500">Sleeps: {sleeps}</p>
                 </div>
             </div>
