@@ -1,6 +1,5 @@
 import Link from "next/link";
-import ReadingPopup, { InsructionsPopup } from "../../layouts/ReadingPopupLayout/ReadingPopupLayout";
-import Popup, { InstructionsPopup } from "../../Popup/Popup";
+import { InstructionsPopup } from "../../Popup/Popup";
 import React, { useEffect, useState } from "react";
 import InstructionsLayout from "../../layouts/InstructionsLayout/InstructionsLayout";
 import Tile, { TileType } from "../../Tile/Tile";
