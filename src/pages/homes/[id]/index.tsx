@@ -134,7 +134,19 @@ export default function Index(props) {
         {
             icon: <IoList />,
             text: "Instructions",
-            path: "/homes/" + home._id + "/instructions"
+            path: "/homes/" + home._id,
+            onClick: () => {
+
+                            popupVisible && (
+                                <Popup onClick={() => setPopupVisible(!popupVisible)}>
+                                    <QRCode text={popupData.text} />
+                                </Popup>
+                                )
+                                setPopupVisible(!popupVisible);
+                                setPopupData({
+                                text: `${currentPath}/auth/guest?name=${home.name}`
+                                    })
+                                }
         },
         {
             icon: <IoLogOut />,

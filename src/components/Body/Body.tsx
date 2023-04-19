@@ -8,11 +8,12 @@ import Image from 'next/image';
 import NavbarStats from '../Stats/Stats'
 import Card, { CardType } from "../Card/Card";
 import Stats from "../Stats/Stats";
+import Button from "../Button/Button";
 
 export interface BodyNavItem{
     icon: React.ReactElement,
     text: string,
-    path: string,
+    path?: string,
     activePage?: boolean
 }
 
