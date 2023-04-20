@@ -1,5 +1,5 @@
 import dbConnect from "../../db/dbcon/dbcon";
-import { getServerSession } from "next-auth/next";
+import { getServerSession } from "../../hooks/getServerSession";
 import { authOptions } from "./auth/[...nextauth]";
 import User from "../../db/models/User";
 import Home from "../../db/models/Home";

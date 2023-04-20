@@ -1,4 +1,4 @@
-import { getServerSession } from "next-auth/next";
+import { getServerSession } from "../../hooks/getServerSession";
 import { authOptions } from "../api/auth/[...nextauth]";
 import { IoHome, IoLogOut } from "react-icons/io5";
 import Body from "../../components/Body/Body";

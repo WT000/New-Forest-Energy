@@ -1,6 +1,6 @@
 import dbConnect from "../../../db/dbcon/dbcon";
 import { authOptions } from "../../api/auth/[...nextauth]";
-import { getServerSession } from "next-auth/next";
+import { getServerSession } from "../../../hooks/getServerSession";
 import { Toaster } from "react-hot-toast";
 import React, { useEffect, useState } from "react";
 

@@ -1,8 +1,8 @@
 // @ts-nocheck
-import { getServerSession } from "next-auth/next";
+import { getServerSession } from "../../hooks/getServerSession";
 import Head from "next/head";
 import { authOptions } from "../api/auth/[...nextauth]";
-import { useSession } from "next-auth/react";
+import { useSession } from "../../hooks/useSession";
 import { UserInterface } from "../../db/models/User";
 import { HomeInterface } from "../../db/models/Home";
 import getRole from "../../lib/utils/getRole";
