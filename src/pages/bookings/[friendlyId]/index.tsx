@@ -113,11 +113,13 @@ export default function Index(props) {
         notification();
     }
 
+    const homeLink = (props?.userRole === Role.Agency ||  props?.userRole === Role.Homeowner || props?.userRole === Role.Delegate) ? `/homes/${props?.booking?.home?._id}` : null
+
     return (
         <Body menuItems={navItems} statItems={stats} 
             welcomeText={`Welcome to, ${props?.booking?.home.name}`}
             welcomeImage={props?.booking?.home?.image}
-            currentPage={`Booking (${startDate} - ${endDate})`}>
+            currentPage={`Booking (${startDate} - ${endDate})`} homeLink={homeLink}>
                 <div className="md:flex md:justify-between ">
                     <div className="md:w-[42%] my-10 ">
                         {props?.userRole != Role.Guest && (

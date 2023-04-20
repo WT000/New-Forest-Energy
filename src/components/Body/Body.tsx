@@ -28,6 +28,7 @@ interface BodyProps{
     welcomeText: string
     welcomeImage: string
     currentPage: string
+    homeLink?: string
 }
 
 export default function Body(props: BodyProps){
@@ -65,6 +66,7 @@ export default function Body(props: BodyProps){
                     {menuItems}
                 </NavbarMenu>  
                 }
+            homeLink={props.homeLink}
             >
                 {navBarStats}
             </DesktopNavbar>
@@ -73,6 +75,7 @@ export default function Body(props: BodyProps){
                 text={props.welcomeText}
                 image={props.welcomeImage}
                 currentPage={props.currentPage}
+                homeLink={props.homeLink}
             />
 
             <div className="hidden md:block h-32 overflow-clip">

@@ -1,10 +1,12 @@
 import Image from "next/image"
+import Link from "next/link";
 
 interface DesktopNavbarProps {
     text: string;
     image: string;
     menu: React.ReactNode;
     children: React.ReactNode;
+    homeLink?: string
 }
 
 export default function DesktopNavbar(props: DesktopNavbarProps) {
@@ -32,14 +34,29 @@ export default function DesktopNavbar(props: DesktopNavbarProps) {
                 />
                 <div className="m-auto">
                     <div className="flex items-center justify-center pb-1">
-                        <Image
-                            className="rounded-full h-24 w-24"
-                            src={image}
-                            alt="Profile Picture"
-                            width={193}
-                            height={108}
-                            unoptimized={true}
-                        />
+
+                        {props.homeLink ? (
+                                <Link href={props.homeLink} className="cursor-pointer">
+                                    <Image
+                                        className="rounded-full h-24 w-24"
+                                        src={image}
+                                        alt="Profile Picture"
+                                        width={193}
+                                        height={108}
+                                        unoptimized={true}
+                                    />      
+                                </Link>
+                            ) : (
+                                <Image
+                                className="rounded-full h-24 w-24"
+                                src={image}
+                                alt="Profile Picture"
+                                width={193}
+                                height={108}
+                                unoptimized={true}
+                            />
+                        )}
+                        
                     </div>
                 </div>
                 <div className="text-center overflow-clip overflow-ellipsis">

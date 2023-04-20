@@ -21,6 +21,7 @@ import { ToSeriableHome } from "../../lib/utils/json";
 import { useEffect, useRef, useState } from "react";
 import { Toaster } from "react-hot-toast";
 import { useExtendedState } from "../../lib/utils/react";
+import Role from "../../lib/utils/roles";
 
 export default function AllHomes(props){
 
@@ -145,6 +146,11 @@ export async function getServerSideProps({ req, res, params }) {
     const isAgency = session?.user?.isAgency == true;
     const userId = session?.user?.id ?? "";
 
+
+    if (userId === "") {
+        return redirectToSignin();
+    }
+
     try{
         // This will error with a "arguments passed in must be..." message, this is because userId doesn't exist!
         // It still works as intended (as this error will only occur for signed out users, giving them a 404 page), but we may want to redirect
@@ -154,6 +160,14 @@ export async function getServerSideProps({ req, res, params }) {
         const homesTask = Home.find(filter);
 
         const homeCountTask = Home.count(filter);
+
+        const homeCount = await homeCountTask
+
+        if(!isAgency && homeCount <= 0){
+            return redirectToSignin();
+        }
+
+        const userRole = getRole(session);
 
         const homes = await homesTask;
 
@@ -175,11 +189,10 @@ export async function getServerSideProps({ req, res, params }) {
                 }
         });
 
-
         return {
             props: {
                 stats: {
-                    homes: (await homeCountTask).toString(),
+                    homes: homeCount.toString(),
                     bookingsLast3Months: (await bookingsLast3MonthsTask).toString(),
                     bookingsLast12Months: (await bookingsLast12MonthsTask).toString()
                 },
@@ -194,4 +207,14 @@ export async function getServerSideProps({ req, res, params }) {
             notFound: true,
         };
     }
+}
+
+
+function redirectToSignin(){
+    return {
+        redirect: {
+            destination: "/auth/signin",
+            permanent: false,
+        },
+    };
 }

@@ -122,3 +122,12 @@ export default function Home() {
     </>
   )
 }
+
+export async function getServerSideProps({ req, res, params }) {
+  return {
+    redirect: {
+        destination: "/homes",
+        permanent: true,
+    },
+};
+}

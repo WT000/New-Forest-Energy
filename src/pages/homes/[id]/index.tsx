@@ -334,6 +334,10 @@ export async function getServerSideProps({ req, res, params }) {
             averagePerDay = (Number(lastReading.value) - Number(firstReading.value)) / daysElapsed;
         }
 
+        const bookings = await Booking.find({home: h._id, isDeleted: { $ne: true }}).sort({"createdAt": -1}).lean()
+
+        const delegates = h.delegates;       
+        const userRole = getRole(session, hNoDelegates);
         const delegateReadingCount = await Reading.aggregate([
             {
                 $match: {
