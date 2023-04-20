@@ -45,8 +45,6 @@ function displayCost(cost) {
 
 export default function Index(props) {
     const router = useRouter();
-
-    console.log("input props", props)
     
     const readings = props.readings ? JSON.parse(props.readings) : null;
     const bookings = props.bookings ? JSON.parse(props.bookings) : null;
@@ -418,8 +416,6 @@ export async function getServerSideProps({ req, res, params }) {
                 },
             };
         }
-
-        console.log("home props", otherHomesPercentageDiff, lastMonthComparison)
 
         return {
             props: {
