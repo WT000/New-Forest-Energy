@@ -24,14 +24,17 @@ export default function DesktopNavbar(props: DesktopNavbarProps) {
     return (
         <div className="fixed left-0 top-0 bg-white-100 hidden md:flex md:flex-col w-[260px] min-h-[calc(100%-2rem)] m-4 rounded-[20px] shadow-[0_4px_100px_rgba(0,0,0,0.1)] p-9 z-10">
             <div>
-                <Image
-                    className="m-auto pb-12"
-                    src="/logo.png"
-                    alt="Logo"
-                    width={120}
-                    height={31}
-                    unoptimized={true}
-                />
+                <Link href={"/"}>
+                    <Image
+                        className="m-auto pb-12"
+                        src="/logo.png"
+                        alt="Logo"
+                        width={120}
+                        height={31}
+                        unoptimized={true}
+                    />
+                </Link>
+
                 <div className="m-auto">
                     <div className="flex items-center justify-center pb-1">
 
