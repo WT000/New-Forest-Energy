@@ -126,16 +126,14 @@ bookingSchema.method("calculateCost", async function calculateCost(cb) {
 	let totalUsage = 0;
 	let totalCost = 0;
 	let totalCostMinusBuffer = 0;
-	let totalDays = 0;
-	let totalBuffer = 0
+	const totalDays =
+		dateDiffInDays(
+			this.startDateTime,
+			this.endDateTime
+		) || 1;
+	const totalBuffer = totalDays * this.home.energyBuffer;
 	if (readings.length > 1) {
 		totalUsage = readings[readings.length - 1].value - readings[0].value;
-		totalDays =
-			dateDiffInDays(
-				readings[readings.length - 1].createdAt,
-				readings[0].createdAt
-			) || 1;
-		totalBuffer = totalDays * this.home.energyBuffer;
 		//@ts-ignore
 		totalCost = totalUsage * this.home.energyTariff;
 		//@ts-ignore

@@ -216,7 +216,7 @@ export async function getServerSideProps({ req, res, params }) {
         const totalUsage = cost.totalUsage;
         const readings = cost.readings;
         const totalDays = cost.totalDays;
-        
+
         //@ts-ignore
         const userRole = getRole(session, b.home)
         
