@@ -1,9 +1,8 @@
 import dbConnect from "../../../db/dbcon/dbcon";
-import { useSession } from "next-auth/react";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import { authOptions } from "../../api/auth/[...nextauth]";
-import { getServerSession } from "next-auth/next";
+import { getServerSession } from "../../../hooks/getServerSession";
 import { Toaster } from "react-hot-toast";
 
 import Booking from "../../../db/models/Booking";

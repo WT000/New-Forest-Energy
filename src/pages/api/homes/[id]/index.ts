@@ -1,4 +1,4 @@
-import { getServerSession } from "next-auth/next";
+import { getServerSession } from "../../../../hooks/getServerSession";
 import { authOptions } from "../../auth/[...nextauth]";
 import dbConnect from "../../../../db/dbcon/dbcon";
 import Home from "../../../../db/models/Home";

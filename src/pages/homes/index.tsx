@@ -1,4 +1,4 @@
-import { useSession } from "next-auth/react";
+import { useSession } from "../../hooks/useSession";
 import { authOptions } from "../api/auth/[...nextauth]";
 import Body from "../../components/Body/Body";
 import getRole from "../../lib/utils/getRole";
@@ -13,7 +13,7 @@ import Image from "next/image";
 import InputLayout from "../../components/layouts/InputLayout/InputLayout";
 import HomeLayout from "../../components/layouts/HomeLayout/HomeLayout";
 import Link from "next/link";
-import { getServerSession } from "next-auth/next";
+import { getServerSession } from "../../hooks/getServerSession";
 import mongoose, { set } from "mongoose";
 import Booking from "../../db/models/Booking";
 import { ToSeriableHome } from "../../lib/utils/json";
