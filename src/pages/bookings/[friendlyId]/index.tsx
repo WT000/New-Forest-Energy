@@ -36,9 +36,6 @@ function displayCost(cost) {
     return costString
 }
 
-
-// TO DO - UPDATE LINKS
-
 export default function Index(props) {
     const router = useRouter();
     const [currentPath, setCurrentPath] = useState("");
@@ -156,7 +153,7 @@ export default function Index(props) {
                             </div>
                         )}
                         <div className="">
-                            <ProgressBar num1={props?.booking?.home.energyBuffer} num2={props?.totalCost}
+                            <ProgressBar num1={props?.totalBuffer} num2={props?.totalCost}
                                 text1="Total Cost" text2="Buffer" />
                         </div>
                         <div className="mt-10 md:mt-16 mb-8">
@@ -219,9 +216,6 @@ export async function getServerSideProps({ req, res, params }) {
         const totalUsage = cost.totalUsage;
         const readings = cost.readings;
         const totalDays = cost.totalDays;
-
-        console.log(totalDays)
-        console.log(totalBuffer)
         
         //@ts-ignore
         const userRole = getRole(session, b.home)
@@ -256,6 +250,7 @@ export async function getServerSideProps({ req, res, params }) {
                 userRole: userRole,
                 totalUsage: totalUsage,
                 totalCost: totalCost,
+                totalBuffer: totalBuffer,
                 totalCostMinusBuffer: totalCostMinusBuffer,
                 otherGuestsComparison : isNaN(otherGuestsPercentageDiff) ? 0 : otherGuestsPercentageDiff,
                 similarHomesComparison: isNaN(similarHomesPercentageDiff) ? 0 : similarHomesPercentageDiff
