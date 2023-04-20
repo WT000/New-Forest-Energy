@@ -208,6 +208,7 @@ export default function Index(props) {
                             <ProgressBar num1={props?.home.energyBuffer} num2={props?.averagePerDay}
                                 text1="Average per Day" text2="Buffer" />
                         </div>
+                        {props.otherHomesComparison !== null && props.lastMonthComparison !== null ?
                         <div className="mt-10 md:mt-16 mb-8">
                             <div className="flex justify-between">
                                 {props.otherHomesComparison !== null && (
@@ -227,7 +228,7 @@ export default function Index(props) {
                                     </Card>
                                 )}
                             </div>
-                        </div>
+                        </div> : <div className="mt-2"/>}
                     </div>
                     <div className="md:w-[42%] md:flex" >
                         <div className="w-full">
