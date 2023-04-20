@@ -45,6 +45,8 @@ function displayCost(cost) {
 
 export default function Index(props) {
     const router = useRouter();
+
+    console.log("input props", props)
     
     const readings = props.readings ? JSON.parse(props.readings) : null;
     const bookings = props.bookings ? JSON.parse(props.bookings) : null;
@@ -208,7 +210,7 @@ export default function Index(props) {
                             <ProgressBar num1={props?.home.energyBuffer} num2={props?.averagePerDay}
                                 text1="Average per Day" text2="Buffer" />
                         </div>
-                        {props.otherHomesComparison !== null && props.lastMonthComparison !== null ?
+                        {props.otherHomesComparison !== null || props.lastMonthComparison !== null ?
                         <div className="mt-10 md:mt-16 mb-8">
                             <div className="flex justify-between">
                                 {props.otherHomesComparison !== null && (
@@ -416,6 +418,8 @@ export async function getServerSideProps({ req, res, params }) {
                 },
             };
         }
+
+        console.log("home props", otherHomesPercentageDiff, lastMonthComparison)
 
         return {
             props: {
