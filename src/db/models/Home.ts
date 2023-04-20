@@ -5,13 +5,13 @@ export interface HomeInterface {
   owner: mongoose.Schema.Types.ObjectId;
   delegates: [mongoose.Schema.Types.ObjectId];
   name: string;
-  description: string;
-  image: string;
-  numBeds: Number;
+  description?: string;
+  image?: string;
+  numBeds: number;
   energyInstructions: string;
-  energyTariff: Number;
-  energyBuffer: Number;
-  isDeleted: Boolean;
+  energyTariff: number;
+  energyBuffer: number;
+  isDeleted?: Boolean;
   createdAt: Date;
   updatedAt: Date;
 }
@@ -28,12 +28,13 @@ const homeSchema = new Schema<HomeInterface, Model<HomeInterface>>(
         type: mongoose.Schema.Types.ObjectId,
         ref: "User",
         required: true,
+        default: [],
       },
     ],
     name: {
       type: String,
       required: true,
-      minlength: [4, "Home name must be at least 5 characters in length."],
+      minlength: [4, "Home name must be at least 4 characters in length."],
       maxlength: [100, "Home name must not exceed 100 characters."],
     },
     description: {

@@ -1,10 +1,12 @@
 import Image from "next/image"
+import Link from "next/link";
 
 interface DesktopNavbarProps {
     text: string;
     image: string;
     menu: React.ReactNode;
     children: React.ReactNode;
+    homeLink?: string
 }
 
 export default function DesktopNavbar(props: DesktopNavbarProps) {
@@ -13,36 +15,54 @@ export default function DesktopNavbar(props: DesktopNavbarProps) {
     let welcome = text
     let name = ""
 
-    if(text.includes(",")){
+    if(text && text.includes(",")){
         const split = text.split(",");
         welcome = split[0];
         name = split[1]
     }
 
     return (
-        <div className="absolute bg-white-100 hidden md:flex md:flex-col w-[260px] min-h-[calc(100%-2rem)] m-4 rounded-[20px] shadow-[0_4px_100px_rgba(0,0,0,0.1)] p-9 z-10">
+        <div className="fixed left-0 top-0 bg-white-100 hidden md:flex md:flex-col w-[260px] min-h-[calc(100%-2rem)] m-4 rounded-[20px] shadow-[0_4px_100px_rgba(0,0,0,0.1)] p-9 z-10">
             <div>
-                <Image
-                    className="m-auto pb-12"
-                    src="/logo.png"
-                    alt="Logo"
-                    width={120}
-                    height={31}
-                    unoptimized={true}
-                />
+                <Link href={"/"}>
+                    <Image
+                        className="m-auto pb-12"
+                        src="/logo.png"
+                        alt="Logo"
+                        width={120}
+                        height={31}
+                        unoptimized={true}
+                    />
+                </Link>
+
                 <div className="m-auto">
                     <div className="flex items-center justify-center pb-1">
-                        <Image
-                            className="rounded-full h-24 w-24"
-                            src={image}
-                            alt="Profile Picture"
-                            width={193}
-                            height={108}
-                            unoptimized={true}
-                        />
+
+                        {props.homeLink ? (
+                                <Link href={props.homeLink} className="cursor-pointer">
+                                    <Image
+                                        className="rounded-full h-24 w-24"
+                                        src={image}
+                                        alt="Profile Picture"
+                                        width={193}
+                                        height={108}
+                                        unoptimized={true}
+                                    />      
+                                </Link>
+                            ) : (
+                                <Image
+                                className="rounded-full h-24 w-24"
+                                src={image}
+                                alt="Profile Picture"
+                                width={193}
+                                height={108}
+                                unoptimized={true}
+                            />
+                        )}
+                        
                     </div>
                 </div>
-                <div className="text-center">
+                <div className="text-center overflow-clip overflow-ellipsis">
                     <span className="text-sm text-black-500">{welcome},</span><br/>
                     <span className="font-bold text-lg text-black">{name}</span>
                 </div>

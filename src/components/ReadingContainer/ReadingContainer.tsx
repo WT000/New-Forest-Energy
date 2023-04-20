@@ -1,6 +1,9 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Reading from "../Reading/Reading";
 import useInfiniteScroll, { ScrollDirectionBooleanState, ScrollDirection } from "react-easy-infinite-scroll-hook";
+import Popup from "../Popup/Popup";
+import ReadingPopup from "../layouts/ReadingPopupLayout/ReadingPopupLayout";
+import Role from "../../lib/utils/roles";
 
 function loadMore(setCurrentOffset: (number) => void, currentOffset: number, offset: number, data: []) {
     const startingIndex = currentOffset;
@@ -34,46 +37,76 @@ const createNext =
     };
 
 export interface ReadingContainertInterface {
-    readings: [];
+    readings: any[];
+    readingsPerLoad: number;
+    deleteMethod?: (id) => void;
 }
 
 export default function ReadingContainer(props: ReadingContainertInterface) {
     // Setdata SHOULD BE SETTING READING VALUES
-    const { readings } = props;
+    const { readings, readingsPerLoad, deleteMethod } = props;
 
-    const [offset, setCurrentOffset] = useState(6);
+    const [offset, setCurrentOffset] = useState(readingsPerLoad);
 
-    const [data, setData] = useState(readings ? readings.slice(0, 6) : []);
+    const [data, setData] = useState(readings ? readings.slice(0, readingsPerLoad) : []);
     const [hasMore, setHasMore] = useState<ScrollDirectionBooleanState>({
         up: false,
         down: true,
     });
 
+    useEffect(() => {
+        setData(readings ? readings.slice(0, readingsPerLoad) : [])
+    }, [readings])
+
     const ref = useInfiniteScroll<HTMLDivElement>({
-        next: createNext({ setData, setCurrentOffset, offset: 6, currentOffset: offset, data: readings }),
+        //@ts-ignore
+        next: createNext({ setData, setCurrentOffset, offset: readingsPerLoad, currentOffset: offset, data: readings }),
         rowCount: readings.length,
         hasMore,
     });
-    
+
+    const [popupVisible, setPopupVisible] = useState(false);
+    const [popupData, setPopupData] = useState({
+        creator: "",
+        value: 0,
+        image: "",
+        createdAt: new Date(),
+        createdAtStr: "",
+        id: ""
+    });
+
     return (
         <div>
+            {popupVisible && (
+                <Popup onClick={() => setPopupVisible(!popupVisible)}>
+                    <ReadingPopup showDelete={deleteMethod !== undefined} deleteMethod={() => {deleteMethod(popupData.id); setPopupVisible(false) }} name={popupData.creator} date={popupData.createdAt} kwh={popupData.value} image={popupData.image} imgname={"Reading"}/>
+                </Popup>
+            )}
             <div
                 ref={ref}
-                className="List bg-white-100 h-[35vh] w-[60vw] overflow-y-auto flex flex-col"
+                className="List h-[35vh] overflow-y-auto flex flex-col"
             >
-                {data.map((reading, index) => (
+                {data.map((reading) => (
                     <Reading
-                        key={index}
+                        key={reading._id}
                         //@ts-ignore
                         creator={reading.user?.name ? reading.user.name : "Guest"}
                         //@ts-ignore
-                        kwhValue={reading.value}
+                        value={reading.value}
                         //@ts-ignore
                         image={reading.image}
                         //@ts-ignore
                         createdAt={new Date(reading.createdAt)}
                         onClick={() => {
-                            console.log("click");
+                            setPopupVisible(!popupVisible);
+                            setPopupData({
+                                creator: reading.user?.name ? reading.user.name : "Guest",
+                                value: reading.value,
+                                image: reading.image,
+                                createdAt: new Date(reading.createdAt),
+                                createdAtStr: new Date(reading.createdAt).toLocaleString("en-GB", {hour12: true}),
+                                id: reading._id
+                            })
                         }}
                     />
                 ))}

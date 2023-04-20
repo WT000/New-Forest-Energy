@@ -6,10 +6,6 @@ module.exports = {
         "./app/**/*.{js,ts,jsx,tsx}",
         "./pages/**/*.{js,ts,jsx,tsx}",
         "./components/**/*.{js,ts,jsx,tsx}",
-        "./node_modules/flowbite/**/*.js",
-        
-
-        // Or if using `src` directory:
         "./src/**/*.{js,ts,jsx,tsx}",
     ],
     theme: {
@@ -27,11 +23,19 @@ module.exports = {
             black: {
                 DEFAULT: "#051821",
                 500: "#77767A",
+                700: "#DCDCDD",
             },
             white: {
                 DEFAULT: "#FFFFFF",
                 100: "#FAFAFA",
-                300: "#EDEEF0"
+                300: "#EDEEF0",
+            },
+            red: {
+                400: "#C82D2D",
+                500: "#DB2727",
+            },
+            darkblue: {
+                900: "#051821F2",
             },
             darkblue: {
                 900: "#051821F2"
@@ -43,7 +47,5 @@ module.exports = {
             },
         },
     },
-    plugins: [
-        require('flowbite/plugin')
-    ],
+    plugins: [require("tailwind-scrollbar-hide")],
 };

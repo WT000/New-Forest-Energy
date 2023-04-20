@@ -11,20 +11,20 @@ export default function Stats(props: StatsProps) {
     let line1 = text;
     let line2 = "";
 
-    if(stat.includes(" ")) {
+    if(stat && stat.includes(" ")) {
         const split = stat.split(" ");
         statLargeText = split[0];
         statSmallText = split[1];
     }
 
-    if(text.includes("(")){
+    if(text && text.includes("(")){
         const split = text.split("(");
         line1 = split[0];
         line2 = "(" + split[1];
     }
 
     return (
-        <div className="mx-auto text-center mt-1 md:my-4">
+        <div className="mx-auto text-center my-1">
             <p className="text-xl font-bold md:text-3xl text-black leading-6">{statLargeText}
                 <span className="text-[10px] md:text-lg"> {statSmallText} </span>
             </p>

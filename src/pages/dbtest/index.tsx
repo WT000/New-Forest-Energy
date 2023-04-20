@@ -1,8 +1,8 @@
 // @ts-nocheck
-import { getServerSession } from "next-auth/next";
+import { getServerSession } from "../../hooks/getServerSession";
 import Head from "next/head";
 import { authOptions } from "../api/auth/[...nextauth]";
-import { useSession } from "next-auth/react";
+import { useSession } from "../../hooks/useSession";
 import { UserInterface } from "../../db/models/User";
 import { HomeInterface } from "../../db/models/Home";
 import getRole from "../../lib/utils/getRole";
@@ -69,9 +69,9 @@ export default function Home() {
             {session && 
                 <div>
                     <p>Logged in as {session.user.name}.</p>
-                    <p>Role status (own home if logged in): {getRole(fakeOwnHome, session)}</p>
-                    <p>Role status (delegate test): {getRole(fakeDelegate, session)}</p>
-                    <p>Role status (other home): {getRole(fakeOther, session)}</p>
+                    <p>Role status (own home if logged in): {getRole(session, fakeOwnHome)}</p>
+                    <p>Role status (delegate test): {getRole(session, fakeDelegate)}</p>
+                    <p>Role status (other home): {getRole(session, fakeOther)}</p>
 
                     <br/>
                     <a href="./api/auth/signout">Click here to logout.</a>
@@ -81,9 +81,9 @@ export default function Home() {
             {!session && 
                 <div>
                     <p>Logged out.</p>
-                    <p>Role status (own home if logged in): {getRole(fakeOwnHome, session)}</p>
-                    <p>Role status (delegate test): {getRole(fakeDelegate, session)}</p>
-                    <p>Role status (other home): {getRole(fakeOther, session)}</p>
+                    <p>Role status (own home if logged in): {getRole(session, fakeOwnHome)}</p>
+                    <p>Role status (delegate test): {getRole(session, fakeDelegate)}</p>
+                    <p>Role status (other home): {getRole(session, fakeOther)}</p>
 
                     <br/>
                     <a href="./api/auth/signin">Click here to login.</a>
