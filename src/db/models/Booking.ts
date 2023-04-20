@@ -93,7 +93,7 @@ const bookingSchema = new Schema<
 bookingSchema.method("calculateCost", async function calculateCost(cb) {
 	const rBefore = await this.model("Reading")
 		.find(
-			{ home: this.home._id, createdAt: { $lt: this.startDateTime } },
+			{ home: this.home._id, createdAt: { $lt: this.startDateTime }, deleted: {$ne: true} },
 			cb
 		)
 		.sort("-createdAt")
@@ -102,7 +102,7 @@ bookingSchema.method("calculateCost", async function calculateCost(cb) {
 	//@ts-ignore
 	const rAfter = await this.model("Reading")
 		.find(
-			{ home: this.home._id, createdAt: { $gte: this.endDateTime } },
+			{ home: this.home._id, createdAt: { $gte: this.endDateTime }, deleted: {$ne: true} },
 			cb
 		)
 		.sort("createdAt")
@@ -114,6 +114,7 @@ bookingSchema.method("calculateCost", async function calculateCost(cb) {
 			home: this.home._id,
 			createdAt: { $gte: this.startDateTime, $lt: this.endDateTime },
 			cb,
+			deleted: {$ne: true}
 		})
 		.sort("createdAt");
 

@@ -42,13 +42,12 @@ function displayCost(cost) {
 export default function Index(props) {
     const router = useRouter();
     const [currentPath, setCurrentPath] = useState("");
-    useEffect(() => {if (window) {setCurrentPath(window.location.href)}});
 
-    const readings = props.readings ? JSON.parse(props.readings) : null
+    const [currentReadings, setCurrentReadings] = useState(sortDatesDescending([...(props.readings ? JSON.parse(props.readings) : null)]))
+
+    useEffect(() => {if (window) {setCurrentPath(window.location.href)}});
     const startDate = getDayMonth(new Date(props?.booking?.startDateTime));
     const endDate = getDayMonth(new Date(props?.booking?.endDateTime), true);
-    const descendingDates = [...readings];
-    sortDatesDescending(descendingDates)
 
     const stats = [
         {
@@ -56,7 +55,7 @@ export default function Index(props) {
             text: "Total Cost (minus Buffer)"
         },
         {
-            stat: `${props?.totalUsage} kWh`,
+            stat: `${props?.totalUsage?.toFixed(2)} kWh`,
             text: "Total Usage"
         }
     ]
@@ -101,6 +100,8 @@ export default function Index(props) {
         navItems.splice(0,1);
     }
 
+    const canDelete = (props.userRole == Role.Agency || props.userRole == Role.Homeowner)
+
     const otherGuestsComparisonTextWording = Math.abs((props.otherGuestsComparison * 100)).toFixed(0) + '%' + " " + (props.otherGuestsComparison > 0 ? "more" : "less")
     const otherGuestsIcon = props.otherGuestsComparison > 0 ? <IoTrendingUp size="34px" className="text-orange"/> : <IoTrendingDown size="34px" className="text-green-500"/>
 
@@ -111,6 +112,17 @@ export default function Index(props) {
         navigator.clipboard.writeText(currentPath);
         let notification = Notification({text: "Link copied to clipboard.", icon: <IoClose />})
         notification();
+    }
+
+    function deleteReading(id){
+        console.log("todelete:", id)
+        fetch(`/api/reading/${id}`, { method: 'DELETE' })
+        .then((res) => res.json())
+        .then((data) => {
+            if(data.success){
+                setCurrentReadings(currentReadings.filter(x => x._id != id));
+            }
+        })
     }
 
     const homeLink = (props?.userRole === Role.Agency ||  props?.userRole === Role.Homeowner || props?.userRole === Role.Delegate) ? `/homes/${props?.booking?.home?._id}` : null
@@ -168,7 +180,7 @@ export default function Index(props) {
                         <div>
                             <Subtitle text1="Usage Per Day (kWh)" showbar={false}/>
                             <div className="ml-2 mt-3">
-                                <BarChart rawData={readings} beginAtZero={true} showDifference={true}
+                                <BarChart rawData={currentReadings} beginAtZero={true} showDifference={true}
                                     dateType={ChartDateType.DayMonth} unitOfMeasure={"kWh"} />
                             </div>
                         </div>
@@ -177,7 +189,7 @@ export default function Index(props) {
                 <div className="mt-14 md:mt-0 md:w-[42%]">
                     <Subtitle text1="Latest Readings" showbar={true}/>
                     <div className="mt-3">
-                        <ReadingContainer readings={descendingDates} readingsPerLoad={8}/>
+                        <ReadingContainer deleteMethod={canDelete ? (id) => deleteReading(id) : undefined} readings={currentReadings} readingsPerLoad={8}/>
                     </div>
                 </div>
             
@@ -185,6 +197,8 @@ export default function Index(props) {
 
     )
 }
+
+
 
 export async function getServerSideProps({ req, res, params }) {
     await dbConnect();
