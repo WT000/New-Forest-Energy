@@ -9,6 +9,7 @@ export const getServerSession = (req, res, authOptions) : any => {
         email: "TestBot@<web>.com",
         image: "https://avatars.githubusercontent.com/u/27347476?s=200&v=4",
         id: "00000020f51bb4362eee2a4d",
+        isAgency: true
       },
       expires: "",
     };
