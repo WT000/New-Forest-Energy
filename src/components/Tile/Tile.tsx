@@ -12,10 +12,18 @@ interface TileProps {
     clickable: boolean;
     customClass?: string;
     onClick?: () => void;
+    focus?: () => void;
 }
 
 export default function Tile(props: TileProps) {
-    const { tileType, children, clickable, customClass, onClick } = props
+    const { focus, tileType, children, clickable, customClass, onClick } = props
+
+    const focusChild = () => {
+        if(focus){
+           focus()
+        }
+    }
+
 
     let styling = ""
     if(tileType == TileType.fill) {styling = "h-full md:w-[368px] rounded-[10px]"}
@@ -29,7 +37,13 @@ export default function Tile(props: TileProps) {
 
     return (
         <div className={`${styling} ${customClass} ${cursorStyle} group/tile bg-transparent flex border-solid border-[1px] border-[#DCDCDD]`}
-            onClick={onClick}
+            onClick={(e) => {
+                console.log("hit")
+                focusChild();
+                if(onClick){
+                    onClick();
+                }
+            }}
         >
             {children}
         </div>

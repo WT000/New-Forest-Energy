@@ -86,6 +86,7 @@ export default function HomeForm(props: HomeFormProps) {
     const { onSubmit, onCancel, userFinder, isLoading, triggerReset, edit } = props;
 
     const {
+        setFocus,
         register,
         handleSubmit,
         formState: { errors },
@@ -125,7 +126,7 @@ export default function HomeForm(props: HomeFormProps) {
             />
 
             {/* Name */}
-            <Tile tileType={TileType.input} clickable={false}>
+            <Tile tileType={TileType.input} clickable={false} focus={() => setFocus("name")}>
                 <InputLayout
                     icon={<IoText size="32px" />}
                     text={"Home Name"}
@@ -143,7 +144,7 @@ export default function HomeForm(props: HomeFormProps) {
             </Tile>
 
             {/* Look for the email as validation */}
-            <Tile tileType={TileType.input} clickable={false}>
+            <Tile tileType={TileType.input} clickable={false} focus={() => setFocus("owner")}>
                 <InputLayout
                     icon={<IoPerson size="32px" />}
                     text={"Homeowner"}
@@ -164,7 +165,7 @@ export default function HomeForm(props: HomeFormProps) {
             </Tile>
 
             {/* Beds */}
-            <Tile tileType={TileType.input} clickable={false}>
+            <Tile tileType={TileType.input} clickable={false} focus={() => setFocus("numBeds")}>
                 <InputLayout
                     icon={<IoBed size="32px" />}
                     text={"Total Beds"}
@@ -187,7 +188,7 @@ export default function HomeForm(props: HomeFormProps) {
 
             {/* Instructions */}
             {/* May need a custom size set on md: breakpoint */}
-            <Tile tileType={TileType.fill} customClass="row-span-2" clickable={false}>
+            <Tile tileType={TileType.fill} customClass="row-span-2" clickable={false} focus={() => setFocus("energyInstructions")}>
                 <InstructionsLayout
                     text=""
                     editable={true}
@@ -201,7 +202,7 @@ export default function HomeForm(props: HomeFormProps) {
             </Tile>
 
             {/* Cost Buffer */}
-            <Tile tileType={TileType.input} clickable={false}>
+            <Tile tileType={TileType.input} clickable={false} focus={() => setFocus("energyBuffer")}>
                 <InputLayout
                     icon={<IoWallet size="32px" />}
                     text={"Cost Buffer"}
@@ -224,7 +225,7 @@ export default function HomeForm(props: HomeFormProps) {
             </Tile>
 
             {/* Energy Tariff (per kWh) */}
-            <Tile tileType={TileType.input} clickable={false}>
+            <Tile tileType={TileType.input} clickable={false} focus={() => setFocus("energyTariff")}>
                 <InputLayout
                     icon={<IoFlash size="32px" />}
                     text={"Energy Tariff (per Kwh)"}
