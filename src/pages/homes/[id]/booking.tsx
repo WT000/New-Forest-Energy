@@ -1,6 +1,6 @@
 import { getServerSession } from "../../../hooks/getServerSession";
 import { authOptions } from "../../api/auth/[...nextauth]";
-import { IoHome, IoLogOut } from "react-icons/io5";
+import {IoHome, IoPieChart, IoFlash, IoList, IoLogOut, IoCalendar} from "react-icons/io5";
 import Body from "../../../components/Body/Body";
 import getRole from "../../../lib/utils/getRole";
 import Role from "../../../lib/utils/roles";
@@ -23,14 +23,34 @@ export default function NewBooking(props) {
             icon: <IoHome />,
             text: "All Homes",
             path: "/homes",
-            activePage: true,
+        },
+        {
+            icon: <IoPieChart />,
+            text: "Dashboard",
+            path: "/homes/" + home._id
+        },
+        {
+            icon: <IoFlash />,
+            text: "New Reading",
+            path: "/homes/" + home._id + "/readings/new"
+        },
+        {
+            icon: <IoCalendar />,
+            text: "New Booking",
+            path:"#",
+            activePage: true
+        },
+        {
+            icon: <IoList />,
+            text: "Instructions",
+            path: "/homes/" + home._id + "/instructions"
         },
         {
             icon: <IoLogOut />,
             text: "Sign Out",
-            path: "/api/auth/signout",
-        },
-    ];
+            path: "/api/auth/signout"
+        }
+    ]
 
     const stats = [
         {
