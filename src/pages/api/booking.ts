@@ -62,7 +62,7 @@ export default async function handler(req, res) {
                 home = await Home.findById(booking.homeId);
                 role = getRole(session, home);
 
-                if (role !== Role.Agency && role !== Role.Homeowner) {
+                if (role !== Role.Agency) {
                     return res.status(401).json({ success: false });
                 }
 

@@ -122,19 +122,23 @@ export default function Index(props) {
                     <div className="md:w-[42%] my-10 ">
                         {props?.userRole != Role.Guest && (
                             <div className="flex justify-between mb-8 md:mb-11">
-                            <Tile tileType={TileType.link} 
+                            {props?.userRole == Role.Agency && (
+                                <Tile tileType={TileType.link} 
                                 children={<CompactLayout 
                                 icon={<IoCreate size="34px"/>}
                                 textLine1="Edit Booking"
                                 textLine2="Details"></CompactLayout>} 
                                 clickable={true} onClick={() => router.push(`/bookings/${props?.booking?.friendlyId}/edit`)}></Tile>
-                            <Tile tileType={TileType.link} 
+                            )}
+                            {props?.userRole != Role.Delegate && (
+                                <Tile tileType={TileType.link} 
                                 children={<CompactLayout 
                                 icon={<IoShareSocial size="34px"/>}
                                 textLine1="Share Link"
                                 textLine2="Booking"></CompactLayout>} 
                                 clickable={true} onClick={clipboardNotification}></Tile>
-                                <Toaster></Toaster>
+                            )}
+                            <Toaster></Toaster>
                             </div>
                         )}
                         <div className="">
@@ -192,41 +196,12 @@ export async function getServerSideProps({ req, res, params }) {
 
         console.log(b);
 
-        //@ts-ignore
-        const rBefore = await Reading.find({ home: b.home._id,  createdAt: { $lt:b.startDateTime } })
-            .populate("user", "name", User)
-            .sort("-createdAt")
-            .limit(1);
-        
-        //@ts-ignore
-        const rAfter = await Reading.find({ home: b.home._id,  createdAt: { $gte:b.endDateTime } })
-            .populate("user", "name", User)
-            .sort("createdAt")
-            .limit(1);
-
-        //@ts-ignore
-        const rRange = await Reading.find({ home: b.home._id, createdAt: { $gte:b.startDateTime, $lt:b.endDateTime } })
-            .populate("user", "name", User)
-            .sort("createdAt");
-
-        const readings = [ ...rBefore, ...rRange, ...rAfter ];
-
-        let totalUsage = 0
-        let totalCost = 0
-        let totalCostMinusBuffer = 0
-        let totalDays = 0
-        
-        if (readings.length > 1) {
-            totalUsage =  readings[readings.length -1].value - readings[0].value
-            totalDays = dateDiffInDays(readings[readings.length -1].createdAt, readings[0].createdAt) || 1
-            //@ts-ignore
-            totalCost = totalUsage * b.home.energyTariff
-            //@ts-ignore
-            if(totalCost > Number(b.home.energyBuffer)) {
-                //@ts-ignore
-                totalCostMinusBuffer = totalCost - Number(b.home.energyBuffer)
-            }
-        } 
+        const cost = await new Booking(b).calculateCost(0);
+        const totalCostMinusBuffer = cost.totalCostMinusBuffer;
+        const totalCost = cost.totalCost;
+        const totalUsage = cost.totalUsage;
+        const readings = cost.readings;
+        const totalDays = cost.totalDays;
         
         //@ts-ignore
         const userRole = getRole(session, b.home)
