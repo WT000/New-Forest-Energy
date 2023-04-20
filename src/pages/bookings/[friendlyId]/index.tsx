@@ -253,8 +253,8 @@ export async function getServerSideProps({ req, res, params }) {
                 totalUsage: totalUsage,
                 totalCost: totalCost,
                 totalCostMinusBuffer: totalCostMinusBuffer,
-                otherGuestsComparison : otherGuestsPercentageDiff,
-                similarHomesComparison: similarHomesPercentageDiff
+                otherGuestsComparison : isNaN(otherGuestsPercentageDiff) ? 0 : otherGuestsPercentageDiff,
+                similarHomesComparison: isNaN(similarHomesPercentageDiff) ? 0 : similarHomesPercentageDiff
             },
         };
     }

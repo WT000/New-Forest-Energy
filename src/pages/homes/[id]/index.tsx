@@ -431,8 +431,8 @@ export async function getServerSideProps({ req, res, params }) {
                 userRole: userRole,
                 averagePerDay: averagePerDay ?? 0.00,
                 bookingCosts: JSON.stringify(bookingCosts),
-                otherHomesComparison : otherHomesPercentageDiff,
-                lastMonthComparison: lastMonthComparison,
+                otherHomesComparison : isNaN(otherHomesPercentageDiff) ? 0 : otherHomesPercentageDiff,
+                lastMonthComparison: isNaN(lastMonthComparison) ? 0 : lastMonthComparison,
             },
         };
     }
