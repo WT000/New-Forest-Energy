@@ -52,21 +52,6 @@ export default function NewBooking(props) {
         }
     ]
 
-    const stats = [
-        {
-            stat: props?.stats?.homes,
-            text: "Homes",
-        },
-        {
-            stat: props?.stats?.bookingsLast3Months,
-            text: "Bookings (Last 3 Months)",
-        },
-        {
-            stat: props?.stats?.bookingsLast12Months,
-            text: "Bookings (Last 12 Months)",
-        },
-    ];
-
     const router = useRouter();
 
     const { isLoading, mutate } = useMutation(
@@ -84,10 +69,10 @@ export default function NewBooking(props) {
     return (
         <>
             <Body
-                statItems={stats}
+                statItems={[]}
                 menuItems={navItems}
-                welcomeText={`Welcome back, ${userSession?.user?.name}`}
-                welcomeImage={userSession?.user?.image}
+                welcomeText={`Welcome to, ${props?.home?.name}`}
+                welcomeImage={props?.home?.image}
                 currentPage="New Booking"
             >
                 <BookingForm
