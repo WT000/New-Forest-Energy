@@ -354,6 +354,7 @@ export async function getServerSideProps({ req, res, params }) {
             const lastReading = readings[readings.length -1];
             let daysElapsed = dateDiffInDays(lastReading.createdAt, firstReading.createdAt) || 1;
             averagePerDay = (Number(lastReading.value) - Number(firstReading.value)) / daysElapsed;
+            if(averagePerDay < 0.00) averagePerDay = 0
         }
         
         const delegateReadingCount = await Reading.aggregate([
