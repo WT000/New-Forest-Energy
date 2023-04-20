@@ -22,7 +22,7 @@ import BarChart, { ChartDateType } from "../../../components/BarChart/BarChart";
 import ReadingContainer from "../../../components/ReadingContainer/ReadingContainer";
 import HorizontalContainer from "../../../components/GridContainer/HorizontalContainer";
 import Subtitle from "../../../components/Subtitle/Subtitle";
-import {IoHome, IoPieChart, IoFlash, IoList, IoLogOut, IoTrendingDown, IoTrendingUp, IoQrCode, IoCreateSharp, IoClose} from "react-icons/io5";
+import {IoHome, IoPieChart, IoFlash, IoList, IoLogOut, IoTrendingDown, IoTrendingUp, IoQrCode, IoCreateSharp, IoClose, IoCalendar} from "react-icons/io5";
 import BookingLayout from "../../../components/layouts/BookingLayout/BookingLayout";
 import DelegatesList from "../../../components/DelegatesList/DelegatesList";
 import DelegatesListItem from "../../../components/DelegatesListItem/DelegatesListItem";
@@ -142,6 +142,14 @@ export default function Index(props) {
             path: "/api/auth/signout"
         }
     ]
+
+    if(props?.userRole == Role.Agency){
+        navItems.splice(3, 0, {
+            icon: <IoCalendar />,
+            text: "New Booking",
+            path:"/homes/" + home._id + "/booking"
+        })
+    }
 
     let otherHomesComparisonTextWording = null
     let otherHomesIcon = null
