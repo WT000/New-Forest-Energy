@@ -37,6 +37,9 @@ module.exports = {
             darkblue: {
                 900: "#051821F2",
             },
+            darkblue: {
+                900: "#051821F2"
+            },
         },
         extend: {
             fontFamily: {
