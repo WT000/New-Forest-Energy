@@ -39,11 +39,12 @@ const createNext =
 export interface ReadingContainertInterface {
     readings: any[];
     readingsPerLoad: number;
+    deleteMethod?: (id) => void;
 }
 
 export default function ReadingContainer(props: ReadingContainertInterface) {
     // Setdata SHOULD BE SETTING READING VALUES
-    const { readings, readingsPerLoad } = props;
+    const { readings, readingsPerLoad, deleteMethod } = props;
 
     const [offset, setCurrentOffset] = useState(readingsPerLoad);
 
@@ -52,6 +53,10 @@ export default function ReadingContainer(props: ReadingContainertInterface) {
         up: false,
         down: true,
     });
+
+    useEffect(() => {
+        setData(readings ? readings.slice(0, readingsPerLoad) : [])
+    }, [readings])
 
     const ref = useInfiniteScroll<HTMLDivElement>({
         //@ts-ignore
@@ -67,22 +72,23 @@ export default function ReadingContainer(props: ReadingContainertInterface) {
         image: "",
         createdAt: new Date(),
         createdAtStr: "",
+        id: ""
     });
 
     return (
         <div>
             {popupVisible && (
                 <Popup onClick={() => setPopupVisible(!popupVisible)}>
-                    <ReadingPopup name={popupData.creator} date={popupData.createdAt} kwh={popupData.value} image={popupData.image} imgname={"Reading"}/>
+                    <ReadingPopup showDelete={deleteMethod !== undefined} deleteMethod={() => {deleteMethod(popupData.id); setPopupVisible(false) }} name={popupData.creator} date={popupData.createdAt} kwh={popupData.value} image={popupData.image} imgname={"Reading"}/>
                 </Popup>
             )}
             <div
                 ref={ref}
                 className="List h-[35vh] overflow-y-auto flex flex-col"
             >
-                {data.map((reading, index) => (
+                {data.map((reading) => (
                     <Reading
-                        key={index}
+                        key={reading._id}
                         //@ts-ignore
                         creator={reading.user?.name ? reading.user.name : "Guest"}
                         //@ts-ignore
@@ -99,6 +105,7 @@ export default function ReadingContainer(props: ReadingContainertInterface) {
                                 image: reading.image,
                                 createdAt: new Date(reading.createdAt),
                                 createdAtStr: new Date(reading.createdAt).toLocaleString("en-GB", {hour12: true}),
+                                id: reading._id
                             })
                         }}
                     />

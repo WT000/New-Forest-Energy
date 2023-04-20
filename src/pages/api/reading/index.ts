@@ -1,8 +1,11 @@
 import { getServerSession } from "next-auth";
-import { ReadingFormData } from "../../components/forms/ReadingForm/ReadingForm";
-import dbConnect from "../../db/dbcon/dbcon";
-import Reading from "../../db/models/Reading";
-import { authOptions } from "./auth/[...nextauth]";
+import { ReadingFormData } from "../../../components/forms/ReadingForm/ReadingForm";
+import dbConnect from "../../../db/dbcon/dbcon";
+import Reading from "../../../db/models/Reading";
+import { authOptions } from "../auth/[...nextauth]";
+import getRole from "../../../lib/utils/getRole";
+import Home from "../../../db/models/Home";
+import Role from "../../../lib/utils/roles";
 
 function checkFormErrors(reading :ReadingFormData, method): boolean {
     if(!reading.image || !reading.readingValue || !reading.homeId || reading.readingValue < 0)return false;

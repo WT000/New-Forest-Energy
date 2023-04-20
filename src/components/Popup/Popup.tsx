@@ -15,13 +15,13 @@ export default function Popup(props: PopupProps) {
             id="defaultModal"
             tabIndex={-1}
             aria-hidden="true"
-            className="flex items-center justify-center fixed top-0 left-0 right-0 z-50 w-full p-4 overflow-x-hidden overflow-y-auto md:inset-0 h-[calc(100%-1rem)] md:h-full bg-darkblue-900/90 "
+            className="flex items-center justify-center fixed top-0 left-0 right-0 z-50 w-full p-4 overflow-x-hidden overflow-y-auto md:inset-0 h-[calc(100%-1rem)] md:h-full bg-darkblue-900 "
         >
             <div className="relative w-full h-full max-w-2xl md:h-auto ">
                 <div className="text-right ">
                     <button
                         type="button"
-                        className="text-white bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5  ml-auto inline-flex items-center dark:hover:bg-gray-600 dark:hover:text-grey"
+                        className="text-white bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5  ml-auto inline-flex items-center hover:bg-gray-600 hover:text-grey"
                         data-modal-target="defaultModal"
                         data-modal-hide="defaultModal"
                         onClick={() => onClick()}

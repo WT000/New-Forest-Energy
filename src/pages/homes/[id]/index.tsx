@@ -46,7 +46,9 @@ function displayCost(cost) {
 export default function Index(props) {
     const router = useRouter();
     
-    const readings = props.readings ? JSON.parse(props.readings) : null;
+    const [currentReadings, setCurrentReadings] = useState(props.readings ? JSON.parse(props.readings) : null)
+
+
     const bookings = props.bookings ? JSON.parse(props.bookings) : null;
     const bookingCosts = props.bookingCosts ? JSON.parse(props.bookingCosts) : null;
     const delegates = props.delegates ? JSON.parse(props.delegates) : null;
@@ -69,9 +71,7 @@ export default function Index(props) {
     const [popupData, setPopupData] = useState({
         text: "",
     });
-    
-    const ascendingDates = [...readings];
-    sortDatesAscending(ascendingDates)
+
 
     let bookingCards = []
     bookings.map((item, index) => {
@@ -173,6 +173,19 @@ export default function Index(props) {
         navItems.splice(0,1);
     }
 
+    const canDelete = (props.userRole == Role.Agency || props.userRole == Role.Homeowner)
+
+    function deleteReading(id){
+        console.log("todelete:", id)
+        fetch(`/api/reading/${id}`, { method: 'DELETE' })
+        .then((res) => res.json())
+        .then((data) => {
+            if(data.success){
+                setCurrentReadings(currentReadings.filter(x => x._id != id));
+            }
+        })
+    }
+
     return (
         <Body menuItems={navItems} statItems={stats} 
             welcomeText={`Welcome to, ${props?.home?.name}`}
@@ -234,7 +247,7 @@ export default function Index(props) {
                         <div className="w-full">
                             <Subtitle text1="Usage Per Day (kWh)" showbar={false}/>
                             <div className="ml-2 mt-3">
-                                <BarChart rawData={ascendingDates} beginAtZero={true} showDifference={true}
+                                <BarChart rawData={sortDatesAscending([...currentReadings])} beginAtZero={true} showDifference={true}
                                     dateType={ChartDateType.DayMonth} unitOfMeasure={"kWh"} />
                             </div>
                         </div>
@@ -244,7 +257,7 @@ export default function Index(props) {
                     <div className="mt-14 md:mt-0 md:w-[42%]">
                         <Subtitle text1="Latest Readings" showbar={true}/>
                         <div className="mt-3">
-                            <ReadingContainer readings={readings} readingsPerLoad={8}/>
+                            <ReadingContainer deleteMethod={canDelete ? (id) => deleteReading(id) : undefined} readings={currentReadings} readingsPerLoad={8}/>
                         </div>
                     </div>
                     <div className="mt-14 md:mt-0 md:w-[42%]">
@@ -427,8 +440,8 @@ export async function getServerSideProps({ req, res, params }) {
                 userRole: userRole,
                 averagePerDay: averagePerDay ?? 0.00,
                 bookingCosts: JSON.stringify(bookingCosts),
-                otherHomesComparison : otherHomesPercentageDiff,
-                lastMonthComparison: lastMonthComparison,
+                otherHomesComparison : isNaN(otherHomesPercentageDiff) ? 0 : otherHomesPercentageDiff,
+                lastMonthComparison: isNaN(lastMonthComparison) ? 0 : lastMonthComparison,
             },
         };
     }
