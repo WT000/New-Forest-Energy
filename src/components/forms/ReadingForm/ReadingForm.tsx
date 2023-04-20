@@ -27,6 +27,7 @@ export default function ReadingForm(props: ReadingFormProps){
     const { onSubmit, onCancel, readingValueValidator, isLoading, triggerReset } = props;
 
     const {
+        setFocus,
         register,
         handleSubmit,
         formState: { errors },
@@ -71,7 +72,7 @@ export default function ReadingForm(props: ReadingFormProps){
                 <span className="text-xs text-red-400">Image is Required</span>
             )}
 
-            <Tile tileType={TileType.input} clickable={false}>
+            <Tile tileType={TileType.input} clickable={false} focus={() => setFocus("readingValue")}>
                 <InputLayout
                     icon={<IoFlash size="32px" />}
                     text={"Reading Value"}

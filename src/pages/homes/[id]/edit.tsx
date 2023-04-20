@@ -16,7 +16,12 @@ import axios from "axios";
 import User from "../../../db/models/User";
 
 export default function EditHome(props) {
-    const { userSession, home, role } = props;
+    const { userSession, homeJSON, role } = props;
+
+    // Parse a bit of JSON here, as delegate lists need their emails extracted
+    const home = JSON.parse(homeJSON);
+    home.owner = home.owner.email;
+    home.delegates = home.delegates.map(obj => obj.email).join(", ");
 
     const navItems = [
         {
@@ -121,7 +126,7 @@ export async function getServerSideProps(context) {
     const session = await getServerSession(context.req, context.res, authOptions);
 
     // Find the home to be edited
-    const home = await Home.findOne({_id: context.params.id}).populate("owner", "email", User);
+    const home = await Home.findOne({_id: context.params.id}).populate("owner", "email", User).populate("delegates", "-_id email", User);
     const role = getRole(session, home);
 
     if (role != Role.Agency && role != Role.Homeowner) {
@@ -169,7 +174,7 @@ export async function getServerSideProps(context) {
                     bookingsLast12Months: (await bookingsLast12MonthsTask).toString(),
                 },
                 homes: homes.map((x) => ToSeriable(x)),
-                home: ToSeriable(home, "email"),
+                homeJSON: JSON.stringify(home),
                 userSession: session,
                 role: role,
             },

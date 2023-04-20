@@ -1,4 +1,4 @@
-import { IoBed, IoFlash, IoFootsteps, IoImages, IoPerson, IoSave, IoText, IoWallet, IoTrashBin } from "react-icons/io5";
+import { IoBed, IoFlash, IoPerson, IoSave, IoText, IoWallet, IoTrashBin, IoMail } from "react-icons/io5";
 import { Controller, SubmitHandler, useForm } from "react-hook-form";
 import Button from "../../Button/Button";
 import InputLayout from "../../layouts/InputLayout/InputLayout";
@@ -7,13 +7,13 @@ import Tile, { TileType } from "../../Tile/Tile";
 import { useEffect, useState } from "react";
 import Role from "../../../lib/utils/roles";
 import PhotoInputLayout from "../../layouts/PhotoInputLayout/PhotoInputLayout";
-import ImageLayout from "../../layouts/ImageLayout/ImageLayout";
 
 export interface HomeFormData {
     name: string;
     owner: string;
     description?: string;
     image?: string;
+    delegates?: string;
     numBeds: number;
     energyInstructions: string;
     energyTariff: number;
@@ -64,10 +64,29 @@ async function findUser(email: string, userFinder: (email: string) => Promise<bo
     return false;
 }
 
+async function checkEmails(emails: string, userFinder: (email: string) => Promise<boolean>) {
+    if (emails !== "" && typeof emails == "string") {
+        // Detect if inputted as email1,email2 or email1, email2
+        let delegateEmails;
+        if (emails.match(", ")) {
+            delegateEmails = Array.from(new Set(emails.split(", ")));
+        } else {
+            delegateEmails = Array.from(new Set(emails.split(",")));
+        }
+
+        // Map, forEach, etc seem to be very buggy with react-hook-form
+        for (let i=0; i<delegateEmails.length; i++) {
+            if (!await findUser(delegateEmails[i], userFinder)) return false;
+        }
+    }
+    return true;
+}
+
 export default function HomeForm(props: HomeFormProps) {
     const { onSubmit, onCancel, userFinder, isLoading, triggerReset, edit } = props;
 
     const {
+        setFocus,
         register,
         handleSubmit,
         formState: { errors },
@@ -107,7 +126,7 @@ export default function HomeForm(props: HomeFormProps) {
             />
 
             {/* Name */}
-            <Tile tileType={TileType.input} clickable={false}>
+            <Tile tileType={TileType.input} clickable={false} focus={() => setFocus("name")}>
                 <InputLayout
                     icon={<IoText size="32px" />}
                     text={"Home Name"}
@@ -125,7 +144,7 @@ export default function HomeForm(props: HomeFormProps) {
             </Tile>
 
             {/* Look for the email as validation */}
-            <Tile tileType={TileType.input} clickable={false}>
+            <Tile tileType={TileType.input} clickable={false} focus={() => setFocus("owner")}>
                 <InputLayout
                     icon={<IoPerson size="32px" />}
                     text={"Homeowner"}
@@ -146,7 +165,7 @@ export default function HomeForm(props: HomeFormProps) {
             </Tile>
 
             {/* Beds */}
-            <Tile tileType={TileType.input} clickable={false}>
+            <Tile tileType={TileType.input} clickable={false} focus={() => setFocus("numBeds")}>
                 <InputLayout
                     icon={<IoBed size="32px" />}
                     text={"Total Beds"}
@@ -169,7 +188,7 @@ export default function HomeForm(props: HomeFormProps) {
 
             {/* Instructions */}
             {/* May need a custom size set on md: breakpoint */}
-            <Tile tileType={TileType.fill} customClass="row-span-3" clickable={false}>
+            <Tile tileType={TileType.fill} customClass="row-span-2" clickable={false} focus={() => setFocus("energyInstructions")}>
                 <InstructionsLayout
                     text=""
                     editable={true}
@@ -183,7 +202,7 @@ export default function HomeForm(props: HomeFormProps) {
             </Tile>
 
             {/* Cost Buffer */}
-            <Tile tileType={TileType.input} clickable={false}>
+            <Tile tileType={TileType.input} clickable={false} focus={() => setFocus("energyBuffer")}>
                 <InputLayout
                     icon={<IoWallet size="32px" />}
                     text={"Cost Buffer"}
@@ -206,7 +225,7 @@ export default function HomeForm(props: HomeFormProps) {
             </Tile>
 
             {/* Energy Tariff (per kWh) */}
-            <Tile tileType={TileType.input} clickable={false}>
+            <Tile tileType={TileType.input} clickable={false} focus={() => setFocus("energyTariff")}>
                 <InputLayout
                     icon={<IoFlash size="32px" />}
                     text={"Energy Tariff (per Kwh)"}
@@ -225,6 +244,26 @@ export default function HomeForm(props: HomeFormProps) {
                     }}
                     errors={errors.energyTariff}
                     errorMessage={"*Must be at least £0.01."}
+                />
+            </Tile>
+            
+            {/* Delegates */}
+            <Tile tileType={TileType.input} clickable={false}>
+                <InputLayout
+                    icon={<IoMail size="32px" />}
+                    text={"Delegate Emails"}
+                    type={"text"}
+                    name={"delegates"}
+                    placeholder={"abc@gmail.com, def@g..."}
+                    register={register}
+                    registerSettings={{
+                        validate: {
+                            real: (emails) => checkEmails(emails, userFinder),
+                        },
+                    }}
+                    errors={errors.delegates}
+                    errorMessage={"*Must be real and comma seperated."}
+                    fontSize="md"
                 />
             </Tile>
 

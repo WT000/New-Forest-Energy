@@ -14,12 +14,12 @@ export default function DelegatesListItem(props: DelegatesListItemProps) {
         <div 
             className="relative h-11 w-11 md:h-12 md:w-12 rounded-full cursor-pointer flex justify-center items-center
                 bg-[#1D1A22] text-[rgb(255,255,255,0.0)]  hover:text-[rgb(255,255,255,1)] 
-                transition duration-500 ease-in-out hover:bg-orange hover:scale-110"
+                transition duration-500 ease-in-out hover:scale-110"
             onClick={onClick}
         >
-            <IoRemove className="" size="20px" />
+            {/* <IoRemove className="" size="20px" /> */}
             <Image
-                className="rounded-full opacity-75 hover:opacity-25"
+                className="rounded-full opacity-75 hover:opacity-100"
                 src={image}
                 alt={username}
                 fill

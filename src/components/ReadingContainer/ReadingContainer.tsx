@@ -13,8 +13,6 @@ function loadMore(setCurrentOffset: (number) => void, currentOffset: number, off
     return data.slice(startingIndex, newOffset);
 }
 
-
-
 const createNext =
     ({
         setData,
@@ -40,15 +38,16 @@ const createNext =
 
 export interface ReadingContainertInterface {
     readings: any[];
+    readingsPerLoad: number;
 }
 
 export default function ReadingContainer(props: ReadingContainertInterface) {
     // Setdata SHOULD BE SETTING READING VALUES
-    const { readings } = props;
+    const { readings, readingsPerLoad } = props;
 
-    const [offset, setCurrentOffset] = useState(6);
+    const [offset, setCurrentOffset] = useState(readingsPerLoad);
 
-    const [data, setData] = useState(readings ? readings.slice(0, 6) : []);
+    const [data, setData] = useState(readings ? readings.slice(0, readingsPerLoad) : []);
     const [hasMore, setHasMore] = useState<ScrollDirectionBooleanState>({
         up: false,
         down: true,
@@ -56,7 +55,7 @@ export default function ReadingContainer(props: ReadingContainertInterface) {
 
     const ref = useInfiniteScroll<HTMLDivElement>({
         //@ts-ignore
-        next: createNext({ setData, setCurrentOffset, offset: 6, currentOffset: offset, data: readings }),
+        next: createNext({ setData, setCurrentOffset, offset: readingsPerLoad, currentOffset: offset, data: readings }),
         rowCount: readings.length,
         hasMore,
     });
