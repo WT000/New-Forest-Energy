@@ -20,7 +20,7 @@ export default function EditHome(props) {
 
     // Parse a bit of JSON here, as delegate lists need their emails extracted
     const home = JSON.parse(homeJSON);
-    home.owner = home.owner.email;
+    home.owner = home?.owner?.email ?? "";
     home.delegates = home.delegates.map(obj => obj.email).join(", ");
 
     const navItems = [
