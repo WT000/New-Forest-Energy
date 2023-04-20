@@ -251,7 +251,7 @@ export default function HomeForm(props: HomeFormProps) {
             <Tile tileType={TileType.input} clickable={false}>
                 <InputLayout
                     icon={<IoMail size="32px" />}
-                    text={"Delegate Emails"}
+                    text={"Delegate Emails (comma separated)"}
                     type={"text"}
                     name={"delegates"}
                     placeholder={"abc@gmail.com, def@g..."}

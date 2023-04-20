@@ -314,7 +314,7 @@ export async function getServerSideProps({ req, res, params }) {
             .populate("user", "name", User)
             .sort({"createdAt": -1});
 
-        const bookings = await Booking.find({home: h._id, isDeleted: false}).sort({"createdAt": -1}).lean()
+        const bookings = await Booking.find({home: h._id, isDeleted: { $ne: true }}).sort({"createdAt": -1}).lean()
         const delegates = h.delegates;       
         const userRole = getRole(session, hNoDelegates);
 
@@ -333,11 +333,7 @@ export async function getServerSideProps({ req, res, params }) {
             let daysElapsed = dateDiffInDays(lastReading.createdAt, firstReading.createdAt) || 1;
             averagePerDay = (Number(lastReading.value) - Number(firstReading.value)) / daysElapsed;
         }
-
-        const bookings = await Booking.find({home: h._id, isDeleted: { $ne: true }}).sort({"createdAt": -1}).lean()
-
-        const delegates = h.delegates;       
-        const userRole = getRole(session, hNoDelegates);
+        
         const delegateReadingCount = await Reading.aggregate([
             {
                 $match: {
