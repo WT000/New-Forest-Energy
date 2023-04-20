@@ -213,11 +213,15 @@ export async function getServerSideProps({ req, res, params }) {
         console.log(b);
 
         const cost = await new Booking(b).calculateCost(0);
+        const totalBuffer = cost.totalBuffer;
         const totalCostMinusBuffer = cost.totalCostMinusBuffer;
         const totalCost = cost.totalCost;
         const totalUsage = cost.totalUsage;
         const readings = cost.readings;
         const totalDays = cost.totalDays;
+
+        console.log(totalDays)
+        console.log(totalBuffer)
         
         //@ts-ignore
         const userRole = getRole(session, b.home)
