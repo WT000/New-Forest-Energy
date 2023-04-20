@@ -273,7 +273,7 @@ export default function Index(props) {
                                 <HorizontalContainer componentIterable={bookingCards} hideScrollbar={true}/>
                             </div>
                         </div>
-                        <div className="md:flex mt-2">
+                        <div className="flex md:mt-2">
                             <Card cardType={CardType.colourThumbnail} bookingType={BookingType.planned}></Card> 
                             <div className="-mt-1 ml-1.5 mr-3 text-[#77767A]">Planned</div>
                             <Card cardType={CardType.colourThumbnail} bookingType={BookingType.inProgress}></Card>
