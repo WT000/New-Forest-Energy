@@ -205,7 +205,7 @@ export default function HomeForm(props: HomeFormProps) {
             <Tile tileType={TileType.input} clickable={false} focus={() => setFocus("energyBuffer")}>
                 <InputLayout
                     icon={<IoWallet size="32px" />}
-                    text={"Cost Buffer"}
+                    text={"Cost Buffer (per day)"}
                     type={"number"}
                     name={"energyBuffer"}
                     placeholder={"0.50"}

@@ -17,6 +17,7 @@ export interface BookingInterface {
 		totalUsage;
 		readings;
 		totalDays;
+		totalBuffer;
 		cb;
 	};
 }
@@ -28,6 +29,7 @@ export interface BookingMethods {
 		totalUsage;
 		readings;
 		totalDays;
+		totalBuffer;
 		cb;
 	};
 }
@@ -124,20 +126,20 @@ bookingSchema.method("calculateCost", async function calculateCost(cb) {
 	let totalUsage = 0;
 	let totalCost = 0;
 	let totalCostMinusBuffer = 0;
-	let totalDays = 0;
+	const totalDays =
+		dateDiffInDays(
+			this.startDateTime,
+			this.endDateTime
+		) || 1;
+	const totalBuffer = totalDays * this.home.energyBuffer;
 	if (readings.length > 1) {
 		totalUsage = readings[readings.length - 1].value - readings[0].value;
-		totalDays =
-			dateDiffInDays(
-				readings[readings.length - 1].createdAt,
-				readings[0].createdAt
-			) || 1;
 		//@ts-ignore
 		totalCost = totalUsage * this.home.energyTariff;
 		//@ts-ignore
-		if (totalCost > Number(this.home.energyBuffer)) {
+		if (totalCost > totalBuffer) {
 			//@ts-ignore
-			totalCostMinusBuffer = totalCost - Number(this.home.energyBuffer);
+			totalCostMinusBuffer = totalCost - totalBuffer;
 		}
 	}
 
@@ -147,6 +149,7 @@ bookingSchema.method("calculateCost", async function calculateCost(cb) {
 		totalUsage,
 		readings,
 		totalDays,
+		totalBuffer,
 		cb,
 	};
 });
