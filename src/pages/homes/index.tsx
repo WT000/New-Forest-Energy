@@ -163,10 +163,6 @@ export async function getServerSideProps({ req, res, params }) {
 
         const homeCount = await homeCountTask
 
-        if(!isAgency && homeCount <= 0){
-            return redirectToSignin();
-        }
-
         const userRole = getRole(session);
 
         const homes = await homesTask;
