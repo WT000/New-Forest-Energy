@@ -131,15 +131,15 @@ bookingSchema.method("calculateCost", async function calculateCost(cb) {
 			this.startDateTime,
 			this.endDateTime
 		) || 1;
-	const totalBuffer = totalDays * this.home.energyBuffer;
+	const totalBuffer = (totalDays * this.home.energyBuffer).toFixed(2);
 	if (readings.length > 1) {
 		totalUsage = readings[readings.length - 1].value - readings[0].value;
 		//@ts-ignore
-		totalCost = totalUsage * this.home.energyTariff;
+		totalCost = (totalUsage * this.home.energyTariff).toFixed(2);
 		//@ts-ignore
 		if (totalCost > totalBuffer) {
 			//@ts-ignore
-			totalCostMinusBuffer = totalCost - totalBuffer;
+			totalCostMinusBuffer = (totalCost - totalBuffer).toFixed(2);
 		}
 	}
 
