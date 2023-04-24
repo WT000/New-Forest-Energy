@@ -350,10 +350,10 @@ export async function getServerSideProps({ req, res, params }) {
         // Daily Average    
         let averagePerDay = 0;
         if (readings.length > 0) {
-            const firstReading = readings[0];
-            const lastReading = readings[readings.length -1];
-            let daysElapsed = dateDiffInDays(lastReading.createdAt, firstReading.createdAt) || 1;
-            averagePerDay = ((Number(lastReading.value) - Number(firstReading.value)) / daysElapsed) * h.energyTariff;
+            const latestReading = readings[0];
+            const oldestReading = readings[readings.length -1];
+            let daysElapsed = dateDiffInDays(oldestReading.createdAt, latestReading.createdAt) || 1;
+            averagePerDay = ((Number(latestReading.value) - Number(oldestReading.value)) / daysElapsed) * h.energyTariff;
             if(averagePerDay < 0.00) averagePerDay = 0
         }
         
