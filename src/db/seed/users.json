@@ -1,0 +1,16 @@
+[
+
+    {
+      "_id": {
+        "$oid": "00000020f51bb4362eee2a4d"
+      },
+      "name": "TestBot",
+      "email": "TestBot@<web>.com",
+      "image": "https://avatars.githubusercontent.com/u/27347476?s=200&v=4",
+      "likedRecipes": [],
+      "emailVerified": null,
+      "__v": 2
+    }
+
+  ]
+  

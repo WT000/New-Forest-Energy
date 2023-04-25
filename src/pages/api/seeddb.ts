@@ -1,6 +1,7 @@
 import {NextApiResponse} from "next";
-import dbConnect from "../../db/dbConnect";
+import dbConnect from "../../db/dbcon/dbcon";
 import User from "../../db/models/User";
+import Home from "../../db/models/Home"
 
 /* eslint-disable @typescript-eslint/no-var-requires */
 /* eslint-disable camelcase */
@@ -37,7 +38,7 @@ export default async function handler(_, res: NextApiResponse) {
   try {
     const conn = await dbConnect();
 
-    const results = await Review.countDocuments();
+    const results = await Home.countDocuments();
     /**
      * If existing records then delete the current collections
      */
@@ -52,9 +53,8 @@ export default async function handler(_, res: NextApiResponse) {
      */
     const userData = await fs.readFile("./src/db/seed/users.json", "utf8");
 
-    const reviewData = await fs.readFile("./src/db/seed/reviews.json", "utf8");
+    const homeData = await fs.readFile("./src/db/seed/homes.json", "utf8");
 
-    const recipeData = await fs.readFile("./src/db/seed/recipes.json", "utf8");
 
     // const accountData = await fs.readFile(
     //   "./src/db/seed/accounts.json",
@@ -69,13 +69,12 @@ export default async function handler(_, res: NextApiResponse) {
     /**
      * Set the reviews
      */
-    console.log("----Editing reviews----");
-    let reviewJson = JSON.parse(reviewData);
+    console.log("----Editing homes----");
+    let reviewJson = JSON.parse(homeData);
     reviewJson = convertId(reviewJson, "_id", false);
-    reviewJson = convertId(reviewJson, "creator", false);
     // Insert
-    await Review.insertMany(reviewJson);
-    console.log("----Inserted reviews----");
+    await Home.insertMany(reviewJson);
+    console.log("----Inserted homes----");
 
     /**
      * Set the users
@@ -83,7 +82,6 @@ export default async function handler(_, res: NextApiResponse) {
     console.log("----Editing users----");
     let userJson = JSON.parse(userData);
     userJson = convertId(userJson, "_id", false);
-    userJson = convertId(userJson, "likedRecipes", true);
     // Insert
     await User.insertMany(userJson);
     console.log("----Inserted users----");
@@ -91,14 +89,7 @@ export default async function handler(_, res: NextApiResponse) {
     /**
      * Set the recipes
      */
-    console.log("----Editing recipes----");
-    let recipeJson = JSON.parse(recipeData);
-    recipeJson = convertId(recipeJson, "_id", false);
-    recipeJson = convertId(recipeJson, "creator", false);
-    recipeJson = convertId(recipeJson, "reviews", true);
-    // Insert
-    await Recipe.insertMany(recipeJson);
-    console.log("----Inserted recipes----");
+
 
     res.json({success: true});
     return;

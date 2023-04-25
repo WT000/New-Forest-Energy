@@ -1,0 +1,26 @@
+[
+    {
+      "_id": {
+        "$oid": "637f8ed5e4e31558f4669ad8"
+      },
+      "owner": "ee",
+      "name": "TestHome",
+      "delegates": [],
+      "image": "",
+      "numbeds": 3,
+      "energyInstructions": "eee",
+      "energyTariff": 3,
+      "energyBuffer": 4,
+      "isDeleted": false,
+      "createdAt": "2014-05-01T10:02:03.839Z",
+      "updatedAt": "2014-05-01T10:02:03.839Z",
+
+
+      "description": "Make the herby mustard butter a few days ahead, then microwave your carrots on the day for a speedy vegetarian side. It's the perfect dish for Christmas dinner or a Sunday roast",
+
+      "__v": 2
+    }
+
+
+  ]
+  
