@@ -12,24 +12,24 @@ export interface BookingInterface {
 	createdAt: Date;
 	updatedAt: Date;
 	calculateCost?: (cb: any) => {
-		totalCost;
-		totalCostMinusBuffer;
-		totalUsage;
-		readings;
-		totalDays;
-		totalBuffer;
+		totalCost: number;
+		totalCostMinusBuffer: number;
+		totalUsage: number;
+		readings: any;
+		totalDays: any;
+		totalBuffer: number;
 		cb;
 	};
 }
 
 export interface BookingMethods {
 	calculateCost(cb: any): {
-		totalCost;
-		totalCostMinusBuffer;
-		totalUsage;
-		readings;
-		totalDays;
-		totalBuffer;
+		totalCost: number;
+		totalCostMinusBuffer: number;
+		totalUsage: number;
+		readings: any;
+		totalDays: any;
+		totalBuffer: number;
 		cb;
 	};
 }
@@ -95,7 +95,11 @@ const bookingSchema = new Schema<
 bookingSchema.method("calculateCost", async function calculateCost(cb) {
 	const rBefore = await this.model("Reading")
 		.find(
-			{ home: this.home._id, createdAt: { $lt: this.startDateTime }, deleted: {$ne: true} },
+			{
+				home: this.home._id,
+				createdAt: { $lt: this.startDateTime },
+				deleted: { $ne: true },
+			},
 			cb
 		)
 		.sort("-createdAt")
@@ -104,7 +108,11 @@ bookingSchema.method("calculateCost", async function calculateCost(cb) {
 	//@ts-ignore
 	const rAfter = await this.model("Reading")
 		.find(
-			{ home: this.home._id, createdAt: { $gte: this.endDateTime }, deleted: {$ne: true} },
+			{
+				home: this.home._id,
+				createdAt: { $gte: this.endDateTime },
+				deleted: { $ne: true },
+			},
 			cb
 		)
 		.sort("createdAt")
@@ -116,30 +124,32 @@ bookingSchema.method("calculateCost", async function calculateCost(cb) {
 			home: this.home._id,
 			createdAt: { $gte: this.startDateTime, $lt: this.endDateTime },
 			cb,
-			deleted: {$ne: true}
+			deleted: { $ne: true },
 		})
 		.sort("createdAt");
 
 	await this.populate("home");
 
 	const readings = [...rBefore, ...rRange, ...rAfter];
-	let totalUsage = 0;
-	let totalCost = 0;
-	let totalCostMinusBuffer = 0;
-	const totalDays =
-		dateDiffInDays(
-			this.startDateTime,
-			this.endDateTime
-		) || 1;
-	const totalBuffer = (totalDays * this.home.energyBuffer).toFixed(2);
+	let totalUsage: number = 0;
+	let totalCost: number = 0;
+	let totalCostMinusBuffer: number = 0;
+	const totalDays = dateDiffInDays(this.startDateTime, this.endDateTime) || 1;
+	const totalBuffer = parseFloat(
+		(totalDays * this.home.energyBuffer).toFixed(2)
+	);
 	if (readings.length > 1) {
 		totalUsage = readings[readings.length - 1].value - readings[0].value;
 		//@ts-ignore
-		totalCost = (totalUsage * this.home.energyTariff).toFixed(2);
+		totalCost = parseFloat(
+			(totalUsage * this.home.energyTariff).toFixed(2)
+		);
 		//@ts-ignore
 		if (totalCost > totalBuffer) {
 			//@ts-ignore
-			totalCostMinusBuffer = (totalCost - totalBuffer).toFixed(2);
+			totalCostMinusBuffer = parseFloat(
+				(totalCost - totalBuffer).toFixed(2)
+			);
 		}
 	}
 
