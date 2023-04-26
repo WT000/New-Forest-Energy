@@ -1,5 +1,6 @@
 import mongoose, { Model, Schema, models, model } from "mongoose";
 import { dateDiffInDays } from "../../lib/utils/dates";
+import User from "./User";
 
 export interface BookingInterface {
 	_id?: string;
@@ -102,6 +103,7 @@ bookingSchema.method("calculateCost", async function calculateCost(cb) {
 			},
 			cb
 		)
+		.populate("user", "name", User)
 		.sort("-createdAt")
 		.limit(1);
 
@@ -115,6 +117,7 @@ bookingSchema.method("calculateCost", async function calculateCost(cb) {
 			},
 			cb
 		)
+		.populate("user", "name", User)
 		.sort("createdAt")
 		.limit(1);
 
@@ -126,6 +129,7 @@ bookingSchema.method("calculateCost", async function calculateCost(cb) {
 			cb,
 			deleted: { $ne: true },
 		})
+		.populate("user", "name", User)
 		.sort("createdAt");
 
 	await this.populate("home");
