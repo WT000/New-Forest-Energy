@@ -38,6 +38,7 @@ function displayCost(cost) {
 export default function Index(props) {
     const router = useRouter();
     const [currentPath, setCurrentPath] = useState("");
+    const chartReadings = props?.readings.slice()
 
     const [currentReadings, setCurrentReadings] = useState(sortDatesDescending([...(props.readings ? JSON.parse(props.readings) : null)]))
 
@@ -176,7 +177,7 @@ export default function Index(props) {
                         <div>
                             <Subtitle text1="Usage Per Day (kWh)" showbar={false}/>
                             <div className="ml-2 mt-3">
-                                <BarChart rawData={currentReadings} beginAtZero={true} showDifference={true}
+                                <BarChart rawData={sortDatesAscending(currentReadings.slice())} beginAtZero={true} showDifference={true}
                                     dateType={ChartDateType.DayMonth} unitOfMeasure={"kWh"} />
                             </div>
                         </div>
