@@ -3,14 +3,16 @@
       "_id": {
         "$oid": "637f8ed5e4e31558f4669ad8"
       },
-      "owner": "ee",
+      "owner": {
+        "$oid": "64475a5bbde7b49897570cb2"
+      },
       "name": "TestHome",
       "delegates": [],
-      "image": "",
-      "numbeds": 3,
+      "image": "https://media.rightmove.co.uk/dir/crop/10:9-16:9/251k/250262/132706706/250262_2_109_IMG_00_0000_max_476x317.jpeg",
+      "numBeds": 3,
       "energyInstructions": "eee",
-      "energyTariff": 3,
-      "energyBuffer": 4,
+      "energyTariff": 0.32,
+      "energyBuffer": 0.42,
       "isDeleted": false,
       "createdAt": "2014-05-01T10:02:03.839Z",
       "updatedAt": "2014-05-01T10:02:03.839Z",
@@ -18,7 +20,7 @@
 
       "description": "Make the herby mustard butter a few days ahead, then microwave your carrots on the day for a speedy vegetarian side. It's the perfect dish for Christmas dinner or a Sunday roast",
 
-      "__v": 2
+      "__v": 0
     }
 
 

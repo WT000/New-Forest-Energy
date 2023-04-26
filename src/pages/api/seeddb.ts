@@ -72,6 +72,8 @@ export default async function handler(_, res: NextApiResponse) {
     console.log("----Editing homes----");
     let reviewJson = JSON.parse(homeData);
     reviewJson = convertId(reviewJson, "_id", false);
+    reviewJson = convertId(reviewJson, "owner", false);
+
     // Insert
     await Home.insertMany(reviewJson);
     console.log("----Inserted homes----");
