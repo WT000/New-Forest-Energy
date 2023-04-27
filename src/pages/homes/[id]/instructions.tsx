@@ -29,7 +29,7 @@ export default function AllHomes(props){
 
     const [homes, setHomes] = useState(props?.homes)
 
-    const { data: session } = useSession();
+    const session = props?.userSession;
 
     const isAgency = session?.user?.isAgency;
     
@@ -117,9 +117,6 @@ export async function getServerSideProps({ req, res, params }) {
 
     const session =  await getServerSession(req, res, authOptions)
 
-    
-
-
     const isAgency = session?.user?.isAgency == true;
     const userId = session?.user?.id ?? "";
 
@@ -158,6 +155,7 @@ export async function getServerSideProps({ req, res, params }) {
                     bookingsLast3Months: (await bookingsLast3MonthsTask).toString(),
                     bookingsLast12Months: (await bookingsLast12MonthsTask).toString()
                 },
+                userSession: session,
                 homes: homes.map(x => ToSeriableHome(x))
             },
         };
