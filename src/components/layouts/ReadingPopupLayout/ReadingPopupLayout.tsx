@@ -12,6 +12,10 @@ interface ReadingPopupProps {
     deleteMethod?: () => void;
 }
 
+interface InsructionsPopupProps {
+    text: string;
+}
+
 export default function ReadingPopup(props: ReadingPopupProps) {
     const { name, date, kwh, image, imgname, deleteMethod, showDelete } = props;
 
@@ -67,3 +71,6 @@ export default function ReadingPopup(props: ReadingPopupProps) {
         </div>
     );
 }
+
+
+

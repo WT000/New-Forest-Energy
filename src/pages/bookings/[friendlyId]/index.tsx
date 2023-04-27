@@ -77,7 +77,8 @@ export default function Index(props) {
         {
             icon: <IoList />,
             text: "Instructions",
-            path: `/homes/${props?.booking?.home?._id}/instructions`
+            path: `/homes/${props?.booking?.home?._id}/instructions`,
+            instructionstext: `${props?.booking?.home?.energyInstructions}`,
         }]
     
         if(props.userRole != "Guest"){
@@ -204,7 +205,7 @@ export async function getServerSideProps({ req, res, params }) {
 
     try {
         const b = await Booking.findOne({ friendlyId : params.friendlyId })
-            .populate("home", "_id owner delegates name image energyBuffer energyTariff numBeds", Home)
+            .populate("home", "_id owner delegates name image energyBuffer energyTariff numBeds energyInstructions", Home)
             .lean();
 
         console.log(b);

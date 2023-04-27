@@ -134,7 +134,9 @@ export default function Index(props) {
         {
             icon: <IoList />,
             text: "Instructions",
-            path: "/homes/" + home._id + "/instructions"
+            path: "",
+            instructionstext: home.energyInstructions,
+
         },
         {
             icon: <IoLogOut />,

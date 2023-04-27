@@ -29,8 +29,7 @@ export default function AllHomes(props){
 
     const [homes, setHomes, getHomes] = useExtendedState(props?.homes)
 
-    const { data: session } = useSession();
-
+    const session = props?.userSession;
     const isAgency = session?.user?.isAgency;
     
     const navItems = [
@@ -123,7 +122,7 @@ export default function AllHomes(props){
 
     
     return (
-        <Body statItems={stats} menuItems={navItems} welcomeText={`Welcome back, ${session?.user?.name}`} welcomeImage={session?.user?.image} currentPage="Homes">
+        <Body statItems={stats} menuItems={navItems} welcomeText={`Welcome back, ${session?.user?.name ? session.user.name : ""}`} welcomeImage={session?.user?.image} currentPage="Homes">
             <section className="pt-4">
                 <Tile tileType ={TileType.input} clickable={false}>
                     <InputLayout onChange={(e) => setSearchQuery(e.target.value)} icon={<IoSearch size="32px"/>} text="Search" type="text" name="search_query" placeholder="My Search Query..."/>
@@ -192,7 +191,8 @@ export async function getServerSideProps({ req, res, params }) {
                     bookingsLast3Months: (await bookingsLast3MonthsTask).toString(),
                     bookingsLast12Months: (await bookingsLast12MonthsTask).toString()
                 },
-                homes: homes.map(x => ToSeriableHome(x))
+                homes: homes.map(x => ToSeriableHome(x)),
+                userSession: session,
             },
         };
     }
