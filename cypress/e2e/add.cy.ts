@@ -1,6 +1,8 @@
 describe("Add home Test", () => {
     beforeEach(() => {
       cy.visit("homes/new");
+      cy.viewport(1920, 1080)
+
     });
   
     it("Add a home", () => {
