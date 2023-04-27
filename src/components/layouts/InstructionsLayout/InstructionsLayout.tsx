@@ -37,7 +37,7 @@ export default function InstructionsLayout(props: InstructionsLayoutProps) {
     const { text, editable, register, registerSettings, errors, errorMessage } = props;
 
     return (
-        <div className="flex items-center justify-center w-full h-full">
+        <div className="flex items-center justify-center w-full h-full bg-white">
             <div className="w-[94%] h-[90%] p-2">
                 <div className="flex flex-row">
                     <div className="py-1 md:py-2 pr-6">

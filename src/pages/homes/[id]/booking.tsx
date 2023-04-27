@@ -1,6 +1,6 @@
 import { getServerSession } from "../../../hooks/getServerSession";
 import { authOptions } from "../../api/auth/[...nextauth]";
-import { IoHome, IoLogOut } from "react-icons/io5";
+import {IoHome, IoPieChart, IoFlash, IoList, IoLogOut, IoCalendar} from "react-icons/io5";
 import Body from "../../../components/Body/Body";
 import getRole from "../../../lib/utils/getRole";
 import Role from "../../../lib/utils/roles";
@@ -23,29 +23,34 @@ export default function NewBooking(props) {
             icon: <IoHome />,
             text: "All Homes",
             path: "/homes",
-            activePage: true,
+        },
+        {
+            icon: <IoPieChart />,
+            text: "Dashboard",
+            path: "/homes/" + home._id
+        },
+        {
+            icon: <IoFlash />,
+            text: "New Reading",
+            path: "/homes/" + home._id + "/readings/new"
+        },
+        {
+            icon: <IoCalendar />,
+            text: "New Booking",
+            path:"#",
+            activePage: true
+        },
+        {
+            icon: <IoList />,
+            text: "Instructions",
+            path: "/homes/" + home._id + "/instructions"
         },
         {
             icon: <IoLogOut />,
             text: "Sign Out",
-            path: "/api/auth/signout",
-        },
-    ];
-
-    const stats = [
-        {
-            stat: props?.stats?.homes,
-            text: "Homes",
-        },
-        {
-            stat: props?.stats?.bookingsLast3Months,
-            text: "Bookings (Last 3 Months)",
-        },
-        {
-            stat: props?.stats?.bookingsLast12Months,
-            text: "Bookings (Last 12 Months)",
-        },
-    ];
+            path: "/api/auth/signout"
+        }
+    ]
 
     const router = useRouter();
 
@@ -64,10 +69,10 @@ export default function NewBooking(props) {
     return (
         <>
             <Body
-                statItems={stats}
+                statItems={[]}
                 menuItems={navItems}
-                welcomeText={`Welcome back, ${userSession?.user?.name}`}
-                welcomeImage={userSession?.user?.image}
+                welcomeText={`Welcome to, ${props?.home?.name}`}
+                welcomeImage={props?.home?.image}
                 currentPage="New Booking"
             >
                 <BookingForm

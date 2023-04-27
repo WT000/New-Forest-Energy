@@ -56,7 +56,7 @@ export default function BarChart(props: ChartProps) {
       }
       catch{ }
       
-      values.push(difference)
+      values.push(Number(difference.toFixed(2)))
     }
     dates.shift()
   } else {
