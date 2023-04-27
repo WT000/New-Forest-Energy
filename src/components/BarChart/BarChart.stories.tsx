@@ -56,3 +56,12 @@ Bar_NotAtZero_MonthYear.args = {
   unitOfMeasure: "",
   rawData: basicReadings,
 };
+
+export const Bar_NotAtZero_MonthYear_Diff = Template.bind({});
+Bar_NotAtZero_MonthYear_Diff.args = {
+  beginAtZero: false,
+  dateType: ChartDateType.DayMonth,
+  unitOfMeasure: "",
+  rawData: basicReadings,
+  showDifference: true
+};
