@@ -49,6 +49,7 @@ export default function InputLayout(props: InputLayoutProps) {
                         //@ts-ignore
                         {...(register && { ...register(name, registerSettings) })}
                         disabled={disabled ? true : false}
+                        data-test="hometile4"
                     />
                 </p>
             </div>

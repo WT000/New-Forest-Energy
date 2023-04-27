@@ -49,6 +49,7 @@ export default function Notification(props: NotificationProp) {
 						opacity: t.visible ? 1 : 0,
 						transition: "opacity 250ms ease-in-out",
 					}}
+					data-test="deletedtoast"
 				>
 					<div className="ml-3 text-base font-normal text-white">
 						{text}
@@ -62,6 +63,7 @@ export default function Notification(props: NotificationProp) {
 								<button
 								onClick={function(event){ interactive.onClick(); toast.dismiss(t.id);}}
 								className="inline-flex justify-center w-full text-base font-bold text-center text-white hover:scale-110 transition ease-in-out"
+								data-test="deletedhomedimiss"
 							>
 									{interactive.text}
 								</button>

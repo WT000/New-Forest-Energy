@@ -2,6 +2,8 @@ import {NextApiResponse} from "next";
 import dbConnect from "../../db/dbcon/dbcon";
 import User from "../../db/models/User";
 import Home from "../../db/models/Home"
+import Booking from "../../db/models/Booking";
+import Reading from "../../db/models/Reading";
 
 /* eslint-disable @typescript-eslint/no-var-requires */
 /* eslint-disable camelcase */
@@ -55,6 +57,13 @@ export default async function handler(_, res: NextApiResponse) {
 
     const homeData = await fs.readFile("./src/db/seed/homes.json", "utf8");
 
+    const bookingData = await fs.readFile("./src/db/seed/booking.json", "utf8");
+
+    const ReadingData = await fs.readFile("./src/db/seed/reading.json", "utf8");
+
+    
+
+
 
     // const accountData = await fs.readFile(
     //   "./src/db/seed/accounts.json",
@@ -73,10 +82,34 @@ export default async function handler(_, res: NextApiResponse) {
     let reviewJson = JSON.parse(homeData);
     reviewJson = convertId(reviewJson, "_id", false);
     reviewJson = convertId(reviewJson, "owner", false);
+    reviewJson = convertId(reviewJson, "delegates", false);
+
 
     // Insert
     await Home.insertMany(reviewJson);
     console.log("----Inserted homes----");
+
+    console.log("----Editing bookings----");
+    let bookingJson = JSON.parse(bookingData);
+    bookingJson = convertId(bookingJson, "_id", false);
+    bookingJson = convertId(bookingJson, "home", false);
+
+    await Booking.insertMany(bookingJson);
+    console.log("----Inserted bookings----");
+
+
+    console.log("----Editing readings----");
+    let readingJson = JSON.parse(ReadingData);
+    readingJson = convertId(readingJson, "_id", false);
+    readingJson = convertId(readingJson, "home", false);
+    readingJson = convertId(readingJson, "booking", false);
+    readingJson = convertId(readingJson, "user", false);
+
+
+    await Reading.insertMany(readingJson);
+    console.log("----Inserted readings----");
+
+    
 
     /**
      * Set the users
