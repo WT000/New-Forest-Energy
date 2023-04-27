@@ -26,6 +26,7 @@ function display(text: string, editable: boolean, register?: UseFormRegister<Hom
                 placeholder={placeholder}
                 rows={4}
                 {...(register && { ...register("energyInstructions", registerSettings) })}
+                data-test="instructionsinput"
             />
         );
     } else {

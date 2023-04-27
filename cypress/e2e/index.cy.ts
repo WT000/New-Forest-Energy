@@ -52,7 +52,7 @@ describe("Home Page Test", () => {
       
     });
 
-    it("navigate to new home page", () => {
+    it("navigate to create a home page", () => {
 
       cy.getByData("navbutton").eq(1).click({ force: true })
       cy.url().should("eq", Cypress.config().baseUrl + "/homes/new")
@@ -65,6 +65,15 @@ describe("Home Page Test", () => {
       cy.url().should("eq", Cypress.config().baseUrl + "/homes")
       
     });
+
+    it("Add a reading", () => {
+
+      cy.getByData('hometile3').eq(0).click({ force: true })
+
+      
+    });
+
+    
 
     
   
