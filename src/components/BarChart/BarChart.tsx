@@ -23,8 +23,6 @@ interface ChartProps {
 export default function BarChart(props: ChartProps) {
   const { rawData, showDifference } = props;
 
-  console.log("----", rawData, showDifference)
-
   const rawDataByDays = groupBy(rawData, d => dateToEpoch(d.createdAt))
 
   const groupedValues = []
