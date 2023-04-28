@@ -36,7 +36,7 @@ export default function Tile(props: TileProps) {
     if(clickable) {cursorStyle = "cursor-pointer"}
 
     return (
-        <div className={`${styling} ${customClass} ${cursorStyle} group/tile bg-transparent flex border-solid border-[1px] border-[#DCDCDD]`}
+        <div className={`${styling} ${customClass} ${cursorStyle} group/tile bg-transparent flex border-solid border-[1px] border-[#DCDCDD]`} data-test="tilebutton"
             onClick={(e) => {
                 console.log("hit")
                 focusChild();

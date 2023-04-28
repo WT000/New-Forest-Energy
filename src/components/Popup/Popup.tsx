@@ -11,7 +11,7 @@ export default function Popup(props: PopupProps) {
     const { onClick, children } = props;
 
     return (
-        <div
+        <div 
             id="defaultModal"
             tabIndex={-1}
             aria-hidden="true"

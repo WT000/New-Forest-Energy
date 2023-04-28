@@ -15,11 +15,12 @@ export default function DelegatesList(props: DelegatesListProps) {
                 <div 
                     className="h-11 w-11 md:h-12 md:w-12 rounded-full bg-black cursor-pointer flex justify-center items-center transition ease-in-out hover:scale-110"
                     onClick={onClick}
+                    data-test="adddelegate"
                     >
                     <IoAdd className="text-white-100" size="20px"/>
                 </div>
             </div>
-            <div className="pl-6 space-x-6 w-full flex md:pl-6 md:space-x-6">
+            <div className="pl-6 space-x-6 w-full flex md:pl-6 md:space-x-6" data-test="delegatepic">
                 {children}
             </div>
 

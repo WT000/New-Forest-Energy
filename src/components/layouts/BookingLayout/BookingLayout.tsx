@@ -13,7 +13,7 @@ export default function BookingLayout(props: BookingLayoutProps) {
 	}
 
 	return (
-		<div className="grid grid-rows-3 text-white-100 w-full">
+		<div className="grid grid-rows-3 text-white-100 w-full" data-test="bookingcard">
 			<div className="text-lg md:text-[22px]">{cost}</div>
 			<div></div>
 			<div>

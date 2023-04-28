@@ -76,7 +76,7 @@ export default function ReadingContainer(props: ReadingContainertInterface) {
     });
 
     return (
-        <div>
+        <div > 
             {popupVisible && (
                 <Popup onClick={() => setPopupVisible(!popupVisible)}>
                     <ReadingPopup showDelete={deleteMethod !== undefined} deleteMethod={() => {deleteMethod(popupData.id); setPopupVisible(false) }} name={popupData.creator} date={popupData.createdAt} kwh={popupData.value} image={popupData.image} imgname={"Reading"}/>

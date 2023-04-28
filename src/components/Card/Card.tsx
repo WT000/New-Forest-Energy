@@ -35,7 +35,7 @@ export default function Card(props: CardProps) {
     if(bookingType == BookingType.complete) {bgColour="bg-orange"}
 
     return (
-        <div className={`${styling} ${bgColour} flex`}>
+        <div className={`${styling} ${bgColour} flex`} data-test="bookingcard">
             <div className="m-auto">{children}</div>
         </div>
     )

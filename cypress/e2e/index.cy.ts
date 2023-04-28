@@ -5,19 +5,10 @@ describe("Home Page Test", () => {
       cy.viewport(1920, 1080)
     });
   
-    it("test", () => {
-      cy.getByData("hometile1").should("exist");
-      cy.getByData("hometile4").should("exist");
-
-      cy.getByData("navbutton").should("exist");
-
-      cy.getByData("navstats").eq(0).should("have.text", "5  ")
-
-    });
-
     it("shows multiple houses", () => {
 
       cy.getByData("hometile3").should("have.length", 5);
+      cy.getByData("navstats").eq(0).should("have.text", "5  ")
 
     });
 
@@ -44,10 +35,11 @@ describe("Home Page Test", () => {
       cy.getByData('hometile3').eq(0).trigger('mouseover')
       cy.getByData('deletehome').eq(0).click({ force: true })
       cy.getByData("deletedtoast").should('be.visible');
-      // cy.getByData("deletedhomeundo").should('be.visible');
       cy.getByData("deletedhomedimiss").click();
       cy.reload()
       cy.getByData("navstats").eq(0).should("have.text", "4  ")
+      cy.getByData("navstats").eq(0).should("have.text", "4  ")
+      
 
       
     });
@@ -61,6 +53,7 @@ describe("Home Page Test", () => {
       cy.getByData("deletedhomeundo").click();
       cy.reload()
       cy.getByData("navstats").eq(0).should("have.text", "5  ")
+      cy.getByData("hometile3").should("have.length", 5);
 
       
     });

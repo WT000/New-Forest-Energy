@@ -89,11 +89,11 @@ export default function Index(props) {
         const bookingLayout = (<BookingLayout cost={totalCostMinusBuffer} duration={duration} dateRange={dateRange}></BookingLayout>)
 
         if (endDate.getTime() < now) {
-            bookingCards.push((<div onClick={() => router.push(bookingLink)} className={surroundingStlye}><Card key={index} cardType={CardType.booking} bookingType={BookingType.complete} children={bookingLayout}></Card></div>))
+            bookingCards.push((<div onClick={() => router.push(bookingLink)} className={surroundingStlye} data-test="bookingcard"> <Card key={index} cardType={CardType.booking} bookingType={BookingType.complete} children={bookingLayout}></Card></div>))
         } else if (startDate.getTime() > now ) {
-            bookingCards.push((<div onClick={() => router.push(bookingLink)} className={surroundingStlye}><Card key={index} cardType={CardType.booking} bookingType={BookingType.planned} children={bookingLayout}></Card></div>))
+            bookingCards.push((<div onClick={() => router.push(bookingLink)} className={surroundingStlye} data-test="bookingcard"><Card key={index} cardType={CardType.booking} bookingType={BookingType.planned} children={bookingLayout}></Card></div>))
         } else {
-            bookingCards.push((<div onClick={() => router.push(bookingLink)} className={surroundingStlye}><Card key={index} cardType={CardType.booking} bookingType={BookingType.inProgress} children={bookingLayout}></Card></div>))
+            bookingCards.push((<div onClick={() => router.push(bookingLink)} className={surroundingStlye} data-test="bookingcard"><Card key={index} cardType={CardType.booking} bookingType={BookingType.inProgress} children={bookingLayout}></Card></div>))
         }
     })
 
@@ -200,7 +200,7 @@ export default function Index(props) {
                 )}
                 <div className="md:flex md:justify-between ">
                     <div className="md:w-[42%] my-10 ">
-                        <div className="flex justify-between mb-8 md:mb-11">
+                        <div className="flex justify-between mb-8 md:mb-11" >
                             <Tile tileType={TileType.link} 
                                 children={<CompactLayout 
                                 icon={<IoCreateSharp size="34px"/>}
@@ -271,8 +271,8 @@ export default function Index(props) {
                         </div>
                         <div className="mt-10">
                         <Subtitle text1="Bookings" showbar={false}/>
-                            <div className="mt-3">
-                                <HorizontalContainer componentIterable={bookingCards} hideScrollbar={true}/>
+                            <div className="mt-3" >
+                                <HorizontalContainer componentIterable={bookingCards} hideScrollbar={true} />
                             </div>
                         </div>
                         <div className="flex md:mt-2">

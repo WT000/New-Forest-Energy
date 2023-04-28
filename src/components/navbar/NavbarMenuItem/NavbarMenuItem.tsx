@@ -34,18 +34,19 @@ export default function NavbarMenuItem(props: NavbarMenuItemProps) {
 
   if (text == "Instructions") {
     return (
-      <div>
+      <div >
         {popupVisible && (
-          <InstructionsPopup onClick={() => setPopupVisible(!popupVisible)}>
+          <InstructionsPopup onClick={() => setPopupVisible(!popupVisible)} >
 
-            <Tile tileType={TileType.box} clickable={false}>
+            <Tile tileType={TileType.box} clickable={false} >
 
                 <InstructionsLayout text={instructionstext} editable={false}></InstructionsLayout>
             </Tile>
           </InstructionsPopup>
         )}
 
-        <div
+        <div 
+          
           className={`${textFormat} ${desktop} hover:text-black cursor-pointer transition ease-in-out hover:scale-105`}
           id={text}
           onClick={() => {
@@ -61,8 +62,8 @@ export default function NavbarMenuItem(props: NavbarMenuItemProps) {
             });
           }}
         >
-          <div className="md:col-span-1 md:m-auto md:pr-4">{icon}</div>
-          <div className="hidden md:block md:col-span-2">{text}</div>
+          <div className="md:col-span-1 md:m-auto md:pr-4" >{icon}</div>
+          <div className="hidden md:block md:col-span-2" >{text}</div>
         </div>
       </div>
     );

@@ -21,8 +21,8 @@ export default function Reading(props: ReadingComponentInterface) {
     }, [createdAtV]);
     
     return (
-        <div className="flex gap-x-4 w-full my-2 py-2 cursor-pointer" onClick={() => onClick()}>
-            <div className="flex justify-center items-center">
+        <div className="flex gap-x-4 w-full my-2 py-2 cursor-pointer" onClick={() => onClick()} data-test="instructionsbutton" >
+            <div className="flex justify-center items-center" >
                 <Card cardType={CardType.icon}>
                     <IoFlash className="w-5 h-5"/>
                 </Card>
