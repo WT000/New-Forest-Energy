@@ -1,6 +1,6 @@
 name: E2E Testing with Cypress
 
-on: [pull_request]
+on: [push, pull_request]
 
 jobs:
   install:
