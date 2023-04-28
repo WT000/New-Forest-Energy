@@ -1,0 +1,47 @@
+name: E2E Testing with Cypress
+
+on: [pull_request]
+
+jobs:
+  install:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Dependencies
+        run: |
+          npm install
+
+      - name: create env file
+        run: |
+          touch .env
+          echo MONGODB_URI=${{secrets.MONGODB_URI}} >> .env
+          echo NEXTAUTH_URL=${{secrets.NEXTAUTH_URL}} >> .env
+          echo NEXTAUTH_SECRET=${{secrets.NEXTAUTH_SECRET}} >> .env
+          echo NEXT_PUBLIC_CLOUDINARY_NAME=${{secrets.NEXT_PUBLIC_CLOUDINARY_NAME}} >> .env
+          echo NEXT_PUBLIC_CLOUDINARY_PRESET=${{secrets.NEXT_PUBLIC_CLOUDINARY_PRESET}} >> .env
+          echo NEXT_PUBLIC_CLOUDINARY_FOLDER=${{secrets.NEXT_PUBLIC_CLOUDINARY_FOLDER}} >> .env
+
+
+          echo NEXT_PUBLIC_TEST=true >> .env
+
+      - name: Cypress run
+        uses: cypress-io/github-action@v4
+        with:
+          start: npm test
+          browser: chrome
+          wait-on: "http://localhost:3000"
+        env:
+          MONGODB_URI: ${{secrets.MONGODB_URI}}
+      - uses: actions/upload-artifact@v2
+        if: failure()
+        with:
+          name: cypress-screenshots
+          path: cypress/screenshots
+
+      - uses: actions/upload-artifact@v2
+        if: always()
+        with:
+          name: cypress-videos
+          path: cypress/videos
