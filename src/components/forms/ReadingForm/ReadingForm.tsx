@@ -69,7 +69,7 @@ export default function ReadingForm(props: ReadingFormProps){
               )}
             />
             {errors.image && (
-                <span className="text-xs text-red-400">Image is Required</span>
+                <span className="text-xs text-red-400" data-test="readingerrorrr">Image is Required</span>
             )}
 
             <Tile tileType={TileType.input} clickable={false} focus={() => setFocus("readingValue")}>
@@ -91,6 +91,7 @@ export default function ReadingForm(props: ReadingFormProps){
                     }}
                     errors={errors.readingValue}
                     errorMessage={"*Must be greater than previous reading with a maximum of 2 decimal places"}
+                    data-test="readinginput"
                 />
             </Tile>
 

@@ -13,8 +13,6 @@ describe("Home Page Test", () => {
 
       cy.getByData("navstats").eq(0).should("have.text", "5  ")
 
-
-
     });
 
     it("shows multiple houses", () => {
@@ -68,12 +66,7 @@ describe("Home Page Test", () => {
       
     });
 
-    it("Add a reading", () => {
 
-      cy.getByData('hometile3').eq(0).click({ force: true })
-
-      
-    });
 
     
 
