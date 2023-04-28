@@ -20,6 +20,7 @@ describe("Add home Test", () => {
     cy.getByData("hometile4")
       .eq(5)
       .type("delegate2@delagates.com, delegate3@delagates.com");
+    cy.getByData("instructionsinput").eq(0).click()
     cy.getByData("instructionsinput").eq(0).type("instructions");
     cy.getByData("testbutton").click();
   });
