@@ -4,7 +4,7 @@ describe("Add home Test", () => {
     cy.viewport(1920, 1080);
   });
 
-  it("Add a home", () => {
+  it("add a home", () => {
     cy.url().should("eq", Cypress.config().baseUrl + "/homes/new");
     cy.getByData("hometile4").eq(0).click();
     cy.getByData("hometile4").eq(0).type("NewTestHome");

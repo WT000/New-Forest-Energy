@@ -4,7 +4,7 @@ describe("Home Page Test", () => {
     cy.viewport(1920, 1080);
   });
 
-  it("Add a reading fail because of no image and low reading value", () => {
+  it("add a reading fail because of no image and low reading value", () => {
     cy.getByData("hometile3").eq(0).click({ force: true });
     cy.getByData("navbutton").eq(2).click({ force: true });
     cy.getByData("hometile4").click();
@@ -19,7 +19,7 @@ describe("Home Page Test", () => {
     cy.getByData("hometile4").clear();
     cy.getByData("hometile4").type("9");
     cy.getByData("testbutton").click();
-    cy.getByData("readingerrorrr").should("have.text", "Image is Required");
+    cy.getByData("readingformerror").should("have.text", "Image is Required");
   });
 });
 

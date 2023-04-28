@@ -36,7 +36,7 @@ describe("Home Page Test", () => {
     cy.getByData("hometile3").should("have.length", 4);
   });
 
-  it("Add a delegate", () => {
+  it("add a delegate", () => {
     cy.getByData("hometile3").eq(0).click({ force: true });
     cy.getByData("tilebutton").eq(1).click({ force: true });
     cy.getByData("adddelegate").eq(0).click({ force: true });

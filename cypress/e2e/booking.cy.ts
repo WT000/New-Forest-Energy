@@ -4,7 +4,7 @@ describe("Home Page Test", () => {
     cy.viewport(1920, 1080);
   });
 
-  it("Date failure check", () => {
+  it("date failure check", () => {
     cy.getByData("hometile3").eq(0).click({ force: true });
     cy.getByData("navbutton").eq(3).click({ force: true });
     cy.getByData("hometile4").eq(1).click();
@@ -16,7 +16,7 @@ describe("Home Page Test", () => {
     );
   });
 
-  it("Empty fields validation", () => {
+  it("empty fields validation", () => {
     cy.getByData("hometile3").eq(0).click({ force: true });
     cy.getByData("navbutton").eq(3).click({ force: true });
     cy.getByData("hometile4").eq(1).click();
@@ -27,7 +27,7 @@ describe("Home Page Test", () => {
     );
   });
 
-  it("Generate QR code for booking", () => {
+  it("generate QR code for booking", () => {
     cy.visit("/bookings/adf7772");
     cy.getByData("tilebutton").eq(1).click();
     cy.getByData("deletedtoast").should("be.visible");
@@ -41,7 +41,7 @@ describe("Home Page Test", () => {
     cy.getByData("deletedtoast").should("not.be.visible");
   });
 
-  it("Delete booking", () => {
+  it("delete booking", () => {
     cy.visit("/bookings/adf7772");
     cy.getByData("tilebutton").eq(0).click();
     cy.url().should("eq", Cypress.config().baseUrl + "/bookings/adf7772/edit");
