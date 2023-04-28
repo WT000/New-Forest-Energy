@@ -26,6 +26,7 @@ export default function Button(props: ButtonProp) {
 			onClick={onClick}
 			className={`${backgroundColour} rounded-lg ${shadowType} w-100 md:w-[150px] shadow-md flex gap-4 justify-center items-center py-2 px-4`}
 			disabled={disabled ? true : false}
+			data-test="testbutton"
 		>
 			<div>{icon}</div>
 			<div className={`${textClassName}`}>{text}</div>

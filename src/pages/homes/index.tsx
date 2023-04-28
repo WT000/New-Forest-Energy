@@ -111,9 +111,9 @@ export default function AllHomes(props){
             ?.filter(x => searchQuery == null || searchQuery == "" || 
                 x.name.toLowerCase().split(" ").some(y => y.startsWith(searchQuery.toLowerCase()))).map(x => {
         return (
-            <Link key={x._id} href={`/homes/${x._id}`}>
+            <Link key={x._id} href={`/homes/${x._id}`} data-test="hometile3">
                 <Tile tileType ={TileType.home} clickable={true} onClick={() => console.log("Clicked")}>
-                    <HomeLayout onClick={isAgency ? (e) => deleteHome(e, x._id) : null} image={x.image} name={x.name} sleeps={x.numBeds}/>
+                    <HomeLayout onClick={isAgency ? (e) => deleteHome(e, x._id) : null} image={x.image} name={x.name} sleeps={x.numBeds} data-test="hometile4"/>
                 </Tile>
             </Link>
 
@@ -123,7 +123,7 @@ export default function AllHomes(props){
     
     return (
         <Body statItems={stats} menuItems={navItems} welcomeText={`Welcome back, ${session?.user?.name ? session.user.name : ""}`} welcomeImage={session?.user?.image} currentPage="Homes">
-            <section className="pt-4">
+            <section className="pt-4" data-test="hometile1">
                 <Tile tileType ={TileType.input} clickable={false}>
                     <InputLayout onChange={(e) => setSearchQuery(e.target.value)} icon={<IoSearch size="32px"/>} text="Search" type="text" name="search_query" placeholder="My Search Query..."/>
                 </Tile>

@@ -1,0 +1,66 @@
+[
+
+    {
+      "_id": {
+        "$oid": "00000020f51bb4362eee2a4d"
+      },
+      "name": "TestBot",
+      "email": "TestBot@<web>.com",
+      "image": "https://avatars.githubusercontent.com/u/27347476?s=200&v=4",
+      "emailVerified": null,
+      "isAgency": true
+    },
+    {
+      "_id": {
+        "$oid": "00000020f51bb4362eee2a41"
+      },
+      "name": "delegate1",
+      "email": "delegate1@delagates.com",
+      "image": "https://avatars.githubusercontent.com/u/27347476?s=200&v=4",
+      "emailVerified": null,
+      "isAgency": true
+    },
+    {
+      "_id": {
+        "$oid": "00000020f51bb4362eee2a42"
+      },
+      "name": "delegate2",
+      "email": "delegate2@delagates.com",
+      "image": "https://avatars.githubusercontent.com/u/27347476?s=200&v=4",
+      "emailVerified": null,
+      "isAgency": true
+    },
+    {
+      "_id": {
+        "$oid": "00000020f51bb4362eee2a43"
+      },
+      "name": "delegate3",
+      "email": "delegate3@delagates.com",
+      "image": "https://avatars.githubusercontent.com/u/27347476?s=200&v=4",
+      "emailVerified": null,
+      "isAgency": true
+    },
+    {
+      "_id": {
+        "$oid": "00000020f51bb4362eee2a44"
+      },
+      "name": "delegate4",
+      "email": "delegate4@delagates.com",
+      "image": "https://avatars.githubusercontent.com/u/27347476?s=200&v=4",
+      "emailVerified": null,
+      "isAgency": true
+    },
+    {
+      "_id": {
+        "$oid": "6388ec0adfb50fdda3ee6b83"
+      },
+      "name": "Sophia-Attrill1",
+      "email": "5attrs34@solent.ac.uk",
+      "image": "https://avatars.githubusercontent.com/u/71900386?v=4",
+      "emailVerified": null,
+      "isAgency": true
+
+    }
+
+  ]
+  

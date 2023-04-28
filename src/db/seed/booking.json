@@ -1,0 +1,48 @@
+[
+
+    {
+      "_id": {
+        "$oid": "637f8ed5e4e31558f4669ad8"
+      },
+      "home": {
+        "$oid": "637f8ed5e4e31558f4669ad3"
+      },
+      "friendlyId": "adf7772",
+      "isDeleted": false,
+      "surname": "Wall",
+      "startDateTime": "2024-12-28T10:20:39.588Z",
+      "endDateTime": "2024-12-29T10:20:39.588Z"
+
+      
+    },
+    {
+        "_id": {
+          "$oid": "637f8ed5e4e31558f4669aee"
+        },
+        "home": {
+          "$oid": "637f8ed5e4e31558f4669ad3"
+        },
+        "friendlyId": "sdfj4s2",
+        "isDeleted": false,
+        "surname": "Fence",
+        "startDateTime": "2024-11-28T10:20:39.588Z",
+        "endDateTime": "2024-11-29T10:20:39.588Z"
+        
+      },
+      {
+        "_id": {
+          "$oid": "637f8ed5e4e31558f4669aff"
+        },
+        "home": {
+          "$oid": "637f8ed5e4e31558f4669ad3"
+        },
+        "friendlyId": "sdff4s9",
+        "isDeleted": false,
+        "surname": "Brick",
+        "startDateTime": "2024-12-28T10:20:39.588Z",
+        "endDateTime": "2025-12-28T10:20:39.588Z"
+        
+      }
+
+  ]
+  

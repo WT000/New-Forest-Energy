@@ -1,0 +1,128 @@
+[
+    {
+      "_id": {
+        "$oid": "637f8ed5e4e31558f4669ad3"
+      },
+      "owner": {
+        "$oid": "64475a5bbde7b49897570cb2"
+      },
+      "name": "TestHome",
+      "delegates": [
+
+        {
+          "$oid": "00000020f51bb4362eee2a4d"
+        },
+        {
+          "$oid": "00000020f51bb4362eee2a42"
+        }
+
+      ],
+      "image": "",
+      "numBeds": 5,
+      "energyInstructions": "Take a picture",
+      "energyTariff": 0.32,
+      "energyBuffer": 0.42,
+      "isDeleted": false,
+
+
+      "description": "Nice place to stay",
+
+      "__v": 0
+    },
+
+    
+      {
+        "_id": {
+          "$oid": "637f8ed5e4e31558f4669ad9"
+        },
+        "owner": {
+          "$oid": "64475a5bbde7b49897570cb9"
+        },
+        "name": "HouseTest",
+        "delegates": [],
+        "image": "",
+        "numBeds": 10,
+        "energyInstructions": "Instructions",
+        "energyTariff": 5.32,
+        "energyBuffer": 3.42,
+        "isDeleted": false,
+  
+  
+        "description": "Nice place to stay",
+  
+        "__v": 0
+      },
+
+      {
+        "_id": {
+          "$oid": "637f8ed5e4e31558f4669ad8"
+        },
+        "owner": {
+          "$oid": "64475a5bbde7b49897570cb8"
+        },
+        "name": "Bobs",
+        "delegates": [],
+        "image": "",
+        "numBeds": 10,
+        "energyInstructions": "Instructions",
+        "energyTariff": 1.72,
+        "energyBuffer": 5.42,
+        "isDeleted": false,
+  
+  
+        "description": "Nice place to stay",
+  
+        "__v": 0
+      },
+
+      {
+        "_id": {
+          "$oid": "637f8ed5e4e31558f4669ad7"
+        },
+        "owner": {
+          "$oid": "64475a5bbde7b49897570cb7"
+        },
+        "name": "James",
+        "delegates": [],
+        "image": "",
+        "numBeds": 10,
+        "energyInstructions": "Instructions",
+        "energyTariff": 8.32,
+        "energyBuffer": 3.82,
+        "isDeleted": false,
+  
+  
+        "description": "Nice place to stay",
+  
+        "__v": 0
+      },
+
+
+      {
+        "_id": {
+          "$oid": "637f8ed5e4e31558f4669ad6"
+        },
+        "owner": {
+          "$oid": "64475a5bbde7b49897570cb6"
+        },
+        "name": "Sams",
+        "delegates": [],
+        "image": "",
+        "numBeds": 10,
+        "energyInstructions": "Instructions",
+        "energyTariff": 6.32,
+        "energyBuffer": 9.42,
+        "isDeleted": false,
+  
+  
+        "description": "Nice place to stay",
+  
+        "__v": 0
+      }
+
+
+
+
+
+  ]
+  

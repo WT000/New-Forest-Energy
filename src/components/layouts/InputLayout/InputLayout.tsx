@@ -32,7 +32,7 @@ export default function InputLayout(props: InputLayoutProps) {
         <div className="grid grid-cols-5 m-auto w-full">
             <div className="col-span-1 m-auto">{icon}</div>
             <div className="col-span-4 pl-1">
-                <p className="text-black-500 text-xs">
+                <p className="text-black-500 text-xs" data-test="errormessage">
                     {text} {errors && <span className="text-xs text-red-400">{errorMessage}</span>}
                 </p>
                 <p className="">
@@ -49,6 +49,7 @@ export default function InputLayout(props: InputLayoutProps) {
                         //@ts-ignore
                         {...(register && { ...register(name, registerSettings) })}
                         disabled={disabled ? true : false}
+                        data-test="hometile4"
                     />
                 </p>
             </div>
