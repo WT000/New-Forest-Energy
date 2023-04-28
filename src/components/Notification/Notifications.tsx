@@ -31,6 +31,7 @@ export default function Notification(props: NotificationProp) {
 				}
 				data-dismiss-target="#toast-default"
 				aria-label="Close"
+				data-test="deletedhomedimiss"
 			>
 				{props.icon}
 			</button>
