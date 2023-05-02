@@ -10,7 +10,8 @@ import Tile, {TileType} from "../../components/Tile/Tile";
 export default function SignIn({ providers }: InferGetServerSidePropsType<typeof getServerSideProps>) {
 
   const images = [
-    {key:"GitHub", value: "https://th.bing.com/th/id/OIP.D_Gm8IGCvkqmOgtU2hueVwHaHS"}
+    {key:"GitHub", value: "https://th.bing.com/th/id/OIP.D_Gm8IGCvkqmOgtU2hueVwHaHS"},
+    {key:"Google", value: "https://upload.wikimedia.org/wikipedia/commons/thumb/5/53/Google_%22G%22_Logo.svg/706px-Google_%22G%22_Logo.svg.png"},
   ]
 
 
@@ -28,7 +29,7 @@ export default function SignIn({ providers }: InferGetServerSidePropsType<typeof
             />
       </div>
 
-      <div className="mx-auto pb-4">
+      <div className="mx-auto pb-4 flex-col space-y-4">
         {Object.values(providers).map((provider) => (
           <div onClick={() => signIn(provider.id)} key={provider.name} className="mx-auto border px-20 py-[6.4px] rounded-lg border-black-700 cursor-pointer 
                                       hover:bg-white hover:border-white-100 hover:shadow-md transition flex gap-4 justify-center align-middle">
