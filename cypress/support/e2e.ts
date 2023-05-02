@@ -19,7 +19,8 @@ import './commands'
 // Alternatively you can use CommonJS syntax:
 // require('./commands')
 
-import "@cypress/code-coverage/support"
+// cypress/support/e2e.ts
+import '@cypress/code-coverage/support'
 
 Cypress.on("uncaught:exception", (err, runnable) => {
     // returning false here prevents Cypress from failing the test
@@ -38,5 +39,6 @@ Cypress.on("uncaught:exception", (err, runnable) => {
     beforeEach(() => {
       cy.log("Seeding the database before running tests");
       cy.request("http://localhost:3000/api/seeddb/");
+      cy.wait(200)
     });
 
