@@ -9,6 +9,12 @@ const nextConfig = {
         hostname: "th.bing.com",
         port: '',
         pathname: "/th/id/**"
+      },
+      {
+        protocol:"https",
+        hostname: "upload.wikimedia.org",
+        port: '',
+        pathname: "/wikipedia/commons/thumb/**"
       }
     ]
   }
